@@ -1,0 +1,10 @@
+.main-header {
+    @include flex-align;
+
+    height: 100%;
+    margin-left: 2.5rem;
+
+    &__description {
+        color: var(--color-grey);
+    }
+}

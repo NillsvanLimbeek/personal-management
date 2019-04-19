@@ -1,0 +1,91 @@
+.base-layout {
+    display: flex;
+
+    height: 100vh;
+    width: 100vw;
+
+    &__navigation {
+        flex: 0 0 20rem;
+
+        position: relative;
+        z-index: 100;
+
+        background: var(--color-black-light);
+        padding: 1rem;
+        transition: all 0.3s ease-in-out;
+
+        &--hidden {
+            transform: translateX(-20rem);
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+    &__arrow {
+        position: absolute;
+
+        font-size: 1.5rem;
+        color: var(--color-grey);
+        cursor: pointer;
+
+        &--left {
+            top: 2.75rem;
+            right: 2rem;
+        }
+
+        &--right {
+            top: 2.75rem;
+            left: 2rem;
+        }
+    }
+
+    &__main {
+        @include flex-end;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background: var(--color-black);
+    }
+
+    &__main-container {
+        height: 100%;
+        width: 100%;
+
+        margin-top: 7rem;
+        padding: 2rem;
+        transition: all 0.3s ease-in-out;
+
+        &--transform {
+            width: calc(100% - 20rem);
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+    &__header {
+        @include flex-end;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 7rem;
+    }
+
+    &__header-container {
+        height: 100%;
+        width: 100%;
+
+        padding: 2rem;
+        transition: all 0.3s ease-in-out;
+
+        &--transform {
+            width: calc(100% - 20rem);
+            transition: all 0.3s ease-in-out;
+        }
+    }
+}

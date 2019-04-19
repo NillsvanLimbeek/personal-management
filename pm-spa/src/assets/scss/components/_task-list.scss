@@ -1,0 +1,7 @@
+.task-list {
+    &__button {
+        &:not(:last-child) {
+            margin-right: 1.5rem;
+        }
+    }
+}
