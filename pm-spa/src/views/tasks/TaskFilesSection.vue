@@ -4,11 +4,11 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
     import { Vue, Component } from '@/vue-script';
 
     @Component({})
-    export default class TaskFiles extends Vue {}
+    export default class TaskFilesSection extends Vue {}
 </script>
 
 <style>

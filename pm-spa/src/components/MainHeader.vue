@@ -15,7 +15,6 @@
     import { Vue, Component, Getter } from '@/vue-script';
 
     import { TaskTab } from '@data/type';
-
     import { ITaskState } from '@data/state';
 
     const TaskHeader = () => import('@/components/headers/TaskHeader.vue');

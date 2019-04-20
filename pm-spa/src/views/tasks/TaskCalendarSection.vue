@@ -4,11 +4,11 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
     import { Vue, Component } from '@/vue-script';
 
     @Component({})
-    export default class TaskCalendar extends Vue {}
+    export default class TaskCalendarSection extends Vue {}
 </script>
 
 <style>

@@ -16,6 +16,7 @@ module.exports = {
                 '@data': path.join(__dirname, '/src/data/'),
                 '@state': path.join(__dirname, '/src/data/state/'),
                 '@type': path.join(__dirname, '/src/data/type/'),
+                '@models': path.join(__dirname, '/src/data/models/'),
             },
         },
     },
