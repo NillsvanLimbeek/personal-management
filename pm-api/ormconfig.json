@@ -1,0 +1,8 @@
+{
+    "type": "mssql",
+    "host": "localhost",
+    "port": 3000,
+    "database": "master",
+    "entities": ["src/**/*.entity{.ts,.js}"],
+    "synchronize": true
+}
