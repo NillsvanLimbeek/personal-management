@@ -14,7 +14,8 @@
             "@mocks/*": ["src/mocks/*"],
             "@interfaces/*": ["src/interfaces/*"],
             "@dtos/*": ["src/dtos/*"],
-            "@schemas/*": ["src/schemas/*"]
+            "@schemas/*": ["src/schemas/*"],
+            "@entities/*": ["src/entities/*"]
         }
     },
     "exclude": ["node_modules"]

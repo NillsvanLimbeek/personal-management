@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Connection } from 'typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -7,14 +9,10 @@ import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 
 @Module({
-    imports: [
-        MongooseModule.forRoot('mongodb://localhost/project-management-api', {
-            useNewUrlParser: true,
-            useCreateIndex: true,
-        }),
-        TasksModule,
-    ],
+    imports: [TypeOrmModule.forRoot(), TasksModule],
     controllers: [AppController],
     providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+    constructor(private readonly connection: Connection) {}
+}

@@ -1,57 +1,67 @@
 import { Injectable, HttpException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
 
-import { Model } from 'mongoose';
+import { Repository, Connection } from 'typeorm';
 
-import { ITask } from '@interfaces/index';
+import { Task } from '@/entity/task.entity';
 import { CreateTaskDto, UpdateTaskDto } from '@dtos/index';
+import { ITask } from '@/interfaces';
 
 @Injectable()
 export class TasksService {
     constructor(
-        @InjectModel('Task') private readonly taskModel: Model<ITask>,
+        @InjectRepository(Task)
+        private readonly taskRepository: Repository<Task>,
+        private readonly connection: Connection,
     ) {}
 
-    async getTasks(): Promise<ITask[]> {
-        return await this.taskModel.find({});
+    async getTasks(): Promise<Task[]> {
+        return await this.taskRepository.find();
     }
 
-    async getTask(id: string): Promise<ITask> {
-        const task = await this.taskModel.findById({ _id: id });
+    // async getTask(id: string): Promise<ITask> {
+    //     const task = await this.taskModel.findById({ _id: id });
 
-        if (!task) {
-            throw new HttpException('task does not exist', 404);
-        }
+    //     if (!task) {
+    //         throw new HttpException('task does not exist', 404);
+    //     }
+
+    //     return task;
+    // }
+
+    async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+        const task = this.taskRepository.create({
+            title: createTaskDto.title,
+            description: createTaskDto.description,
+            completed: createTaskDto.completed,
+        });
+
+        await this.taskRepository.save(task);
 
         return task;
     }
 
-    async createTask(createTaskDto: CreateTaskDto): Promise<ITask> {
-        const task = new this.taskModel(createTaskDto);
-        return await task.save();
-    }
+    // async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<ITask> {
+    //     const task = await this.taskModel.findByIdAndUpdate(
+    //         { _id: id },
+    //         updateTaskDto,
+    //         { new: true },
+    //     );
 
-    async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<ITask> {
-        const task = await this.taskModel.findByIdAndUpdate(
-            { _id: id },
-            updateTaskDto,
-            { new: true },
-        );
+    //     if (!task) {
+    //         throw new HttpException('task does not exist', 404);
+    //     }
 
-        if (!task) {
-            throw new HttpException('task does not exist', 404);
-        }
+    //     return task;
+    // }
 
-        return task;
-    }
+    // async deleteTask(id: string): Promise<ITask> {
+    //     const task = await this.taskModel.findByIdAndDelete({ _id: id });
 
-    async deleteTask(id: string): Promise<ITask> {
-        const task = await this.taskModel.findByIdAndDelete({ _id: id });
+    //     if (!task) {
+    //         throw new HttpException('task does not exist', 404);
+    //     }
 
-        if (!task) {
-            throw new HttpException('task does not exist', 404);
-        }
-
-        return task;
-    }
+    //     return task;
+    // }
 }

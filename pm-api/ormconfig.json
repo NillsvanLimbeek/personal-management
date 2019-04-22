@@ -1,8 +1,14 @@
 {
-    "type": "mssql",
-    "host": "localhost",
-    "port": 3000,
-    "database": "master",
-    "entities": ["src/**/*.entity{.ts,.js}"],
-    "synchronize": true
+    "type": "sqlite",
+    "database": "project-management.sqlite",
+    "synchronize": true,
+    "logging": false,
+    "entities": ["src/entity/**/*.entity{.ts,.js}"],
+    "migrations": ["src/migration/**/*.ts"],
+    "subscribers": ["src/subscriber/**/*.ts"],
+    "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+    }
 }
