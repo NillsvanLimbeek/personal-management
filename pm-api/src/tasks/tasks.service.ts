@@ -1,11 +1,10 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository, Connection } from 'typeorm';
+import { Repository, Connection, getConnection, DeleteResult } from 'typeorm';
 
-import { Task } from '@/entity/task.entity';
+import { Task } from '@entity/index';
 import { CreateTaskDto, UpdateTaskDto } from '@dtos/index';
-import { ITask } from '@/interfaces';
 
 @Injectable()
 export class TasksService {
@@ -19,15 +18,13 @@ export class TasksService {
         return await this.taskRepository.find();
     }
 
-    // async getTask(id: string): Promise<ITask> {
-    //     const task = await this.taskModel.findById({ _id: id });
+    async getTask(id: string): Promise<Task> {
+        const task = await this.taskRepository.findOne(id);
 
-    //     if (!task) {
-    //         throw new HttpException('task does not exist', 404);
-    //     }
+        // TODO return error if nothing is found
 
-    //     return task;
-    // }
+        return task;
+    }
 
     async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
         const task = this.taskRepository.create({
@@ -37,6 +34,8 @@ export class TasksService {
         });
 
         await this.taskRepository.save(task);
+
+        // TODO return erro if something went wrong
 
         return task;
     }
@@ -55,13 +54,10 @@ export class TasksService {
     //     return task;
     // }
 
-    // async deleteTask(id: string): Promise<ITask> {
-    //     const task = await this.taskModel.findByIdAndDelete({ _id: id });
+    async deleteTask(id: string): Promise<Task> {
+        const task = await this.taskRepository.findOne(id);
+        await this.taskRepository.delete(id);
 
-    //     if (!task) {
-    //         throw new HttpException('task does not exist', 404);
-    //     }
-
-    //     return task;
-    // }
+        return task;
+    }
 }

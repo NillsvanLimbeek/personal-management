@@ -10,8 +10,9 @@ import {
 
 import { TasksService } from './tasks.service';
 
-import { Task } from '../entity/task.entity';
-import { CreateTaskDto, UpdateTaskDto } from '@/dtos';
+import { Task } from '@entity/index';
+import { CreateTaskDto, UpdateTaskDto } from '@dtos/index';
+import { DeleteResult } from 'typeorm';
 
 @Controller('tasks')
 export class TasksController {
@@ -22,10 +23,10 @@ export class TasksController {
         return this.tasksService.getTasks();
     }
 
-    // @Get(':id')
-    // getTask(@Param('id') id: string): Promise<ITask> {
-    //     return this.tasksService.getTask(id);
-    // }
+    @Get(':id')
+    getTask(@Param('id') id: string): Promise<Task> {
+        return this.tasksService.getTask(id);
+    }
 
     @Post()
     createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
@@ -40,8 +41,8 @@ export class TasksController {
     //     return this.tasksService.updateTask(id, updateTaskDto);
     // }
 
-    // @Delete(':id')
-    // deleteTask(@Param('id') id: string): Promise<ITask> {
-    //     return this.tasksService.deleteTask(id);
-    // }
+    @Delete(':id')
+    deleteTask(@Param('id') id: string): Promise<Task> {
+        return this.tasksService.deleteTask(id);
+    }
 }

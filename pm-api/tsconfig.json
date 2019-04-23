@@ -11,11 +11,9 @@
         "baseUrl": "./",
         "paths": {
             "@/*": ["src/*"],
-            "@mocks/*": ["src/mocks/*"],
-            "@interfaces/*": ["src/interfaces/*"],
-            "@dtos/*": ["src/dtos/*"],
-            "@schemas/*": ["src/schemas/*"],
-            "@entities/*": ["src/entities/*"]
+            "@interfaces/*": ["src/data/interfaces/*"],
+            "@dtos/*": ["src/data/dtos/*"],
+            "@entity/*": ["src/data/entity/*"]
         }
     },
     "exclude": ["node_modules"]
