@@ -3,7 +3,7 @@
     "database": "project-management.sqlite",
     "synchronize": true,
     "logging": false,
-    "entities": ["src/data/entity/**/*.entity{.ts,.js}"],
+    "entities": ["src/Models/**/*{.ts,.js}"],
     "migrations": ["src/migration/**/*.ts"],
     "subscribers": ["src/subscriber/**/*.ts"],
     "cli": {

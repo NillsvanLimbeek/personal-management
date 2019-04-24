@@ -6,11 +6,10 @@ import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { TasksModule } from './tasks/tasks.module';
-import { AuthModule } from './auth/auth.module';
+import { TasksModule } from '@/Modules/TasksModule';
 
 @Module({
-    imports: [TypeOrmModule.forRoot(), TasksModule, AuthModule],
+    imports: [TypeOrmModule.forRoot(), TasksModule],
     controllers: [AppController],
     providers: [AppService],
 })

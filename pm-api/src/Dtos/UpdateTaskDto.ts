@@ -1,4 +1,5 @@
-export class CreateTaskDto {
+export class UpdateTaskDto {
+    id: number;
     title: string;
     description: string;
     completed: boolean;

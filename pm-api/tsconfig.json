@@ -11,9 +11,9 @@
         "baseUrl": "./",
         "paths": {
             "@/*": ["src/*"],
-            "@interfaces/*": ["src/data/interfaces/*"],
-            "@dtos/*": ["src/data/dtos/*"],
-            "@entity/*": ["src/data/entity/*"]
+            "@interfaces/*": ["src/interfaces/*"],
+            "@dtos/*": ["src/Dtos/*"],
+            "@entity/*": ["src/entity/*"]
         }
     },
     "exclude": ["node_modules"]
