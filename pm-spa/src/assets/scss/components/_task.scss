@@ -1,0 +1,31 @@
+.task {
+    display: flex;
+
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    &__checkbox {
+        width: 2rem;
+        height: 2rem;
+
+        margin-right: 1.5rem;
+        border: 2px solid var(--color-grey);
+        border-radius: 5rem;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--checkbox-green-dark);
+            border: 2px solid var(--checkbox-green);
+        }
+
+        &--active {
+            background: var(--checkbox-green);
+            border: 2px solid var(--checkbox-green);
+
+            &:hover {
+                background: var(--checkbox-green-dark);
+            }
+        }
+    }
+}

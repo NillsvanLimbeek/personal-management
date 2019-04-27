@@ -5,7 +5,14 @@
             <button class="tasks__button button">Add Section</button>
         </div>
 
-        <TaskList :tasks="tasks"/>
+        <div class="tasks__section">
+            <TaskSection
+                :key="taskSections.id"
+                :task-section="taskSection"
+                :tasks="tasks"
+                v-for="taskSection in taskSections"
+            />
+        </div>
     </div>
 </template>
 
@@ -13,16 +20,17 @@
     import { Vue, Component, Getter } from '@/vue-script';
 
     import { ITaskState } from '@state/index';
-    import { ITask } from '@models/index';
+    import { ITask, ITaskSection } from '@models/index';
 
-    const TaskList = () => import('@components/tasks/TaskList.vue');
+    const TaskSection = () => import('@components/tasks/TaskSection.vue');
 
     @Component({
         components: {
-            TaskList,
+            TaskSection,
         },
     })
     export default class TaskListSection extends Vue {
+        @Getter('tasks/getTaskSections') private taskSections!: ITaskSection[];
         @Getter('tasks/getTasks') private tasks!: ITask[];
     }
 </script>

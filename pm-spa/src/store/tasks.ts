@@ -6,22 +6,37 @@ import { TaskTab } from '@data/type';
 const state: ITaskState = {
     tasks: [
         {
-            id: '1',
+            id: 1,
             title: 'Task #1',
             description: 'This is task one',
             completed: false,
+            sectionId: 1,
         },
         {
-            id: '2',
+            id: 2,
             title: 'Task #2',
             description: 'This is task two',
             completed: true,
+            sectionId: 1,
         },
         {
-            id: '3',
+            id: 3,
             title: 'Task #3',
             description: 'This is task three',
             completed: false,
+            sectionId: 2,
+        },
+    ],
+    taskSections: [
+        {
+            id: 1,
+            title: 'Section #1',
+            taskIds: [1, 2],
+        },
+        {
+            id: 2,
+            title: 'Section #2',
+            taskIds: [3],
         },
     ],
     currentTab: 'list',
@@ -35,6 +50,10 @@ const getters: GetterTree<ITaskState, any> = {
 
     getTasks: (state) => {
         return state.tasks;
+    },
+
+    getTaskSections: (state) => {
+        return state.taskSections;
     },
 };
 
