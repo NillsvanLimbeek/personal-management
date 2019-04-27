@@ -19,14 +19,21 @@ export class TasksService implements ITaskService {
     }
 
     async Find(id: number): Promise<Task> {
-        // TODO throw error if nothing found
-        return await this.taskRepository.findOne(id);
+        const task = await this.taskRepository.findOne(id);
+
+        if (!task) {
+            throw new HttpException('Task does not exist...', 404);
+        }
+
+        return task;
     }
 
     async Create(task: Task): Promise<Task> {
-        // throw error is something went wrong
-        await this.taskRepository.save(task);
-        return task;
+        try {
+            return await this.taskRepository.save(task);
+        } catch (e) {
+            throw new HttpException(e, 404);
+        }
     }
 
     async Update(id: number, task: Task): Promise<Task> {
@@ -35,7 +42,7 @@ export class TasksService implements ITaskService {
 
             return task;
         } catch (e) {
-            // throw error if something went wrong
+            throw new HttpException(e, 404);
         }
     }
 
@@ -46,7 +53,7 @@ export class TasksService implements ITaskService {
 
             return taskToDelete;
         } catch (e) {
-            // TODO throw error is seomthing went wrong
+            throw new HttpException(e, 404);
         }
     }
 }

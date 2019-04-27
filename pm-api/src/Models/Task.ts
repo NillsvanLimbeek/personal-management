@@ -6,20 +6,20 @@ export class Task {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 500 })
+    @Column()
     @IsDefined()
     title: string;
 
-    @Column('text')
+    @Column('text', { nullable: true })
     description: string;
 
     @Column({ default: false })
     completed: boolean;
 
-    @Column()
+    @Column({ nullable: true })
     assignedTo: string;
 
-    @Column()
+    @Column({ nullable: true })
     @IsDate()
     dueDate: Date;
 
@@ -34,4 +34,8 @@ export class Task {
     // TODO
     // @Column()
     // files: File[]
+
+    // TODO
+    // @Column()
+    // project: Project;
 }

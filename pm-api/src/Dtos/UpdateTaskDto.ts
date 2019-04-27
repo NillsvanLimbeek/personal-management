@@ -3,9 +3,12 @@ export class UpdateTaskDto {
     title: string;
     description: string;
     completed: boolean;
+    assignedTo: string;
+    dueDate: Date;
 
     // TODO
-    // assignedTo: string;
-    // dueDate: Date;
-    // project: string
+    // auditLog: auditLogId;
+    // comments: commentsIds;
+    // project: ProjectId;
+    // files: filesIds;
 }
