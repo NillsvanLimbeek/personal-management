@@ -1,13 +1,14 @@
 <template>
     <div class="main-header">
-        <HomeHeader v-if="$route.matched[0].path === '/home'" />
+        <HomeHeader v-if="$route.matched[0].path === '/home'"/>
 
         <TaskHeader
-            v-if="$route.matched[0].path === '/tasks'"
             :current-tab="$route.matched[1].path"
-            @list="$router.push({ path: '/tasks/list' })"
             @calendar="$router.push({ path: '/tasks/calendar' })"
-            @files="$router.push({ path: '/tasks/files' })" />
+            @files="$router.push({ path: '/tasks/files' })"
+            @list="$router.push({ path: '/tasks/list' })"
+            v-if="$route.matched[0].path === '/tasks'"
+        />
     </div>
 </template>
 

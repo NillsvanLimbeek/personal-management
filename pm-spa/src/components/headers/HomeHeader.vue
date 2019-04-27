@@ -1,6 +1,7 @@
 <template>
     <div class="task-header">
-        Your<span class="title-bold">Home</span>
+        Your
+        <span class="title-bold">Home</span>
     </div>
 </template>
 

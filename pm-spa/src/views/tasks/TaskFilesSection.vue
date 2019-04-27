@@ -1,7 +1,5 @@
 <template>
-    <div class="files">
-        Files
-    </div>
+    <div class="files">Files</div>
 </template>
 
 <script lang="ts">

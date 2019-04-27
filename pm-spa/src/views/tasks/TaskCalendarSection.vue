@@ -1,7 +1,5 @@
 <template>
-    <div class="calendar">
-        Calendar
-    </div>
+    <div class="calendar">Calendar</div>
 </template>
 
 <script lang="ts">

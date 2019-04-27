@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsDefined } from 'class-validator';
+import { IsDefined, IsDate } from 'class-validator';
 
 @Entity('tasks')
 export class Task {
@@ -15,4 +15,23 @@ export class Task {
 
     @Column({ default: false })
     completed: boolean;
+
+    @Column()
+    assignedTo: string;
+
+    @Column()
+    @IsDate()
+    dueDate: Date;
+
+    // TODO
+    // @Column()
+    // auditLog: AuditLog[]
+
+    // TODO
+    // @Column()
+    // comments: Comment[]
+
+    // TODO
+    // @Column()
+    // files: File[]
 }

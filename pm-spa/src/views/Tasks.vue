@@ -1,6 +1,6 @@
 <template>
     <div class="tasks">
-        <router-view />
+        <router-view/>
     </div>
 </template>
 
@@ -8,5 +8,5 @@
     import { Vue, Component } from '@/vue-script';
 
     @Component({})
-    export default class Tasks extends Vue { }
+    export default class Tasks extends Vue {}
 </script>

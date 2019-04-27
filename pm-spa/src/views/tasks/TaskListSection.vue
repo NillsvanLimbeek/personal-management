@@ -5,7 +5,7 @@
             <button class="tasks__button button">Add Section</button>
         </div>
 
-        <TaskList :tasks="tasks" />
+        <TaskList :tasks="tasks"/>
     </div>
 </template>
 

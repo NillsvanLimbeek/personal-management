@@ -1,12 +1,10 @@
 <template>
     <div class="task-list">
         <li
+            :key="index"
             class="task-list__item"
             v-for="(task, index) in tasks"
-            :key="index">
-
-            {{ task.title }}
-        </li>
+        >{{ task.title }}</li>
     </div>
 </template>
 
