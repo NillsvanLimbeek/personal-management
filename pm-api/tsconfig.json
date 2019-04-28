@@ -13,7 +13,7 @@
             "@/*": ["src/*"],
             "@interfaces/*": ["src/interfaces/*"],
             "@dtos/*": ["src/Dtos/*"],
-            "@entity/*": ["src/entity/*"]
+            "@models/*": ["src/Models/*"]
         }
     },
     "exclude": ["node_modules"]

@@ -1,4 +1,4 @@
-import { Task } from '@/Models/Task';
+import { Task } from '@models/Task';
 
 export interface ITaskService {
     FindAll(): Promise<Task[]>;

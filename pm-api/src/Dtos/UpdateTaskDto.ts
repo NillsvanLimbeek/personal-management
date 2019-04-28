@@ -1,3 +1,5 @@
+import { TaskSection } from '@models/TaskSection';
+
 export class UpdateTaskDto {
     id: number;
     title: string;
@@ -5,6 +7,7 @@ export class UpdateTaskDto {
     completed: boolean;
     assignedTo: string;
     dueDate: Date;
+    taskSection: TaskSection;
 
     // TODO
     // auditLog: auditLogId;

@@ -39,7 +39,7 @@
 
         private get getTasks() {
             return this.tasks.filter((task) => {
-                return task.sectionId === this.taskSection.id;
+                return task.taskSectionId === this.taskSection.id;
             });
         }
     }
