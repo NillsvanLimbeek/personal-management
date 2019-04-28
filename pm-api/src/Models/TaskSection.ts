@@ -1,7 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { IsDefined } from 'class-validator';
-
-import { Task } from '@models/Task';
 
 @Entity('taskSections')
 export class TaskSection {
@@ -12,6 +10,7 @@ export class TaskSection {
     @IsDefined()
     title: string;
 
-    @OneToMany(type => Task, task => task.id)
-    tasks: Task[];
+    // TODO
+    // @Column()
+    // taskIds: number[];
 }

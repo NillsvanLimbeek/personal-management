@@ -1,7 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { IsDefined, IsDate } from 'class-validator';
-
-import { TaskSection } from '@models/TaskSection';
 
 @Entity('tasks')
 export class Task {
@@ -25,8 +23,8 @@ export class Task {
     @IsDate()
     dueDate: Date;
 
-    @ManyToOne(type => TaskSection, taskSection => taskSection.taskIds)
-    taskSection: TaskSection;
+    @Column({ nullable: true })
+    taskSectionId: number;
 
     // TODO
     // @Column()

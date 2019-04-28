@@ -7,7 +7,7 @@ export class UpdateTaskDto {
     completed: boolean;
     assignedTo: string;
     dueDate: Date;
-    taskSection: TaskSection;
+    taskSectionId: number;
 
     // TODO
     // auditLog: auditLogId;
