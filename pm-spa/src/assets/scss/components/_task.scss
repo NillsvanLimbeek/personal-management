@@ -24,6 +24,7 @@
             border: 2px solid var(--checkbox-green);
 
             &:hover {
+                border: 2px solid var(--checkbox-green-dark);
                 background: var(--checkbox-green-dark);
             }
         }

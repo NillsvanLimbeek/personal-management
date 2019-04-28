@@ -10,6 +10,7 @@
                 :key="taskSections.id"
                 :task-section="taskSection"
                 :tasks="tasks"
+                @section-title="updateSection($event)"
                 v-for="taskSection in taskSections"
             />
         </div>
@@ -32,5 +33,9 @@
     export default class TaskListSection extends Vue {
         @Getter('tasks/getTaskSections') private taskSections!: ITaskSection[];
         @Getter('tasks/getTasks') private tasks!: ITask[];
+
+        private updateSection(payload: any) {
+            console.log(payload);
+        }
     }
 </script>

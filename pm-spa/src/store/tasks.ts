@@ -3,6 +3,8 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 import { ITaskState } from '@data/state';
 import { TaskTab } from '@data/type';
 
+import { ITaskSection } from '@models/taskSection';
+
 const state: ITaskState = {
     tasks: [
         {
@@ -62,12 +64,20 @@ const mutations: MutationTree<ITaskState> = {
     setCurrentTab: (state, tab: TaskTab) => {
         state.currentTab = tab;
     },
+
+    addSection: (state, section: ITaskSection) => {
+        state.taskSections.push(section);
+    },
 };
 
 // TODO TaskState, RootState
 const actions: ActionTree<ITaskState, any> = {
     setCurrentTab({ commit }, tab: TaskTab) {
         commit('setCurrentTab', tab);
+    },
+
+    addSection({ commit }, section: ITaskSection) {
+        commit('addSection', section);
     },
 };
 

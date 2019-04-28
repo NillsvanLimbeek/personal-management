@@ -7,7 +7,13 @@
                 class="task-section__arrow fas fa-chevron-right"
             />
 
-            <h3 class="task-section__title">{{ taskSection.title }}</h3>
+            <input
+                :placeholder="taskSection.title"
+                @blur="$emit('section-title', sectionTitle)"
+                class="task-section__title"
+                type="text"
+                v-model="sectionTitle"
+            >
         </div>
 
         <Task
@@ -36,6 +42,7 @@
         @Prop({ required: true }) private tasks!: ITask[];
 
         private showSection: boolean = true;
+        private sectionTitle: string = '';
 
         private get getTasks() {
             return this.tasks.filter((task) => {
