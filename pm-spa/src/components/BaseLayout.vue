@@ -9,7 +9,7 @@
                 class="base-layout__arrow base-layout__arrow--left fas fa-chevron-left"
             />
 
-            <MainNavigation/>
+            <MainNavigation />
         </div>
 
         <div class="base-layout__main">
@@ -21,10 +21,12 @@
                 />
 
                 <div
-                    :class="{ 'base-layout__header-container--transform': hideNav }"
+                    :class="{
+                        'base-layout__header-container--transform': hideNav,
+                    }"
                     class="base-layout__header-container"
                 >
-                    <MainHeader/>
+                    <MainHeader />
                 </div>
             </div>
 
@@ -33,7 +35,7 @@
                 class="base-layout__main-container"
             >
                 <div class="box">
-                    <router-view/>
+                    <router-view />
                 </div>
             </div>
         </div>
