@@ -2,7 +2,7 @@
     <div class="task-section">
         <div class="task-section__header">
             <i
-                :class="{'task-section__arrow--closed': showSection}"
+                :class="{ 'task-section__arrow--closed': showSection }"
                 @click="showSection = !showSection"
                 class="task-section__arrow fas fa-chevron-right"
             />
@@ -10,10 +10,10 @@
             <input
                 :placeholder="taskSection.title"
                 @blur="$emit('section-title', sectionTitle)"
-                class="task-section__title"
+                class="task-section__title input"
                 type="text"
                 v-model="sectionTitle"
-            >
+            />
         </div>
 
         <Task
@@ -22,6 +22,19 @@
             v-for="task in getTasks"
             v-if="showSection"
         />
+
+        <div class="task-section__add">
+            <i class="fas fa-plus" />
+
+            <input
+                placeholder="Add new task"
+                @blur="addTask"
+                @keyup.enter="addTask"
+                type="text"
+                class="input"
+                v-model="newTaskTitle"
+            />
+        </div>
     </div>
 </template>
 
@@ -29,6 +42,8 @@
     import { Vue, Component, Prop } from '@/vue-script';
 
     import { ITaskSection, ITask } from '@models/index';
+
+    import { generateGuid } from '@/utils';
 
     const Task = () => import('@components/tasks/Task.vue');
 
@@ -43,11 +58,25 @@
 
         private showSection: boolean = true;
         private sectionTitle: string = '';
+        private newTaskTitle: string = '';
 
-        private get getTasks() {
+        private get getTasks(): ITask[] {
             return this.tasks.filter((task) => {
                 return task.taskSectionId === this.taskSection.id;
             });
+        }
+
+        private addTask(): void {
+            const task: ITask = {
+                id: generateGuid(),
+                taskSectionId: this.taskSection.id,
+                title: this.newTaskTitle,
+                completed: false,
+            };
+
+            if (this.newTaskTitle) {
+                this.$emit('add-task', task);
+            }
         }
     }
 </script>

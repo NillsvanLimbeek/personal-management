@@ -3,42 +3,45 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 import { ITaskState } from '@data/state';
 import { TaskTab } from '@data/type';
 
-import { ITaskSection } from '@models/taskSection';
+import { ITaskSection, ITask } from '@/data/models';
 
 const state: ITaskState = {
     tasks: [
         {
-            id: 1,
+            id: '5346d3ca-169f-4584-8710-172d79224d4f',
             title: 'Task #1',
             description: 'This is task one',
             completed: false,
-            taskSectionId: 1,
+            taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
         },
         {
-            id: 2,
+            id: '6e5e1b1e-faf6-4120-bf4c-091ef2329315',
             title: 'Task #2',
             description: 'This is task two',
             completed: true,
-            taskSectionId: 1,
+            taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
         },
         {
-            id: 3,
+            id: '5aa9d99e-f0ca-4ca6-a8ff-eec0c2191efd',
             title: 'Task #3',
             description: 'This is task three',
             completed: false,
-            taskSectionId: 2,
+            taskSectionId: '537d15b0-bd23-46f3-bcc9-c6749c06aaf3',
         },
     ],
     taskSections: [
         {
-            id: 1,
+            id: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
             title: 'Section #1',
-            taskIds: [1, 2],
+            taskIds: [
+                '5346d3ca-169f-4584-8710-172d79224d4f',
+                '6e5e1b1e-faf6-4120-bf4c-091ef2329315',
+            ],
         },
         {
-            id: 2,
+            id: '537d15b0-bd23-46f3-bcc9-c6749c06aaf3',
             title: 'Section #2',
-            taskIds: [3],
+            taskIds: ['5aa9d99e-f0ca-4ca6-a8ff-eec0c2191efd'],
         },
     ],
     currentTab: 'list',
@@ -67,6 +70,14 @@ const mutations: MutationTree<ITaskState> = {
 
     addSection: (state, section: ITaskSection) => {
         state.taskSections.push(section);
+    },
+
+    addTask: (state, task: ITask) => {
+        const taskSection: ITaskSection | undefined = state.taskSections.find(
+            (x) => x.id === task.taskSectionId,
+        );
+
+        state.tasks.push(task);
     },
 };
 

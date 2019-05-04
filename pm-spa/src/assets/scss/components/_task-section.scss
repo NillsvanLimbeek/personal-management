@@ -6,7 +6,7 @@
     }
 
     &__arrow {
-        margin: 0 0 1rem 5px;
+        margin: 0 9px 1rem 5px;
         cursor: pointer;
 
         &--closed {
@@ -15,26 +15,16 @@
     }
 
     &__title {
-        width: 100%;
-
-        background: transparent;
-        border: none;
-
         margin-bottom: 1rem;
         padding: 5px 1rem;
         border-bottom: 1px solid var(--color-black);
+    }
 
-        font-family: 'Montserrat';
-        font-size: 1.5rem;
-        color: var(--color-grey);
+    &__add {
+        @include flex-align;
 
-        &::placeholder {
-            color: var(--color-grey);
-        }
-
-        &:focus {
-            outline: none;
-            // background: var(--color-blue-dark);
+        & > i {
+            margin: 0 1.9rem 0 3px;
         }
     }
 }

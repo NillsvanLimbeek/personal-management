@@ -1,5 +1,5 @@
 export interface ITaskSection {
-    id: number;
-    taskIds: number[];
+    id: string;
+    taskIds: string[];
     title: string;
 }

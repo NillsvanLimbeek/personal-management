@@ -1,9 +1,9 @@
 export interface ITask {
-    id: number;
+    id: string;
     title: string;
-    description: string;
+    description?: string;
     completed: boolean;
-    taskSectionId: number;
+    taskSectionId: string;
 
     // TODO
     // assignedTo: string;
