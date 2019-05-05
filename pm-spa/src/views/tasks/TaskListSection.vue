@@ -2,16 +2,20 @@
     <div class="tasks">
         <div class="tasks__header">
             <!-- <button class="tasks__button button">Add Task</button> -->
-            <button class="tasks__button button">Add Section</button>
+            <button class="tasks__button button" @click="addSection">
+                Add Section
+            </button>
         </div>
 
         <div class="tasks__section">
             <TaskSection
+                v-for="taskSection in taskSections"
                 :key="taskSections.id"
                 :task-section="taskSection"
                 :tasks="tasks"
-                v-for="taskSection in taskSections"
-                @add-task=""
+                @add-task="$store.dispatch('tasks/addTask', $event)"
+                @update-section="$store.dispatch('tasks/updateSection', $event)"
+                @update-task="$store.dispatch('tasks/updateTask', $event)"
             />
         </div>
     </div>
@@ -35,5 +39,16 @@
     export default class TaskListSection extends Vue {
         @Getter('tasks/getTaskSections') private taskSections!: ITaskSection[];
         @Getter('tasks/getTasks') private tasks!: ITask[];
+
+        private addSection(): void {
+            const taskSection: ITaskSection = {
+                id: generateGuid(),
+                title: 'New group',
+                taskIds: [],
+                isOpen: true,
+            };
+
+            this.$store.dispatch('tasks/addSection', taskSection);
+        }
     }
 </script>

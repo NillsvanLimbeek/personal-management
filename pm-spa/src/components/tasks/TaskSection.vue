@@ -2,38 +2,41 @@
     <div class="task-section">
         <div class="task-section__header">
             <i
-                :class="{ 'task-section__arrow--closed': showSection }"
-                @click="showSection = !showSection"
+                :class="{ 'task-section__arrow--closed': taskSection.isOpen }"
+                @click="collapseSection"
                 class="task-section__arrow fas fa-chevron-right"
             />
 
             <input
-                :placeholder="taskSection.title"
-                @blur="$emit('section-title', sectionTitle)"
+                ref="sectionTitle"
+                @blur="updateSection"
+                @keyup.enter="updateSection"
                 class="task-section__title input"
                 type="text"
-                v-model="sectionTitle"
+                v-model="taskSection.title"
             />
         </div>
 
-        <Task
-            :key="task.id"
-            :task="task"
-            v-for="task in getTasks"
-            v-if="showSection"
-        />
-
-        <div class="task-section__add">
-            <i class="fas fa-plus" />
-
-            <input
-                placeholder="Add new task"
-                @blur="addTask"
-                @keyup.enter="addTask"
-                type="text"
-                class="input"
-                v-model="newTaskTitle"
+        <div class="task-section_list" v-if="taskSection.isOpen">
+            <Task
+                :key="task.id"
+                :task="task"
+                v-for="task in getTasks"
+                @update-task="$emit('update-task', $event)"
             />
+
+            <div class="task-section__add">
+                <i class="fas fa-plus" />
+
+                <input
+                    placeholder="Add new task"
+                    @blur="addTask"
+                    @keyup.enter="addTask"
+                    type="text"
+                    class="input"
+                    v-model="newTaskTitle"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -56,7 +59,6 @@
         @Prop({ required: true }) private taskSection!: ITaskSection;
         @Prop({ required: true }) private tasks!: ITask[];
 
-        private showSection: boolean = true;
         private sectionTitle: string = '';
         private newTaskTitle: string = '';
 
@@ -64,6 +66,27 @@
             return this.tasks.filter((task) => {
                 return task.taskSectionId === this.taskSection.id;
             });
+        }
+
+        private collapseSection(): void {
+            this.taskSection.isOpen = !this.taskSection.isOpen;
+            this.$emit('update-section', {
+                id: this.taskSection.id,
+                isOpen: this.taskSection.isOpen,
+            });
+        }
+
+        private updateSection(): void {
+            const input = this.$refs.sectionTitle as HTMLInputElement;
+
+            const taskSection: ITaskSection = {
+                id: this.taskSection.id,
+                title: this.sectionTitle,
+            };
+
+            this.$emit('update-section', taskSection);
+            this.sectionTitle = '';
+            input.blur();
         }
 
         private addTask(): void {
@@ -77,6 +100,8 @@
             if (this.newTaskTitle) {
                 this.$emit('add-task', task);
             }
+
+            this.newTaskTitle = '';
         }
     }
 </script>

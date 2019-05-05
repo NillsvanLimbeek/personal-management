@@ -37,11 +37,13 @@ const state: ITaskState = {
                 '5346d3ca-169f-4584-8710-172d79224d4f',
                 '6e5e1b1e-faf6-4120-bf4c-091ef2329315',
             ],
+            isOpen: true,
         },
         {
             id: '537d15b0-bd23-46f3-bcc9-c6749c06aaf3',
             title: 'Section #2',
             taskIds: ['5aa9d99e-f0ca-4ca6-a8ff-eec0c2191efd'],
+            isOpen: true,
         },
     ],
     currentTab: 'list',
@@ -60,6 +62,10 @@ const getters: GetterTree<ITaskState, any> = {
     getTaskSections: (state) => {
         return state.taskSections;
     },
+
+    getTaskSection: (state, id: string) => {
+        return state.taskSections.find((x) => x.id === id);
+    },
 };
 
 // TODO TaskState
@@ -69,26 +75,60 @@ const mutations: MutationTree<ITaskState> = {
     },
 
     addSection: (state, section: ITaskSection) => {
-        state.taskSections.push(section);
+        state.taskSections.unshift(section);
     },
 
     addTask: (state, task: ITask) => {
-        const taskSection: ITaskSection | undefined = state.taskSections.find(
-            (x) => x.id === task.taskSectionId,
+        state.tasks.push(task);
+    },
+
+    updateSection: (state, taskSection: ITaskSection) => {
+        let sectionToUpdate = state.taskSections.find(
+            (x) => x.id === taskSection.id,
         );
 
-        state.tasks.push(task);
+        if (sectionToUpdate) {
+            sectionToUpdate = { ...taskSection };
+        }
+    },
+
+    updateTask: (state, task: ITask) => {
+        let taskToUpdate = state.tasks.find((x) => x.id === task.id);
+
+        if (taskToUpdate) {
+            taskToUpdate = { ...task };
+        }
     },
 };
 
 // TODO TaskState, RootState
 const actions: ActionTree<ITaskState, any> = {
-    setCurrentTab({ commit }, tab: TaskTab) {
-        commit('setCurrentTab', tab);
+    async setCurrentTab({ commit }, tab: TaskTab) {
+        await commit('setCurrentTab', tab);
     },
 
-    addSection({ commit }, section: ITaskSection) {
-        commit('addSection', section);
+    async addSection({ commit }, section: ITaskSection) {
+        await commit('addSection', section);
+    },
+
+    async addTask({ state, commit }, task: ITask) {
+        const taskSection = await state.taskSections.find(
+            (x) => x.id === task.taskSectionId,
+        );
+
+        if (taskSection && taskSection.taskIds) {
+            taskSection.taskIds.push(task.taskSectionId);
+        }
+
+        await commit('addTask', task);
+    },
+
+    async updateSection({ commit }, taskSection: ITaskSection) {
+        await commit('updateSection', taskSection);
+    },
+
+    async updateTask({ commit }, task: ITask) {
+        await commit('updateTask', task);
     },
 };
 

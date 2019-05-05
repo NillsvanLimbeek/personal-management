@@ -1,9 +1,9 @@
 <template>
     <div class="task">
         <div
-            :class="{'task__checkbox--active': checkbox}"
-            @click="checkbox = !checkbox"
+            :class="{ 'task__checkbox--active': task.completed }"
             class="task__checkbox"
+            @click="updateTask(task.completed)"
         />
         {{ task.title }}
     </div>
@@ -19,5 +19,14 @@
         @Prop({ required: true }) private task!: ITask;
 
         private checkbox: boolean = false;
+
+        private updateTask(msg: boolean): void {
+            this.task.completed = msg === true ? false : true;
+
+            this.$emit('update-task', {
+                id: this.task.id,
+                completed: this.task.completed,
+            });
+        }
     }
 </script>
