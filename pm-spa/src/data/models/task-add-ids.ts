@@ -1,4 +1,4 @@
 export interface ITaskSectionAddIds {
-    taskId: string;
+    taskId: string[];
     taskSectionId: string;
 }

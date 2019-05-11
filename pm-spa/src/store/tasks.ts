@@ -1,8 +1,10 @@
+import { taskSections } from './task-sections';
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 
-import { ITaskState } from '@data/state';
+import { IRootState, ITaskState } from '@data/state';
+import { ITask, ITaskSectionAddIds } from '@data/models';
 
-import { ITask } from '@data/models';
+import { generateGuid } from '@/utils';
 
 const state: ITaskState = {
     tasks: [
@@ -30,10 +32,15 @@ const state: ITaskState = {
     ],
 };
 
-// TODO RootState
-const getters: GetterTree<ITaskState, any> = {
+const getters: GetterTree<ITaskState, IRootState> = {
     getTasks: (state) => {
         return state.tasks;
+    },
+
+    getDuplicateSection: (state, getter, rootState) => {
+        const { taskSections, duplicateId } = rootState.taskSections;
+
+        return taskSections.find((x) => x.id === duplicateId);
     },
 };
 
@@ -50,13 +57,26 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
+    duplicateTask: (state, ids: ITaskSectionAddIds) => {
+        const taskToDuplicate = state.tasks.find((x) => x.id === ids.taskId);
+
+        if (taskToDuplicate) {
+            const newTask = {
+                ...taskToDuplicate,
+                id: generateGuid(),
+                taskSectionId: ids.taskSectionId,
+            };
+
+            state.tasks.push(newTask);
+        }
+    },
+
     deleteTask: (state, id: string) => {
         state.tasks = state.tasks.filter((x) => x.id !== id);
     },
 };
 
-// TODO RootState
-const actions: ActionTree<ITaskState, any> = {
+const actions: ActionTree<ITaskState, IRootState> = {
     async addTask({ commit }, task: ITask) {
         await commit('addTask', task);
     },
@@ -68,10 +88,24 @@ const actions: ActionTree<ITaskState, any> = {
     async deleteTask({ commit }, id: string) {
         await commit('deleteTask', id);
     },
+
+    async deleteTasks({ commit }, ids: string[]) {
+        await ids.forEach((id) => {
+            commit('deleteTask', id);
+        });
+    },
+
+    async duplicateTask({ commit, rootState }, ids: ITaskSectionAddIds) {
+
+
+        ids.taskId.forEach((id) => {
+            commit('duplicateTask', id);
+            rootState.taskSections.
+        })
+    },
 };
 
-// TODO RootState
-export const tasks: Module<ITaskState, any> = {
+export const tasks: Module<ITaskState, IRootState> = {
     namespaced: true,
     state,
     getters,

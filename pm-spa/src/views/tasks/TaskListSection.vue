@@ -18,9 +18,7 @@
                     $store.dispatch('taskSections/updateSection', $event)
                 "
                 @delete-section="deleteSection($event)"
-                @duplicate-section="
-                    $store.dispatch('taskSections/duplicateSection', $event)
-                "
+                @duplicate-section="duplicateSection($event)"
             />
         </div>
     </div>
@@ -30,7 +28,12 @@
     import { Vue, Component, Getter } from '@/vue-script';
 
     import { ITaskState } from '@state/index';
-    import { ITask, ITaskSection, ITaskSectionDeleteIds } from '@models/index';
+    import {
+        ITask,
+        ITaskSection,
+        ITaskSectionDeleteIds,
+        ITaskSectionAddIds,
+    } from '@models/index';
 
     import { generateGuid } from '@/utils';
 
@@ -58,11 +61,31 @@
         }
 
         private deleteSection(ids: ITaskSectionDeleteIds) {
-            this.$store.dispatch('taskSections/deleteSection', ids.taskSectionId);
+            const deleteSection = this.$store.dispatch(
+                'taskSections/deleteSection',
+                ids.taskSectionId,
+            );
+            const deleteTasks = this.$store.dispatch(
+                'tasks/deleteTasks',
+                ids.taskIds,
+            );
 
-            ids.taskIds.forEach((id) => {
-                this.$store.dispatch('tasks/deleteTask', id);
-            });
+            Promise.all([deleteSection, deleteTasks]);
+        }
+
+        private duplicateSection(ids: ITaskSectionAddIds) {
+            this.$store
+                .dispatch('taskSections/duplicateSection', ids.taskSectionId)
+                .then((section: ITaskSection) => {
+                    if (section.taskIds) {
+                        section.taskIds.forEach((id) => {
+                            this.$store.dispatch('tasks/duplicateTask', {
+                                taskId: id,
+                                taskSectionId: section.id,
+                            });
+                        });
+                    }
+                });
         }
     }
 </script>

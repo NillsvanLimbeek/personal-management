@@ -1,6 +1,6 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 
-import { ITaskSectionState } from '@data/state';
+import { IRootState, ITaskSectionState } from '@data/state';
 
 import { ITaskSection, ITaskSectionAddIds } from '@data/models';
 import { generateGuid } from '@/utils';
@@ -23,10 +23,11 @@ const state: ITaskSectionState = {
             isOpen: true,
         },
     ],
+
+    duplicateId: '',
 };
 
-// TODO TaskState, RootState
-const getters: GetterTree<ITaskSectionState, any> = {
+const getters: GetterTree<ITaskSectionState, IRootState> = {
     getTaskSections: (state) => {
         return state.taskSections;
     },
@@ -34,23 +35,26 @@ const getters: GetterTree<ITaskSectionState, any> = {
     getTaskSection: (state, id: string) => {
         return state.taskSections.find((x) => x.id === id);
     },
+
+    getDuplicateSection: (state) => {
+        return state.taskSections.find((x) => x.id === state.duplicateId);
+    },
 };
 
-// TODO TaskState
 const mutations: MutationTree<ITaskSectionState> = {
     addSection: (state, section: ITaskSection) => {
         state.taskSections.unshift(section);
     },
 
-    addTaskToSection: (state, ids: ITaskSectionAddIds) => {
-        const taskSection = state.taskSections.find(
-            (x) => x.id === ids.taskSectionId,
-        );
+    // addTaskToSection: (state, ids: ITaskSectionAddIds) => {
+    //     const taskSection = state.taskSections.find(
+    //         (x) => x.id === ids.taskSectionId,
+    //     );
 
-        if (taskSection && taskSection.taskIds) {
-            taskSection.taskIds.push(ids.taskId);
-        }
-    },
+    //     if (taskSection && taskSection.taskIds) {
+    //         taskSection.taskIds.push(ids.taskId);
+    //     }
+    // },
 
     updateSection: (state, taskSection: ITaskSection) => {
         let sectionToUpdate = state.taskSections.find(
@@ -83,12 +87,14 @@ const mutations: MutationTree<ITaskSectionState> = {
             };
 
             state.taskSections.splice(index + 1, 0, newSection);
+
+            // set duplicate id
+            state.duplicateId = newSection.id;
         }
     },
 };
 
-// TODO TaskState, RootState
-const actions: ActionTree<ITaskSectionState, any> = {
+const actions: ActionTree<ITaskSectionState, IRootState> = {
     async addSection({ commit }, section: ITaskSection) {
         await commit('addSection', section);
     },
@@ -105,13 +111,13 @@ const actions: ActionTree<ITaskSectionState, any> = {
         await commit('deleteSection', id);
     },
 
-    async duplicateSection({ commit }, id: string) {
+    async duplicateSection({ commit, getters, state }, id: string) {
         await commit('duplicateSection', id);
+        return getters.getDuplicateSection;
     },
 };
 
-// TODO TaskState, RootState
-export const taskSections: Module<ITaskSectionState, any> = {
+export const taskSections: Module<ITaskSectionState, IRootState> = {
     namespaced: true,
     state,
     getters,

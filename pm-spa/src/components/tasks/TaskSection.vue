@@ -19,7 +19,7 @@
                     />
                     <DropdownItem
                         title="Duplicate section"
-                        @click="$emit('duplicate-section', taskSection.id)"
+                        @click="duplicateSection"
                     />
                 </Dropdown>
 
@@ -137,6 +137,13 @@
 
         private deleteSection(): void {
             this.$emit('delete-section', {
+                taskSectionId: this.taskSection.id,
+                taskIds: this.taskSection.taskIds,
+            });
+        }
+
+        private duplicateSection(): void {
+            this.$emit('duplicate-section', {
                 taskSectionId: this.taskSection.id,
                 taskIds: this.taskSection.taskIds,
             });
