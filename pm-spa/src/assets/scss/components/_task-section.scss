@@ -5,8 +5,25 @@
         @include flex-center-align;
     }
 
+    &__menu {
+        display: flex;
+        align-items: center;
+
+        margin-bottom: 1rem;
+        margin-left: 6px;
+    }
+
+    &__menu-button {
+        cursor: pointer;
+    }
+
+    &__dropdown {
+        &--hide {
+            opacity: 0;
+        }
+    }
+
     &__arrow {
-        margin: 0 9px 1rem 5px;
         cursor: pointer;
 
         &--closed {

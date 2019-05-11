@@ -1,0 +1,11 @@
+.dropdown-item {
+    font-size: 1.4rem;
+
+    padding: 7.5px 1rem;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-grey-light);
+        color: var(--color-black);
+    }
+}

@@ -1,11 +1,36 @@
 <template>
     <div class="task-section">
         <div class="task-section__header">
-            <i
-                :class="{ 'task-section__arrow--closed': taskSection.isOpen }"
-                @click="collapseSection"
-                class="task-section__arrow fas fa-chevron-right"
-            />
+            <div class="task-section__menu">
+                <Dropdown
+                    class="task-section__dropdown"
+                    :class="{
+                        'task-section__dropdown--hide': !taskSection.isOpen,
+                    }"
+                >
+                    <DropdownItem
+                        title="Collapse section"
+                        @click="collapseSection"
+                    />
+                    <hr />
+                    <DropdownItem
+                        title="Delete section"
+                        @click="$emit('delete-section', taskSection.id)"
+                    />
+                    <DropdownItem
+                        title="Duplicate section"
+                        @click="$emit('duplicate-section', taskSection.id)"
+                    />
+                </Dropdown>
+
+                <i
+                    :class="{
+                        'task-section__arrow--closed': taskSection.isOpen,
+                    }"
+                    @click="collapseSection"
+                    class="task-section__arrow fas fa-chevron-right"
+                />
+            </div>
 
             <input
                 ref="sectionTitle"
@@ -49,16 +74,21 @@
     import { generateGuid } from '@/utils';
 
     const Task = () => import('@components/tasks/Task.vue');
+    const Dropdown = () => import('@components/dropdown/Dropdown.vue');
+    const DropdownItem = () => import('@components/dropdown/DropdownItem.vue');
 
     @Component({
         components: {
             Task,
+            Dropdown,
+            DropdownItem,
         },
     })
     export default class TaskSection extends Vue {
         @Prop({ required: true }) private taskSection!: ITaskSection;
         @Prop({ required: true }) private tasks!: ITask[];
 
+        private showDropdown: boolean = false;
         private sectionTitle: string = '';
         private newTaskTitle: string = '';
 
@@ -70,6 +100,7 @@
 
         private collapseSection(): void {
             this.taskSection.isOpen = !this.taskSection.isOpen;
+
             this.$emit('update-section', {
                 id: this.taskSection.id,
                 isOpen: this.taskSection.isOpen,

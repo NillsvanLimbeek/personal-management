@@ -4,6 +4,7 @@ import { ITaskState } from '@data/state';
 import { TaskTab } from '@data/type';
 
 import { ITaskSection, ITask } from '@/data/models';
+import { generateGuid } from '@/utils';
 
 const state: ITaskState = {
     tasks: [
@@ -99,6 +100,36 @@ const mutations: MutationTree<ITaskState> = {
             taskToUpdate = { ...task };
         }
     },
+
+    deleteSection: (state, id: string) => {
+        // delete tasks
+        state.tasks = state.tasks.filter((x) => x.taskSectionId !== id);
+
+        // delete section
+        state.taskSections = state.taskSections.filter((x) => x.id !== id);
+    },
+
+    duplicateSection: (state, id: string) => {
+        // section to duplicate
+        const sectionToDuplicate = state.taskSections.find((x) => x.id === id);
+
+        // find index of section
+        const index: number = state.taskSections.map((x) => x.id).indexOf(id);
+
+        // make copy and put in array after the original
+        if (sectionToDuplicate) {
+            const newSection: ITaskSection = {
+                id: generateGuid(),
+                title: `Duplicate of ${sectionToDuplicate.title}`,
+                taskIds: [],
+                isOpen: true,
+            };
+
+            state.taskSections.splice(index + 1, 0, newSection);
+
+            // add tasks to new section
+        }
+    },
 };
 
 // TODO TaskState, RootState
@@ -129,6 +160,14 @@ const actions: ActionTree<ITaskState, any> = {
 
     async updateTask({ commit }, task: ITask) {
         await commit('updateTask', task);
+    },
+
+    async deleteSection({ commit }, id: string) {
+        await commit('deleteSection', id);
+    },
+
+    async duplicateSection({ commit }, id: string) {
+        await commit('duplicateSection', id);
     },
 };
 
