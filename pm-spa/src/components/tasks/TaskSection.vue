@@ -15,7 +15,7 @@
                     <hr />
                     <DropdownItem
                         title="Delete section"
-                        @click="$emit('delete-section', taskSection.id)"
+                        @click="deleteSection"
                     />
                     <DropdownItem
                         title="Duplicate section"
@@ -133,6 +133,13 @@
             }
 
             this.newTaskTitle = '';
+        }
+
+        private deleteSection(): void {
+            this.$emit('delete-section', {
+                taskSectionId: this.taskSection.id,
+                taskIds: this.taskSection.taskIds,
+            });
         }
     }
 </script>

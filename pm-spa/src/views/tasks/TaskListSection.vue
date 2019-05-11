@@ -13,12 +13,14 @@
                 :task-section="taskSection"
                 :tasks="tasks"
                 @add-task="$store.dispatch('tasks/addTask', $event)"
-                @update-section="$store.dispatch('tasks/updateSection', $event)"
-                @delete-section="$store.dispatch('tasks/deleteSection', $event)"
-                @duplicate-section="
-                    $store.dispatch('tasks/duplicateSection', $event)
-                "
                 @update-task="$store.dispatch('tasks/updateTask', $event)"
+                @update-section="
+                    $store.dispatch('taskSections/updateSection', $event)
+                "
+                @delete-section="deleteSection($event)"
+                @duplicate-section="
+                    $store.dispatch('taskSections/duplicateSection', $event)
+                "
             />
         </div>
     </div>
@@ -28,7 +30,7 @@
     import { Vue, Component, Getter } from '@/vue-script';
 
     import { ITaskState } from '@state/index';
-    import { ITask, ITaskSection } from '@models/index';
+    import { ITask, ITaskSection, ITaskSectionDeleteIds } from '@models/index';
 
     import { generateGuid } from '@/utils';
 
@@ -40,7 +42,8 @@
         },
     })
     export default class TaskListSection extends Vue {
-        @Getter('tasks/getTaskSections') private taskSections!: ITaskSection[];
+        @Getter('taskSections/getTaskSections')
+        private taskSections!: ITaskSection[];
         @Getter('tasks/getTasks') private tasks!: ITask[];
 
         private addSection(): void {
@@ -51,7 +54,15 @@
                 isOpen: true,
             };
 
-            this.$store.dispatch('tasks/addSection', taskSection);
+            this.$store.dispatch('taskSections/addSection', taskSection);
+        }
+
+        private deleteSection(ids: ITaskSectionDeleteIds) {
+            this.$store.dispatch('taskSections/deleteSection', ids.taskSectionId);
+
+            ids.taskIds.forEach((id) => {
+                this.$store.dispatch('tasks/deleteTask', id);
+            });
         }
     }
 </script>
