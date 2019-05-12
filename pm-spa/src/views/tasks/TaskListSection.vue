@@ -74,22 +74,36 @@
         }
 
         private duplicateSection(ids: ITaskSectionAddIds) {
+            // duplicate section
             this.$store
                 .dispatch('taskSections/duplicateSection', ids.taskSectionId)
                 .then((section: ITaskSection) => {
                     if (section.taskIds) {
-                        section.taskIds.forEach((id) => {
-                            this.$store.dispatch('tasks/duplicateTask', {
-                                taskId: id,
-                                taskSectionId: section.id,
-                            }).then((taskId: string) => {
-                                // bug happens here
-                                this.$store.dispatch('taskSections/addTaskToSection', {
-                                    taskId,
-                                    taskSectionId: section.id,
-                                });
+                        // find orinal section
+                        const originalTaskSection = this.taskSections.find(
+                            (x) => x.id === ids.taskSectionId,
+                        );
+
+                        if (originalTaskSection && originalTaskSection.taskIds) {
+                            // duplicate original tasks
+                            originalTaskSection.taskIds.forEach((id) => {
+                                this.$store
+                                    .dispatch('tasks/duplicateTask', {
+                                        taskId: id,
+                                        taskSectionId: section.id,
+                                    })
+                                    // push taskIds to duplicated section
+                                    .then((taskId: string) => {
+                                        this.$store.dispatch(
+                                            'taskSections/addTaskToSection',
+                                            {
+                                                taskId,
+                                                taskSectionId: section.id,
+                                            },
+                                        );
+                                    });
                             });
-                        });
+                        }
                     }
                 });
         }

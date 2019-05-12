@@ -49,12 +49,12 @@ const mutations: MutationTree<ITaskSectionState> = {
     },
 
     addTaskToSection: (state, ids: ITaskSectionAddIds) => {
-        const taskSection = state.taskSections.find(
+        const section = state.taskSections.find(
             (x) => x.id === ids.taskSectionId,
         );
 
-        if (taskSection && taskSection.taskIds) {
-            taskSection.taskIds.push(ids.taskId);
+        if (section && section.taskIds) {
+            section.taskIds.push(ids.taskId);
         }
     },
 
@@ -85,6 +85,7 @@ const mutations: MutationTree<ITaskSectionState> = {
                 ...sectionToDuplicate,
                 id: generateGuid(),
                 title: `Duplicate of ${sectionToDuplicate.title}`,
+                taskIds: [],
             };
 
             state.taskSections.splice(index + 1, 0, newSection);
