@@ -30,6 +30,7 @@ const state: ITaskState = {
             taskSectionId: '537d15b0-bd23-46f3-bcc9-c6749c06aaf3',
         },
     ],
+    duplicateTaskId: '',
 };
 
 const getters: GetterTree<ITaskState, IRootState> = {
@@ -37,10 +38,8 @@ const getters: GetterTree<ITaskState, IRootState> = {
         return state.tasks;
     },
 
-    getDuplicateSection: (state, getter, rootState) => {
-        const { taskSections, duplicateId } = rootState.taskSections;
-
-        return taskSections.find((x) => x.id === duplicateId);
+    getDuplicateTaskId: (state) => {
+        return state.duplicateTaskId;
     },
 };
 
@@ -58,8 +57,10 @@ const mutations: MutationTree<ITaskState> = {
     },
 
     duplicateTask: (state, ids: ITaskSectionAddIds) => {
+        // find task
         const taskToDuplicate = state.tasks.find((x) => x.id === ids.taskId);
 
+        // push task to task array
         if (taskToDuplicate) {
             const newTask = {
                 ...taskToDuplicate,
@@ -68,6 +69,9 @@ const mutations: MutationTree<ITaskState> = {
             };
 
             state.tasks.push(newTask);
+
+            // set duplicate id in state
+            state.duplicateTaskId = newTask.id;
         }
     },
 
@@ -95,13 +99,9 @@ const actions: ActionTree<ITaskState, IRootState> = {
         });
     },
 
-    async duplicateTask({ commit, rootState }, ids: ITaskSectionAddIds) {
-
-
-        ids.taskId.forEach((id) => {
-            commit('duplicateTask', id);
-            rootState.taskSections.
-        })
+    async duplicateTask({ commit, getters }, ids: ITaskSectionAddIds) {
+        commit('duplicateTask', ids);
+        return getters.getDuplicateTaskId;
     },
 };
 

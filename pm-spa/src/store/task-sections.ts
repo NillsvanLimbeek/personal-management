@@ -24,7 +24,7 @@ const state: ITaskSectionState = {
         },
     ],
 
-    duplicateId: '',
+    duplicateSectionId: '',
 };
 
 const getters: GetterTree<ITaskSectionState, IRootState> = {
@@ -37,7 +37,9 @@ const getters: GetterTree<ITaskSectionState, IRootState> = {
     },
 
     getDuplicateSection: (state) => {
-        return state.taskSections.find((x) => x.id === state.duplicateId);
+        return state.taskSections.find(
+            (x) => x.id === state.duplicateSectionId,
+        );
     },
 };
 
@@ -46,15 +48,15 @@ const mutations: MutationTree<ITaskSectionState> = {
         state.taskSections.unshift(section);
     },
 
-    // addTaskToSection: (state, ids: ITaskSectionAddIds) => {
-    //     const taskSection = state.taskSections.find(
-    //         (x) => x.id === ids.taskSectionId,
-    //     );
+    addTaskToSection: (state, ids: ITaskSectionAddIds) => {
+        const taskSection = state.taskSections.find(
+            (x) => x.id === ids.taskSectionId,
+        );
 
-    //     if (taskSection && taskSection.taskIds) {
-    //         taskSection.taskIds.push(ids.taskId);
-    //     }
-    // },
+        if (taskSection && taskSection.taskIds) {
+            taskSection.taskIds.push(ids.taskId);
+        }
+    },
 
     updateSection: (state, taskSection: ITaskSection) => {
         let sectionToUpdate = state.taskSections.find(
@@ -80,16 +82,15 @@ const mutations: MutationTree<ITaskSectionState> = {
         // make copy and put in array after the original
         if (sectionToDuplicate) {
             const newSection: ITaskSection = {
+                ...sectionToDuplicate,
                 id: generateGuid(),
                 title: `Duplicate of ${sectionToDuplicate.title}`,
-                taskIds: [],
-                isOpen: true,
             };
 
             state.taskSections.splice(index + 1, 0, newSection);
 
             // set duplicate id
-            state.duplicateId = newSection.id;
+            state.duplicateSectionId = newSection.id;
         }
     },
 };

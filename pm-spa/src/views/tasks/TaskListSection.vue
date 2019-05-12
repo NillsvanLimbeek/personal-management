@@ -82,6 +82,12 @@
                             this.$store.dispatch('tasks/duplicateTask', {
                                 taskId: id,
                                 taskSectionId: section.id,
+                            }).then((taskId: string) => {
+                                // bug happens here
+                                this.$store.dispatch('taskSections/addTaskToSection', {
+                                    taskId,
+                                    taskSectionId: section.id,
+                                });
                             });
                         });
                     }

@@ -3,5 +3,5 @@ import { ITask } from '@models/index';
 
 export interface ITaskState {
     tasks: ITask[];
-    // currentTab: TaskTab;
+    duplicateTaskId: string;
 }
