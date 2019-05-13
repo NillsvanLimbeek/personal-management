@@ -48,6 +48,7 @@
         @Getter('taskSections/getTaskSections')
         private taskSections!: ITaskSection[];
         @Getter('tasks/getTasks') private tasks!: ITask[];
+        @Getter('tasks/getDuplicateTaskIds') private duplicateTaskIds!: string[];
 
         private addSection(): void {
             const taskSection: ITaskSection = {
@@ -73,39 +74,31 @@
             Promise.all([deleteSection, deleteTasks]);
         }
 
-        private duplicateSection(ids: ITaskSectionAddIds) {
-            // duplicate section
-            this.$store
-                .dispatch('taskSections/duplicateSection', ids.taskSectionId)
-                .then((section: ITaskSection) => {
-                    if (section.taskIds) {
-                        // find orinal section
-                        const originalTaskSection = this.taskSections.find(
-                            (x) => x.id === ids.taskSectionId,
-                        );
+        private async duplicateSection(ids: ITaskSectionAddIds) {
+            const section: ITaskSection = await this.$store.dispatch(
+                'taskSections/duplicateSection',
+                ids.taskSectionId,
+            );
 
-                        if (originalTaskSection && originalTaskSection.taskIds) {
-                            // duplicate original tasks
-                            originalTaskSection.taskIds.forEach((id) => {
-                                this.$store
-                                    .dispatch('tasks/duplicateTask', {
-                                        taskId: id,
-                                        taskSectionId: section.id,
-                                    })
-                                    // push taskIds to duplicated section
-                                    .then((taskId: string) => {
-                                        this.$store.dispatch(
-                                            'taskSections/addTaskToSection',
-                                            {
-                                                taskId,
-                                                taskSectionId: section.id,
-                                            },
-                                        );
-                                    });
+            const originalTaskSection = this.taskSections.find(
+                (x) => x.id === ids.taskSectionId,
+            );
+
+            if (originalTaskSection && originalTaskSection.taskIds) {
+                await originalTaskSection.taskIds.forEach((id) => {
+                    this.$store
+                        .dispatch('tasks/duplicateTask', {
+                            taskId: id,
+                            taskSectionId: section.id,
+                        })
+                        .then((taskId) => {
+                            this.$store.dispatch('taskSections/addTaskToSection', {
+                                taskId,
+                                taskSectionId: section.id,
                             });
-                        }
-                    }
+                        });
                 });
+            }
         }
     }
 </script>
