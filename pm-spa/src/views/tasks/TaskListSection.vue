@@ -48,7 +48,6 @@
         @Getter('taskSections/getTaskSections')
         private taskSections!: ITaskSection[];
         @Getter('tasks/getTasks') private tasks!: ITask[];
-        @Getter('tasks/getDuplicateTaskIds') private duplicateTaskIds!: string[];
 
         private addSection(): void {
             const taskSection: ITaskSection = {
