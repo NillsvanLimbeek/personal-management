@@ -9,18 +9,34 @@
                     title="Collapse section"
                     @click="$emit('collapse-section')"
                 />
+                <DropdownItem
+                    title="Mark all as complete"
+                    :disabled="true"
+                />
             </DropdownSection>
-
-            <hr />
 
             <DropdownSection>
                 <DropdownItem
-                    title="Delete section"
-                    @click="$emit('delete-section')"
-                />
-                <DropdownItem
                     title="Duplicate section"
                     @click="$emit('duplicate-section')"
+                />
+                <DropdownItem
+                    title="Move all tasks to"
+                    :disabled="true"
+                />
+            </DropdownSection>
+
+            <DropdownSection>
+                <DropdownItem
+                    title="Rename section"
+                    @click="$emit('rename-section')"
+                />
+            </DropdownSection>
+
+            <DropdownSection :last-section="true">
+                <DropdownItem
+                    title="Delete section"
+                    @click="$emit('delete-section')"
                 />
             </DropdownSection>
         </Dropdown>

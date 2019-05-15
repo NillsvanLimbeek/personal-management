@@ -8,6 +8,7 @@
                     @collapse-section="collapseSection"
                     @delete-section="deleteSection"
                     @duplicate-section="duplicateSection"
+                    @rename-section="renameSection"
                 />
 
                 <i
@@ -134,6 +135,10 @@
                 taskSectionId: this.taskSection.id,
                 taskIds: this.taskSection.taskIds,
             });
+        }
+
+        private renameSection(): void {
+            (this.$refs.sectionTitle as HTMLInputElement).focus();
         }
     }
 </script>

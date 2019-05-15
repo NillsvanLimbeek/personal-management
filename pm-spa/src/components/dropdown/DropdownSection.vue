@@ -1,13 +1,18 @@
 <template>
-    <div class="dropdown-section">
+    <div
+        class="dropdown-section"
+        :class="{ 'dropdown-section--last': lastSection }"
+    >
+
         <slot />
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from '@/vue-script';
+    import { Vue, Component, Prop } from '@/vue-script';
 
+    @Component({})
     export default class DropdownSection extends Vue {
-
+        @Prop() private lastSection!: boolean;
     }
 </script>
