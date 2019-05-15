@@ -6,13 +6,19 @@
         </div>
 
         <div class="main-navigation__links">
-            <router-link :to="{ name: 'home' }" class="main-navigation__link">
-                <i class="fas fa-home"/>
+            <router-link
+                :to="{ name: 'home' }"
+                class="main-navigation__link"
+            >
+                <i class="fas fa-home" />
                 Home
             </router-link>
 
-            <router-link :to="{ name: 'tasks' }" class="main-navigation__link">
-                <i class="far fa-check-circle"/>
+            <router-link
+                :to="{ name: 'tasks' }"
+                class="main-navigation__link"
+            >
+                <i class="far fa-check-circle" />
                 Tasks
             </router-link>
         </div>
@@ -23,5 +29,5 @@
     import { Vue, Component, Prop } from '@/vue-script';
 
     @Component({})
-    export default class MainNavigation extends Vue {}
+    export default class MainNavigation extends Vue { }
 </script>

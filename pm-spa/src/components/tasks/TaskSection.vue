@@ -2,26 +2,13 @@
     <div class="task-section">
         <div class="task-section__header">
             <div class="task-section__menu">
-                <Dropdown
-                    class="task-section__dropdown"
-                    :class="{
-                        'task-section__dropdown--hide': !taskSection.isOpen,
-                    }"
-                >
-                    <DropdownItem
-                        title="Collapse section"
-                        @click="collapseSection"
-                    />
-                    <hr />
-                    <DropdownItem
-                        title="Delete section"
-                        @click="deleteSection"
-                    />
-                    <DropdownItem
-                        title="Duplicate section"
-                        @click="duplicateSection"
-                    />
-                </Dropdown>
+
+                <TaskSectionDropdown
+                    :is-open="taskSection.isOpen"
+                    @collapse-section="collapseSection"
+                    @delete-section="deleteSection"
+                    @duplicate-section="duplicateSection"
+                />
 
                 <i
                     :class="{
@@ -42,7 +29,10 @@
             />
         </div>
 
-        <div class="task-section_list" v-if="taskSection.isOpen">
+        <div
+            class="task-section_list"
+            v-if="taskSection.isOpen"
+        >
             <Task
                 :key="task.id"
                 :task="task"
@@ -73,22 +63,19 @@
 
     import { generateGuid } from '@/utils';
 
+    const TaskSectionDropdown = () => import('@components/tasks/TaskSectionDropdown.vue');
     const Task = () => import('@components/tasks/Task.vue');
-    const Dropdown = () => import('@components/dropdown/Dropdown.vue');
-    const DropdownItem = () => import('@components/dropdown/DropdownItem.vue');
 
     @Component({
         components: {
+            TaskSectionDropdown,
             Task,
-            Dropdown,
-            DropdownItem,
         },
     })
     export default class TaskSection extends Vue {
         @Prop({ required: true }) private taskSection!: ITaskSection;
         @Prop({ required: true }) private tasks!: ITask[];
 
-        private showDropdown: boolean = false;
         private sectionTitle: string = '';
         private newTaskTitle: string = '';
 

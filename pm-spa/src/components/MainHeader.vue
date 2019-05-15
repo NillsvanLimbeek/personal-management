@@ -1,6 +1,6 @@
 <template>
     <div class="main-header">
-        <HomeHeader v-if="$route.matched[0].path === '/home'"/>
+        <HomeHeader v-if="$route.matched[0].path === '/home'" />
 
         <TaskHeader
             :current-tab="$route.matched[1].path"

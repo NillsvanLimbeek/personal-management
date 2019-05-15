@@ -1,7 +1,10 @@
 <template>
     <div class="tasks">
         <div class="tasks__header">
-            <button class="tasks__button button" @click="addSection">
+            <button
+                class="tasks__button button"
+                @click="addSection"
+            >
                 Add Section
             </button>
         </div>
@@ -14,9 +17,7 @@
                 :tasks="tasks"
                 @add-task="$store.dispatch('tasks/addTask', $event)"
                 @update-task="$store.dispatch('tasks/updateTask', $event)"
-                @update-section="
-                    $store.dispatch('taskSections/updateSection', $event)
-                "
+                @update-section="$store.dispatch('taskSections/updateSection', $event)"
                 @delete-section="deleteSection($event)"
                 @duplicate-section="duplicateSection($event)"
             />

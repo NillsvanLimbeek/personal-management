@@ -1,5 +1,8 @@
 <template>
-    <div class="dropdown-item" @click="$emit('click')">
+    <div
+        class="dropdown-item"
+        @click="$emit('click')"
+    >
         {{ title }}
     </div>
 </template>
