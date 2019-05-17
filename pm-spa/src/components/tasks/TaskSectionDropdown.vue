@@ -11,7 +11,7 @@
                 />
                 <DropdownItem
                     title="Mark all as complete"
-                    :disabled="true"
+                    @click="$emit('complete-tasks')"
                 />
             </DropdownSection>
 
@@ -47,7 +47,8 @@
     import { Vue, Component, Prop } from '@/vue-script';
 
     const Dropdown = () => import('@components/dropdown/Dropdown.vue');
-    const DropdownSection = () => import('@components/dropdown/DropdownSection.vue');
+    const DropdownSection = () =>
+        import('@components/dropdown/DropdownSection.vue');
     const DropdownItem = () => import('@components/dropdown/DropdownItem.vue');
 
     @Component({
