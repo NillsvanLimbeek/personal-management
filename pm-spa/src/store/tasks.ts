@@ -78,6 +78,14 @@ const mutations: MutationTree<ITaskState> = {
     deleteTask: (state, id: string) => {
         state.tasks = state.tasks.filter((x) => x.id !== id);
     },
+
+    completeTask: (state, id: string) => {
+        const task = state.tasks.find((x) => x.id === id);
+
+        if (task) {
+            task.completed = true;
+        }
+    },
 };
 
 const actions: ActionTree<ITaskState, IRootState> = {
@@ -100,8 +108,14 @@ const actions: ActionTree<ITaskState, IRootState> = {
     },
 
     async duplicateTask({ commit, getters }, ids: ITaskSectionAddIds) {
-        commit('duplicateTask', ids);
+        await commit('duplicateTask', ids);
         return getters.getDuplicateTaskId;
+    },
+
+    async completeTasks({ commit }, ids: string[]) {
+        await ids.forEach((id) => {
+            commit('completeTask', id);
+        });
     },
 };
 

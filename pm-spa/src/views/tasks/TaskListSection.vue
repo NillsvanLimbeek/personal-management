@@ -17,6 +17,7 @@
                 :tasks="tasks"
                 @add-task="$store.dispatch('tasks/addTask', $event)"
                 @update-task="$store.dispatch('tasks/updateTask', $event)"
+                @complete-tasks="$store.dispatch('tasks/completeTasks', $event)"
                 @update-section="$store.dispatch('taskSections/updateSection', $event)"
                 @delete-section="deleteSection($event)"
                 @duplicate-section="duplicateSection($event)"
@@ -29,12 +30,7 @@
     import { Vue, Component, Getter } from '@/vue-script';
 
     import { ITaskState } from '@state/index';
-    import {
-        ITask,
-        ITaskSection,
-        ITaskSectionDeleteIds,
-        ITaskSectionAddIds,
-    } from '@models/index';
+    import { ITask, ITaskSection, ITaskSectionDeleteIds, ITaskSectionAddIds } from '@models/index';
 
     import { generateGuid } from '@/utils';
 
@@ -62,27 +58,16 @@
         }
 
         private deleteSection(ids: ITaskSectionDeleteIds) {
-            const deleteSection = this.$store.dispatch(
-                'taskSections/deleteSection',
-                ids.taskSectionId,
-            );
-            const deleteTasks = this.$store.dispatch(
-                'tasks/deleteTasks',
-                ids.taskIds,
-            );
+            const deleteSection = this.$store.dispatch('taskSections/deleteSection', ids.taskSectionId);
+            const deleteTasks = this.$store.dispatch('tasks/deleteTasks', ids.taskIds);
 
             Promise.all([deleteSection, deleteTasks]);
         }
 
         private async duplicateSection(ids: ITaskSectionAddIds) {
-            const section: ITaskSection = await this.$store.dispatch(
-                'taskSections/duplicateSection',
-                ids.taskSectionId,
-            );
+            const section: ITaskSection = await this.$store.dispatch('taskSections/duplicateSection', ids.taskSectionId);
 
-            const originalTaskSection = this.taskSections.find(
-                (x) => x.id === ids.taskSectionId,
-            );
+            const originalTaskSection = this.taskSections.find((x) => x.id === ids.taskSectionId);
 
             if (originalTaskSection && originalTaskSection.taskIds) {
                 await originalTaskSection.taskIds.forEach((id) => {

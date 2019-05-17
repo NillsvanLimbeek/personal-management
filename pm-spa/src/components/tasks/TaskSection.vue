@@ -9,6 +9,7 @@
                     @delete-section="deleteSection"
                     @duplicate-section="duplicateSection"
                     @rename-section="renameSection"
+                    @complete-tasks="$emit('complete-tasks', taskSection.taskIds);"
                 />
 
                 <i
@@ -64,7 +65,8 @@
 
     import { generateGuid } from '@/utils';
 
-    const TaskSectionDropdown = () => import('@components/tasks/TaskSectionDropdown.vue');
+    const TaskSectionDropdown = () =>
+        import('@components/tasks/TaskSectionDropdown.vue');
     const Task = () => import('@components/tasks/Task.vue');
 
     @Component({
