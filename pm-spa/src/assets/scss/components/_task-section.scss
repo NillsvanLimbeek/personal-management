@@ -25,6 +25,7 @@
 
     &__arrow {
         cursor: pointer;
+        margin-left: 5px;
 
         &--closed {
             transform: rotate(90deg);

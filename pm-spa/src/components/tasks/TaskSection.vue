@@ -2,7 +2,6 @@
     <div class="task-section">
         <div class="task-section__header">
             <div class="task-section__menu">
-
                 <TaskSectionDropdown
                     :is-open="taskSection.isOpen"
                     @collapse-section="collapseSection"
@@ -13,11 +12,11 @@
                 />
 
                 <i
+                    class="task-section__arrow fas fa-chevron-right"
                     :class="{
                         'task-section__arrow--closed': taskSection.isOpen,
                     }"
                     @click="collapseSection"
-                    class="task-section__arrow fas fa-chevron-right"
                 />
             </div>
 

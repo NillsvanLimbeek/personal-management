@@ -1,10 +1,13 @@
 <template>
     <div class="task">
+        <TaskDropdown />
+
         <div
             :class="{ 'task__checkbox--active': task.completed }"
             class="task__checkbox"
             @click="updateTask(task.completed)"
         />
+
         {{ task.title }}
     </div>
 </template>
@@ -14,7 +17,13 @@
 
     import { ITask } from '@/data/models';
 
-    @Component({})
+    const TaskDropdown = () => import('@components/tasks/TaskDropdown.vue');
+
+    @Component({
+        components: {
+            TaskDropdown,
+        },
+    })
     export default class Task extends Vue {
         @Prop({ required: true }) private task!: ITask;
 

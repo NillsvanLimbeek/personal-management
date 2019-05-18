@@ -20,10 +20,6 @@
                     title="Duplicate section"
                     @click="$emit('duplicate-section')"
                 />
-                <DropdownItem
-                    title="Move all tasks to"
-                    :disabled="true"
-                />
             </DropdownSection>
 
             <DropdownSection>

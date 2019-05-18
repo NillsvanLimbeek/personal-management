@@ -3,7 +3,6 @@
         class="dropdown"
         v-click-outside="closeDropdown"
     >
-        <!-- TODO make slot -->
         <i
             class="dropdown__button fas fa-ellipsis-v"
             @click="showDropdown = true"
@@ -19,7 +18,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from '@/vue-script';
+    import { Vue, Component, Prop } from '@/vue-script';
 
     import { EventBus } from '@/event-bus';
 

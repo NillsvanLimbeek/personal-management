@@ -1,5 +1,7 @@
 .dropdown-item {
-    font-size: 1.4rem;
+    @include flex-space-between;
+
+    position: relative;
 
     padding: 7.5px 1rem;
     cursor: pointer;
@@ -17,5 +19,16 @@
             color: var(--color-black-light-2);
             background: var(--color-grey-light);
         }
+    }
+
+    &__title {
+        font-size: 1.4rem;
+    }
+
+    &__second-menu {
+        position: absolute;
+        right: -20rem;
+
+        background: var(--color-black-light-2);
     }
 }
