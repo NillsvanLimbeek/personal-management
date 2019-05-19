@@ -39,7 +39,7 @@
 
     import { generateGuid } from '@/utils';
 
-    const TaskSection = () => import('@components/tasks/TaskSection.vue');
+    const TaskSection = () => import('./components/TaskSection.vue');
 
     @Component({
         components: {

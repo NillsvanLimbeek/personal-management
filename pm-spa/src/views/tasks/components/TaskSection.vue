@@ -8,7 +8,7 @@
                     @delete-section="deleteSection"
                     @duplicate-section="duplicateSection"
                     @rename-section="renameSection"
-                    @complete-tasks="$emit('complete-tasks', taskSection.taskIds);"
+                    @complete-tasks="$emit('complete-tasks', taskSection.taskIds)"
                 />
 
                 <i
@@ -66,7 +66,7 @@
 
     const TaskSectionDropdown = () =>
         import('@components/tasks/TaskSectionDropdown.vue');
-    const Task = () => import('@components/tasks/Task.vue');
+    const Task = () => import('./Task.vue');
 
     @Component({
         components: {

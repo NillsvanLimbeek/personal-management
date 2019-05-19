@@ -11,14 +11,15 @@
             <DropdownSection>
                 <DropdownItem
                     title="Move to section"
-                    @click="$emit('move-to-section')"
                     second-menu="true"
                 >
-                    <DropdownSecondMenu>
-                        <DropdownSection>
-                            <DropdownItem title="Test" />
-                        </DropdownSection>
-                    </DropdownSecondMenu>
+                    <DropdownSection :last-section="true">
+                        <DropdownItem
+                            v-for="taskSection in taskSections"
+                            :key="taskSection.id"
+                            :title="taskSection.title"
+                            @click="$emit('move-to-section', taskSection.id)" />
+                    </DropdownSection>
 
                 </DropdownItem>
             </DropdownSection>
@@ -45,9 +46,9 @@
 <script lang="ts">
     import { Vue, Component, Prop } from '@/vue-script';
 
+    import { ITaskSection } from '@/data/models';
+
     const Dropdown = () => import('@components/dropdown/Dropdown.vue');
-    const DropdownSecondMenu = () =>
-        import('@components/dropdown/DropdownSecondMenu.vue');
     const DropdownSection = () =>
         import('@components/dropdown/DropdownSection.vue');
     const DropdownItem = () => import('@components/dropdown/DropdownItem.vue');
@@ -55,10 +56,11 @@
     @Component({
         components: {
             Dropdown,
-            DropdownSecondMenu,
             DropdownSection,
             DropdownItem,
         },
     })
-    export default class TaskDropdown extends Vue {}
+    export default class TaskDropdown extends Vue {
+        @Prop() private taskSections!: ITaskSection[];
+    }
 </script>

@@ -52,7 +52,8 @@ const mutations: MutationTree<ITaskState> = {
         let taskToUpdate = state.tasks.find((x) => x.id === task.id);
 
         if (taskToUpdate) {
-            taskToUpdate = { ...task };
+            const newTask = { ...taskToUpdate, ...task };
+            taskToUpdate = newTask;
         }
     },
 
@@ -86,6 +87,20 @@ const mutations: MutationTree<ITaskState> = {
             task.completed = true;
         }
     },
+
+    moveTask: (state, task: ITask) => {
+        const taskToMove = state.tasks.find((x) => x.id === task.id);
+
+        if (taskToMove) {
+            const newTask = { ...taskToMove, ...task };
+
+            // remove old task
+            state.tasks = state.tasks.filter((x) => x.id !== taskToMove.id);
+
+            // push new task
+            state.tasks.push(newTask);
+        }
+    },
 };
 
 const actions: ActionTree<ITaskState, IRootState> = {
@@ -116,6 +131,10 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await ids.forEach((id) => {
             commit('completeTask', id);
         });
+    },
+
+    async moveTask({ commit }, task: ITask) {
+        await commit('moveTask', task);
     },
 };
 

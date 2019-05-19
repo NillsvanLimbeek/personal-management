@@ -27,8 +27,14 @@
 
     &__second-menu {
         position: absolute;
+        top: 0;
         right: -20rem;
 
+        width: 20rem;
+        z-index: 100;
+
         background: var(--color-black-light-2);
+        color: var(--color-grey);
+        border-radius: 2px;
     }
 }

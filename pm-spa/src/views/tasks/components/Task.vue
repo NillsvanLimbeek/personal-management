@@ -1,6 +1,8 @@
 <template>
     <div class="task">
-        <TaskDropdown />
+        <TaskDropdown
+            :task-sections="taskSections"
+            @move-to-section="moveTask($event)" />
 
         <div
             :class="{ 'task__checkbox--active': task.completed }"
@@ -13,9 +15,9 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from '@/vue-script';
+    import { Vue, Component, Prop, Getter } from '@/vue-script';
 
-    import { ITask } from '@/data/models';
+    import { ITask, ITaskSection } from '@/data/models';
 
     const TaskDropdown = () => import('@components/tasks/TaskDropdown.vue');
 
@@ -25,6 +27,9 @@
         },
     })
     export default class Task extends Vue {
+        @Getter('taskSections/getTaskSections')
+        private taskSections!: ITaskSection[];
+
         @Prop({ required: true }) private task!: ITask;
 
         private checkbox: boolean = false;
@@ -36,6 +41,13 @@
                 id: this.task.id,
                 completed: this.task.completed,
             });
+        }
+
+        private moveTask(taskSectionId: string) {
+            const task: ITask = { ...this.task };
+            task.taskSectionId = taskSectionId;
+
+            this.$store.dispatch('tasks/moveTask', task);
         }
     }
 </script>
