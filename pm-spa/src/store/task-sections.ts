@@ -58,13 +58,18 @@ const mutations: MutationTree<ITaskSectionState> = {
         }
     },
 
-    updateSection: (state, taskSection: ITaskSection) => {
-        let sectionToUpdate = state.taskSections.find(
-            (x) => x.id === taskSection.id,
+    updateSection: (state, section: ITaskSection) => {
+        const index = state.taskSections.map((x) => x.id).indexOf(section.id);
+        const sectionToUpdate = state.taskSections.find(
+            (x) => x.id === section.id,
         );
 
         if (sectionToUpdate) {
-            sectionToUpdate = { ...taskSection };
+            // make copy
+            const newSection: ITaskSection = { ...sectionToUpdate, ...section };
+
+            // replace section
+            state.taskSections.splice(index, 1, newSection);
         }
     },
 

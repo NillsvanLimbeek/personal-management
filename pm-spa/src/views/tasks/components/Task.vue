@@ -44,10 +44,39 @@
         }
 
         private moveTask(taskSectionId: string) {
-            const task: ITask = { ...this.task };
-            task.taskSectionId = taskSectionId;
+            const oldSectionId = this.task.taskSectionId;
+            const newSectionId = taskSectionId;
+            const task: ITask = { ...this.task, taskSectionId };
 
-            this.$store.dispatch('tasks/moveTask', task);
+            const updateTask = this.$store.dispatch('tasks/updateTask', task);
+            let updateOldSection;
+            let updateNewSection;
+
+            // update old section
+            const oldSection = this.taskSections.find((x) => x.id === oldSectionId);
+
+            if (oldSection && oldSection.taskIds) {
+                oldSection.taskIds = oldSection.taskIds.filter(
+                    (x) => x !== task.id,
+                );
+                updateOldSection = this.$store.dispatch(
+                    'taskSections/updateSection',
+                    oldSection,
+                );
+            }
+
+            // update new section
+            const newSection = this.taskSections.find((x) => x.id === newSectionId);
+
+            if (newSection && newSection.taskIds) {
+                newSection.taskIds.push(task.id);
+                updateNewSection = this.$store.dispatch(
+                    'taskSections/updateSection',
+                    newSection,
+                );
+            }
+
+            Promise.all([updateTask, updateOldSection, updateNewSection]);
         }
     }
 </script>

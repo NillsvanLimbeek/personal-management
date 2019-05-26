@@ -17,7 +17,7 @@
                 :tasks="tasks"
                 @add-task="addTask($event)"
                 @update-task="$store.dispatch('tasks/updateTask', $event)"
-                @complete-tasks="$store.dispatch('tasks/completeTasks', $event)"
+                @complete-tasks="completeTask($event)"
                 @update-section="$store.dispatch('taskSections/updateSection', $event)"
                 @delete-section="deleteSection($event)"
                 @duplicate-section="duplicateSection($event)"
@@ -113,6 +113,15 @@
             );
 
             Promise.all([addTask, addTaskToSecton]);
+        }
+
+        private completeTask(taskIds: string[]) {
+            taskIds.forEach((id) => {
+                this.$store.dispatch('tasks/updateTask', {
+                    id,
+                    completed: true,
+                });
+            });
         }
     }
 </script>

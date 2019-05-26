@@ -49,11 +49,15 @@ const mutations: MutationTree<ITaskState> = {
     },
 
     updateTask: (state, task: ITask) => {
-        let taskToUpdate = state.tasks.find((x) => x.id === task.id);
+        const index = state.tasks.map((x) => x.id).indexOf(task.id);
+        const taskToUpdate = state.tasks.find((x) => x.id === task.id);
 
         if (taskToUpdate) {
-            const newTask = { ...taskToUpdate, ...task };
-            taskToUpdate = newTask;
+            // make copy
+            const newTask: ITask = { ...taskToUpdate, ...task };
+
+            // replace task
+            state.tasks.splice(index, 1, newTask);
         }
     },
 
@@ -78,14 +82,6 @@ const mutations: MutationTree<ITaskState> = {
 
     deleteTask: (state, id: string) => {
         state.tasks = state.tasks.filter((x) => x.id !== id);
-    },
-
-    completeTask: (state, id: string) => {
-        const task = state.tasks.find((x) => x.id === id);
-
-        if (task) {
-            task.completed = true;
-        }
     },
 
     moveTask: (state, task: ITask) => {
@@ -125,12 +121,6 @@ const actions: ActionTree<ITaskState, IRootState> = {
     async duplicateTask({ commit, getters }, ids: ITaskSectionAddIds) {
         await commit('duplicateTask', ids);
         return getters.getDuplicateTaskId;
-    },
-
-    async completeTasks({ commit }, ids: string[]) {
-        await ids.forEach((id) => {
-            commit('completeTask', id);
-        });
     },
 
     async moveTask({ commit }, task: ITask) {
