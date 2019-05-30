@@ -36,47 +36,35 @@
 
         private updateTask(msg: boolean): void {
             this.task.completed = msg === true ? false : true;
-
-            this.$emit('update-task', {
-                id: this.task.id,
-                completed: this.task.completed,
-            });
+            this.$store.dispatch('tasks/updateTask', this.task);
         }
 
-        private moveTask(taskSectionId: string) {
-            const oldSectionId = this.task.taskSectionId;
-            const newSectionId = taskSectionId;
+        private moveTask(taskSectionId: string): void {
+            // update task
             const task: ITask = { ...this.task, taskSectionId };
-
-            const updateTask = this.$store.dispatch('tasks/updateTask', task);
-            let updateOldSection;
-            let updateNewSection;
+            this.$store.dispatch('tasks/updateTask', task);
 
             // update old section
-            const oldSection = this.taskSections.find((x) => x.id === oldSectionId);
+            const oldSection = this.taskSections.find(
+                (x) => x.id === this.task.taskSectionId,
+            );
 
             if (oldSection && oldSection.taskIds) {
                 oldSection.taskIds = oldSection.taskIds.filter(
                     (x) => x !== task.id,
                 );
-                updateOldSection = this.$store.dispatch(
-                    'taskSections/updateSection',
-                    oldSection,
-                );
+                this.$store.dispatch('taskSections/updateSection', oldSection);
             }
 
             // update new section
-            const newSection = this.taskSections.find((x) => x.id === newSectionId);
+            const newSection = this.taskSections.find(
+                (x) => x.id === taskSectionId,
+            );
 
             if (newSection && newSection.taskIds) {
                 newSection.taskIds.push(task.id);
-                updateNewSection = this.$store.dispatch(
-                    'taskSections/updateSection',
-                    newSection,
-                );
+                this.$store.dispatch('taskSections/updateSection', newSection);
             }
-
-            Promise.all([updateTask, updateOldSection, updateNewSection]);
         }
     }
 </script>
