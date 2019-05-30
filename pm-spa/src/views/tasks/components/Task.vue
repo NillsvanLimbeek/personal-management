@@ -1,8 +1,14 @@
 <template>
-    <div class="task">
+    <div
+        class="task"
+        @mouseenter="showEdit = true"
+        @mouseleave="showEdit = false">
+
         <TaskDropdown
             :task-sections="taskSections"
-            @move-to-section="moveTask($event)" />
+            @move-to-section="moveTask($event)"
+            @duplicate-task="duplicateTask"
+            @delete-task="deleteTask" />
 
         <div
             :class="{ 'task__checkbox--active': task.completed }"
@@ -10,7 +16,13 @@
             @click="updateTask(task.completed)"
         />
 
-        {{ task.title }}
+        <div class="task__title">
+            {{ task.title }}
+
+            <i
+                v-if="showEdit"
+                class="task__edit fas fa-pen" />
+        </div>
     </div>
 </template>
 
@@ -18,6 +30,7 @@
     import { Vue, Component, Prop, Getter } from '@/vue-script';
 
     import { ITask, ITaskSection } from '@/data/models';
+    import { generateGuid } from '../../../utils';
 
     const TaskDropdown = () => import('@components/tasks/TaskDropdown.vue');
 
@@ -33,6 +46,7 @@
         @Prop({ required: true }) private task!: ITask;
 
         private checkbox: boolean = false;
+        private showEdit: boolean = false;
 
         private updateTask(msg: boolean): void {
             this.task.completed = msg === true ? false : true;
@@ -64,6 +78,37 @@
             if (newSection && newSection.taskIds) {
                 newSection.taskIds.push(task.id);
                 this.$store.dispatch('taskSections/updateSection', newSection);
+            }
+        }
+
+        private duplicateTask() {
+            const newTask: ITask = {
+                ...this.task,
+                id: generateGuid(),
+                title: `Copy of ${this.task.title}`,
+            };
+            this.$store.dispatch('tasks/addTask', newTask);
+
+            this.$store.dispatch('taskSections/addTaskToSection', {
+                taskSectionId: newTask.taskSectionId,
+                taskId: newTask.id,
+            });
+        }
+
+        private deleteTask() {
+            this.$store.dispatch('tasks/deleteTask', this.task.id);
+
+            const taskSection = this.taskSections.find(
+                (x) => x.id === this.task.taskSectionId,
+            );
+
+            if (taskSection && taskSection.taskIds) {
+                const newTaskIds = taskSection.taskIds.filter(
+                    (x) => x !== this.task.id,
+                );
+                const newTaskSection = { ...taskSection, taskIds: newTaskIds };
+
+                this.$store.dispatch('taskSections/updateSection', newTaskSection);
             }
         }
     }

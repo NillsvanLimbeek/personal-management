@@ -28,7 +28,6 @@
                 <DropdownItem
                     title="Duplicate task"
                     @click="$emit('duplicate-task')"
-                    disabled="true"
                 />
             </DropdownSection>
 
@@ -36,7 +35,6 @@
                 <DropdownItem
                     title="Delete task"
                     @click="$emit('delete-task')"
-                    disabled="true"
                 />
             </DropdownSection>
         </Dropdown>
