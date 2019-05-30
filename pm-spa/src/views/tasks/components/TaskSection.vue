@@ -8,7 +8,7 @@
                     @delete-section="deleteSection"
                     @duplicate-section="duplicateSection"
                     @rename-section="renameSection"
-                    @complete-tasks="$emit('complete-tasks', taskSection.taskIds)"
+                    @complete-tasks="completeTasks"
                 />
 
                 <i
@@ -96,12 +96,13 @@
             });
         }
 
+        // direct in store
         private updateSection(): void {
             const input = this.$refs.sectionTitle as HTMLInputElement;
 
             const taskSection: ITaskSection = {
                 id: this.taskSection.id,
-                title: this.sectionTitle,
+                title: input.value,
             };
 
             this.$emit('update-section', taskSection);
@@ -118,10 +119,23 @@
             };
 
             if (this.newTaskTitle) {
-                this.$emit('add-task', task);
+                this.$store.dispatch('tasks/addTask', task);
+                this.$store.dispatch('taskSections/addTaskToSection', {
+                    taskId: task.id,
+                    taskSectionId: task.taskSectionId,
+                });
             }
 
             this.newTaskTitle = '';
+        }
+
+        private completeTasks(taskIds: string[]) {
+            taskIds.forEach((id) => {
+                this.$store.dispatch('tasks/updateTask', {
+                    id,
+                    completed: true,
+                });
+            });
         }
 
         private deleteSection(): void {
