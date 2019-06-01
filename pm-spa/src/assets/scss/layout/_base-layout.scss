@@ -20,6 +20,16 @@
         }
     }
 
+    &__hover-area {
+        position: absolute;
+        left: 0;
+        top: 7rem;
+        z-index: 100;
+
+        width: 2.5rem;
+        height: 100%;
+    }
+
     &__arrow {
         position: absolute;
 

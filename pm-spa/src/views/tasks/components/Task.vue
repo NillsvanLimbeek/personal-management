@@ -18,10 +18,6 @@
 
         <div class="task__title">
             {{ task.title }}
-
-            <i
-                v-if="showEdit"
-                class="task__edit fas fa-pen" />
         </div>
     </div>
 </template>
@@ -46,7 +42,6 @@
         @Prop({ required: true }) private task!: ITask;
 
         private checkbox: boolean = false;
-        private showEdit: boolean = false;
 
         private updateTask(msg: boolean): void {
             this.task.completed = msg === true ? false : true;

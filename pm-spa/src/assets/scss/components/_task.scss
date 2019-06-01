@@ -30,15 +30,4 @@
             }
         }
     }
-
-    &__edit {
-        font-size: 1.25rem;
-        margin-left: 1rem;
-        color: var(--color-grey);
-        cursor: pointer;
-
-        &:hover {
-            color: white;
-        }
-    }
 }
