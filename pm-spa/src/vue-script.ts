@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import { createDecorator } from 'vue-class-component';
+import { createDecorator, mixins } from 'vue-class-component';
 
 import {
     Component,
@@ -29,4 +29,5 @@ export {
     Watch,
     createDecorator,
     namespace,
+    mixins,
 };
