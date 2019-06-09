@@ -23,7 +23,6 @@
 
 <script lang="ts">
     import { Vue, Component, Prop, Getter, mixins } from '@/vue-script';
-    import { ModalsMixin } from '@/mixins';
 
     import { ITask, ITaskSection } from '@/data/models';
     import { generateGuid } from '../../../utils';
@@ -35,7 +34,7 @@
             TaskDropdown,
         },
     })
-    export default class Task extends mixins(ModalsMixin) {
+    export default class Task extends Vue {
         @Getter('taskSections/getTaskSections')
         private taskSections!: ITaskSection[];
 
@@ -105,10 +104,6 @@
 
                 this.$store.dispatch('taskSections/updateSection', newTaskSection);
             }
-        }
-
-        private openTaskModal() {
-            this.openModal();
         }
     }
 </script>
