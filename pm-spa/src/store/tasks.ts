@@ -38,6 +38,10 @@ const getters: GetterTree<ITaskState, IRootState> = {
         return state.tasks;
     },
 
+    getTask: (state, id: string) => {
+        return state.tasks.find((x) => x.id === id);
+    },
+
     getDuplicateTaskId: (state) => {
         return state.duplicateTaskId;
     },

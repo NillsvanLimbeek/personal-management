@@ -1,0 +1,33 @@
+.modals-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: 100vh;
+    width: 45rem;
+
+    padding: 2rem;
+    background: var(--color-black-light);
+    box-shadow: -5px 0px 10px 5px rgba(0, 0, 0, 0.25);
+
+    &__header {
+    }
+
+    &__close {
+        font-size: 2rem;
+        color: var(--color-grey);
+        cursor: pointer;
+    }
+}
+
+.modal-enter-active,
+.modal-leave-leave-active {
+    transform: translate3d(0, 0, 0);
+    transition: all 0.3s ease-in-out;
+}
+
+.modal-enter,
+.modal-leave-to {
+    transform: translate3d(100%, 0, 0);
+    transition: all 0.3s ease-in-out;
+}
