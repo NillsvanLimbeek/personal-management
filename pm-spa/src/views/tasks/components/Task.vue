@@ -1,22 +1,22 @@
 <template>
-    <div
-        class="task"
-        @click="openTaskModal">
-
+    <div class="task">
         <TaskDropdown
             :task-sections="taskSections"
             @move-to-section="moveTask($event)"
             @duplicate-task="duplicateTask"
-            @delete-task="deleteTask" />
-
-        <div
-            :class="{ 'task__checkbox--active': task.completed }"
-            class="task__checkbox"
-            @click="updateTask(task.completed)"
+            @delete-task="deleteTask"
         />
 
-        <div class="task__title">
-            {{ task.title }}
+        <div @click="openModal(task.id)" class="task__body">
+            <div
+                :class="{ 'task__checkbox--active': task.completed }"
+                class="task__checkbox"
+                @click.stop="updateTask(task.completed)"
+            />
+
+            <div @click.stop="editTitle" class="task__title">
+                {{ task.title }}
+            </div>
         </div>
     </div>
 </template>
@@ -25,7 +25,7 @@
     import { Vue, Component, Prop, Getter, mixins } from '@/vue-script';
 
     import { ITask, ITaskSection } from '@/data/models';
-    import { generateGuid } from '../../../utils';
+    import { generateGuid } from '@/utils';
 
     const TaskDropdown = () => import('@components/tasks/TaskDropdown.vue');
 
@@ -104,6 +104,18 @@
 
                 this.$store.dispatch('taskSections/updateSection', newTaskSection);
             }
+        }
+
+        private openModal(id: string) {
+            if (this.$route.name === 'taskModal') {
+                this.$router.replace({ path: `${id}` });
+            } else {
+                this.$router.push({ path: `list/task/${id}` });
+            }
+        }
+
+        private editTitle() {
+            //
         }
     }
 </script>

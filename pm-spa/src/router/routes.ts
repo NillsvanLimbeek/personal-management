@@ -20,6 +20,14 @@ export const routes: RouteConfig[] = [
                 path: 'list',
                 name: 'taskList',
                 component: () => import('@views/tasks/TaskListSection.vue'),
+                children: [
+                    {
+                        path: 'task/:id',
+                        name: 'taskModal',
+                        component: () =>
+                            import('@views/modals/ModalsContainer.vue'),
+                    },
+                ],
             },
             {
                 path: 'calendar',
