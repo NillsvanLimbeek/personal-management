@@ -13,9 +13,8 @@
     &__header {
         @include flex-space-between;
 
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--color-black);
+        padding-bottom: 1.5rem;
+        border-bottom: var(--border-black);
     }
 
     &__complete {
@@ -26,6 +25,58 @@
         font-size: 2rem;
         color: var(--color-grey);
         cursor: pointer;
+    }
+
+    &__body {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr 1fr 5fr 2fr;
+        grid-template-areas:
+            'title title title'
+            'assigned-to due-date due-date'
+            'description description description'
+            'comments comments comments';
+
+        height: calc(100% - 20rem);
+    }
+
+    &__title {
+        @include flex-align-start;
+
+        grid-area: title;
+        border-bottom: var(--border-black);
+    }
+
+    &__assigned-to {
+        @include flex-align-start;
+
+        grid-area: assigned-to;
+
+        font-size: 2rem;
+        border-bottom: var(--border-black);
+    }
+
+    &__due-date {
+        @include flex-align-start;
+
+        grid-area: due-date;
+
+        font-size: 2rem;
+        border-bottom: var(--border-black);
+    }
+
+    &__description {
+        grid-area: description;
+        border-bottom: var(--border-black);
+    }
+
+    &__comments {
+        grid-area: comments;
+        border-bottom: var(--border-black);
+    }
+
+    &__footer {
+        height: 15rem;
     }
 }
 
