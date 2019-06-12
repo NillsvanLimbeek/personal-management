@@ -1,7 +1,15 @@
 <template>
     <div class="modals-container">
         <div class="modals-container__header">
-            {{ getTask.title }}
+            <div class="modals-container__complete">
+                <div
+                    :class="{ 'task__checkbox--active': getTask.completed }"
+                    class="task__checkbox"
+                    @click="updateTask(getTask.completed)"
+                />
+
+                Task {{ getTask.completed ? 'Complete' : 'Not complete' }}
+            </div>
 
             <i
                 @click="$router.go(-1)"
@@ -9,7 +17,9 @@
             />
         </div>
 
-        <div class="modals-container__body"></div>
+        <div class="modals-container__body">
+            {{ getTask.title }}
+        </div>
 
         <div class="modals-container__footer"></div>
     </div>
@@ -26,6 +36,13 @@
 
         private get getTask() {
             return this.tasks.find((x) => x.id === this.$route.params.id);
+        }
+
+        private updateTask(msg: boolean): void {
+            if (this.getTask) {
+                this.getTask.completed = msg === true ? false : true;
+                this.$store.dispatch('tasks/updateTask', this.getTask.completed);
+            }
         }
     }
 </script>
