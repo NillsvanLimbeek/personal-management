@@ -19,7 +19,12 @@
 
         <div class="modals-container__body">
             <div class="modals-container__title">
-                {{ getTask.title }}
+                <textarea
+                    ref="textarea"
+                    v-model="getTask.title"
+                    class="text-area"
+                />
+                <!-- {{ getTask.title }} -->
             </div>
 
             <div class="modals-container__assigned-to">
@@ -48,6 +53,9 @@
     export default class ModalsContainer extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
 
+        private textarea: HTMLInputElement = this.$refs
+            .textarea as HTMLInputElement;
+
         private get getTask(): ITask | undefined {
             return this.tasks.find((x) => x.id === this.$route.params.id);
         }
@@ -56,6 +64,21 @@
             if (this.getTask) {
                 this.getTask.completed = msg === true ? false : true;
                 this.$store.dispatch('tasks/updateTask', this.getTask.completed);
+            }
+        }
+
+        private autosizeTextarea() {
+            if (this.textarea) {
+                this.textarea.style.height = '50px';
+
+                if (
+                    this.getTask &&
+                    this.getTask.title &&
+                    this.textarea.scrollHeight > 50
+                ) {
+                    this.textarea.style.height =
+                        this.textarea.scrollHeight + 10 + 'px';
+                }
             }
         }
     }
