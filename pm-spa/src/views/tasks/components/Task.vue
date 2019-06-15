@@ -15,7 +15,7 @@
             />
 
             <div @click.stop="editTitle" class="task__title">
-                {{ task.title }}
+                <InlineEdit :title="task.title" />
             </div>
         </div>
     </div>
@@ -28,10 +28,12 @@
     import { generateGuid } from '@/utils';
 
     const TaskDropdown = () => import('@components/tasks/TaskDropdown.vue');
+    const InlineEdit = () => import('@components/InlineEdit.vue');
 
     @Component({
         components: {
             TaskDropdown,
+            InlineEdit,
         },
     })
     export default class Task extends Vue {

@@ -1,0 +1,21 @@
+.inline-edit {
+    &__title {
+        padding: 5px 7.5px;
+        border: var(--border-transparent);
+
+        & > i {
+            margin-left: 5px;
+            opacity: 0;
+            transition: var(--transition-2);
+        }
+
+        &:hover {
+            border: var(--border-black);
+
+            & > i {
+                opacity: 1;
+                transition: var(--transition-2);
+            }
+        }
+    }
+}
