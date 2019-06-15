@@ -12,12 +12,6 @@
                 :key="taskSections.id"
                 :task-section="taskSection"
                 :tasks="tasks"
-                @complete-tasks="completeTask($event)"
-                @update-section="
-                    $store.dispatch('taskSections/updateSection', $event)
-                "
-                @delete-section="deleteSection($event)"
-                @duplicate-section="duplicateSection($event)"
             />
         </div>
 
@@ -61,38 +55,6 @@
             };
 
             this.$store.dispatch('taskSections/addSection', taskSection);
-        }
-
-        private deleteSection(ids: ITaskSectionDeleteIds) {
-            this.$store.dispatch('taskSections/deleteSection', ids.taskSectionId);
-            this.$store.dispatch('tasks/deleteTasks', ids.taskIds);
-        }
-
-        private async duplicateSection(ids: ITaskSectionAddIds) {
-            const section: ITaskSection = await this.$store.dispatch(
-                'taskSections/duplicateSection',
-                ids.taskSectionId,
-            );
-
-            const originalTaskSection = this.taskSections.find(
-                (x) => x.id === ids.taskSectionId,
-            );
-
-            if (originalTaskSection && originalTaskSection.taskIds) {
-                await originalTaskSection.taskIds.forEach((id) => {
-                    this.$store
-                        .dispatch('tasks/duplicateTask', {
-                            taskId: id,
-                            taskSectionId: section.id,
-                        })
-                        .then((taskId) => {
-                            this.$store.dispatch('taskSections/addTaskToSection', {
-                                taskId,
-                                taskSectionId: section.id,
-                            });
-                        });
-                });
-            }
         }
     }
 </script>
