@@ -11,7 +11,7 @@
             <div
                 :class="{ 'task__checkbox--active': task.completed }"
                 class="task__checkbox"
-                @click.stop="updateTask(task.completed)"
+                @click.stop="updateTask"
             />
 
             <div @click.stop="editTitle" class="task__title">
@@ -42,9 +42,11 @@
 
         private checkbox: boolean = false;
 
-        private updateTask(msg: boolean): void {
-            this.task.completed = msg === true ? false : true;
-            this.$store.dispatch('tasks/updateTask', this.task);
+        private updateTask(): void {
+            this.$store.dispatch('tasks/updateTask', {
+                id: this.task.id,
+                completed: !this.task.completed,
+            });
         }
 
         private moveTask(taskSectionId: string): void {

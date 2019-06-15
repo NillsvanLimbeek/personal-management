@@ -18,7 +18,26 @@
         </div>
 
         <div class="modals-container__body">
-            {{ getTask.title }}
+            <div class="modals-container__title">
+                <textarea
+                    rows="1"
+                    @input="autoResize"
+                    v-model="getTask.title"
+                    class="text-area"
+                />
+            </div>
+
+            <div class="modals-container__assigned-to">
+                <i class="far fa-user"></i>
+            </div>
+
+            <div class="modals-container__due-date">
+                <i class="far fa-calendar-alt"></i>
+            </div>
+
+            <div class="modals-container__description"></div>
+
+            <div class="modals-container__comments"></div>
         </div>
 
         <div class="modals-container__footer"></div>
@@ -34,7 +53,7 @@
     export default class ModalsContainer extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
 
-        private get getTask() {
+        private get getTask(): ITask | undefined {
             return this.tasks.find((x) => x.id === this.$route.params.id);
         }
 
@@ -42,6 +61,17 @@
             if (this.getTask) {
                 this.getTask.completed = msg === true ? false : true;
                 this.$store.dispatch('tasks/updateTask', this.getTask.completed);
+            }
+        }
+
+        private autoResize() {
+            const textarea = document.querySelector('textarea');
+
+            if (textarea) {
+                const offset = textarea.offsetHeight - textarea.clientHeight;
+
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + offset + 'px';
             }
         }
     }

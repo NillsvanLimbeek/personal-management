@@ -30,10 +30,7 @@
             />
         </div>
 
-        <div
-            class="task-section_list"
-            v-if="taskSection.isOpen"
-        >
+        <div class="task-section_list" v-if="taskSection.isOpen">
             <Task
                 :key="task.id"
                 :task="task"
@@ -90,22 +87,20 @@
         private collapseSection(): void {
             this.taskSection.isOpen = !this.taskSection.isOpen;
 
-            this.$emit('update-section', {
+            this.$store.dispatch('taskSections/updateSection', {
                 id: this.taskSection.id,
                 isOpen: this.taskSection.isOpen,
             });
         }
 
-        // direct in store
         private updateSection(): void {
             const input = this.$refs.sectionTitle as HTMLInputElement;
 
-            const taskSection: ITaskSection = {
+            this.$store.dispatch('taskSections/updateSection', {
                 id: this.taskSection.id,
                 title: input.value,
-            };
+            });
 
-            this.$emit('update-section', taskSection);
             this.sectionTitle = '';
             input.blur();
         }
@@ -129,27 +124,43 @@
             this.newTaskTitle = '';
         }
 
-        private completeTasks(taskIds: string[]) {
-            taskIds.forEach((id) => {
-                this.$store.dispatch('tasks/updateTask', {
-                    id,
-                    completed: true,
+        private completeTasks(taskIds: string[]): void {
+            if (this.taskSection && this.taskSection.taskIds) {
+                this.taskSection.taskIds.forEach((id) => {
+                    this.$store.dispatch('tasks/updateTask', {
+                        id,
+                        completed: true,
+                    });
                 });
-            });
+            }
         }
 
         private deleteSection(): void {
-            this.$emit('delete-section', {
-                taskSectionId: this.taskSection.id,
-                taskIds: this.taskSection.taskIds,
-            });
+            this.$store.dispatch('taskSections/deleteSection', this.taskSection.id);
+            this.$store.dispatch('tasks/deleteTasks', this.taskSection.taskIds);
         }
 
-        private duplicateSection(): void {
-            this.$emit('duplicate-section', {
-                taskSectionId: this.taskSection.id,
-                taskIds: this.taskSection.taskIds,
-            });
+        private async duplicateSection() {
+            const section: ITaskSection = await this.$store.dispatch(
+                'taskSections/duplicateSection',
+                this.taskSection.id,
+            );
+
+            if (this.taskSection && this.taskSection.taskIds) {
+                await this.taskSection.taskIds.forEach((id) => {
+                    this.$store
+                        .dispatch('tasks/duplicateTask', {
+                            taskId: id,
+                            taskSectionId: section.id,
+                        })
+                        .then((taskId) => {
+                            this.$store.dispatch('taskSections/addTaskToSection', {
+                                taskId,
+                                taskSectionId: section.id,
+                            });
+                        });
+                });
+            }
         }
 
         private renameSection(): void {
