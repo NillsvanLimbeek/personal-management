@@ -2,14 +2,17 @@
     padding: 1rem;
 
     &__header {
-        @include flex-center-align;
+        @include flex-align;
+
+        margin-bottom: 3px;
+        padding-bottom: 3px;
+        border-bottom: var(--border-black);
     }
 
     &__menu {
         display: flex;
         align-items: center;
 
-        margin-bottom: 1rem;
         margin-left: 6px;
     }
 
@@ -25,7 +28,7 @@
 
     &__arrow {
         cursor: pointer;
-        margin-left: 5px;
+        margin: 0 1rem 0 5px;
 
         &--closed {
             transform: rotate(90deg);
@@ -35,7 +38,6 @@
     &__title {
         margin: 0 0 1rem 7.5px;
         padding: 5px 1rem;
-        border-bottom: 1px solid var(--color-black);
     }
 
     &__add {

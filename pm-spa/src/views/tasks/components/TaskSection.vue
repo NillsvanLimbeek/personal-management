@@ -7,7 +7,7 @@
                     @collapse-section="collapseSection"
                     @delete-section="deleteSection"
                     @duplicate-section="duplicateSection"
-                    @rename-section="renameSection"
+                    @rename-section="triggerEdit = true"
                     @complete-tasks="completeTasks"
                 />
 
@@ -20,14 +20,12 @@
                 />
             </div>
 
-            <input
-                ref="sectionTitle"
-                @blur="updateSection"
-                @keyup.enter="updateSection"
-                class="task-section__title input"
-                type="text"
-                v-model="taskSection.title"
+            <InlineEdit
+                :title="taskSection.title"
+                :trigger-edit="triggerEdit"
+                @update-title="renameSection($event)"
             />
+
         </div>
 
         <div class="task-section_list" v-if="taskSection.isOpen">
@@ -59,16 +57,19 @@
 
     import { ITaskSection, ITask } from '@models/index';
 
+    import { EventBus } from '@/event-bus';
     import { generateGuid } from '@/utils';
 
     const TaskSectionDropdown = () =>
         import('@components/tasks/TaskSectionDropdown.vue');
     const Task = () => import('./Task.vue');
+    const InlineEdit = () => import('@components/InlineEdit.vue');
 
     @Component({
         components: {
             TaskSectionDropdown,
             Task,
+            InlineEdit,
         },
     })
     export default class TaskSection extends Vue {
@@ -77,6 +78,7 @@
 
         private sectionTitle: string = '';
         private newTaskTitle: string = '';
+        private triggerEdit: boolean = false;
 
         private get getTasks(): ITask[] {
             return this.tasks.filter((task) => {
@@ -163,8 +165,15 @@
             }
         }
 
-        private renameSection(): void {
-            (this.$refs.sectionTitle as HTMLInputElement).focus();
+        private renameSection(title: string): void {
+            if (this.taskSection) {
+                this.$store.dispatch('taskSections/updateSection', {
+                    id: this.taskSection.id,
+                    title,
+                });
+            }
+
+            this.triggerEdit = false;
         }
     }
 </script>

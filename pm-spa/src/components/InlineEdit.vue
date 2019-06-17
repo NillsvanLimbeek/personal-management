@@ -15,6 +15,7 @@
         >
             <input
                 @blur="submit"
+                @keypress.enter="submit"
                 class="input"
                 ref="input"
                 type="text"
@@ -25,21 +26,36 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from '@/vue-script';
+    import { Vue, Component, Prop, Watch } from '@/vue-script';
+
+    import { EventBus } from '@/event-bus';
 
     @Component({})
     export default class InlineEdit extends Vue {
         @Prop({ required: true }) private title!: string;
+        @Prop() private triggerEdit!: boolean;
 
         private showEdit: boolean = false;
-
         private internalValue = this.title;
+
+        @Watch('triggerEdit')
+        private renameTitle(value: boolean) {
+            if (value) {
+                this.focus();
+            }
+        }
 
         private focus() {
             this.showEdit = true;
 
             Vue.nextTick(() => {
-                (this.$refs.input as HTMLInputElement).select();
+                const input = this.$refs.input as HTMLInputElement;
+
+                input.focus();
+                input.setSelectionRange(
+                    this.internalValue.length,
+                    this.internalValue.length,
+                );
             });
         }
 

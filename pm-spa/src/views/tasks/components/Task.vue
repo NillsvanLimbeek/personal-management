@@ -5,6 +5,7 @@
             @move-to-section="moveTask($event)"
             @duplicate-task="duplicateTask"
             @delete-task="deleteTask"
+            @rename-task="triggerEdit = true"
         />
 
         <div @click="openModal(task.id)" class="task__body">
@@ -14,8 +15,12 @@
                 @click.stop="updateTask"
             />
 
-            <div @click.stop="editTitle" class="task__title">
-                <InlineEdit :title="task.title" />
+            <div @click.stop="triggerEdit = true" class="task__title">
+                <InlineEdit
+                    :title="task.title"
+                    :trigger-edit="triggerEdit"
+                    @update-title="updateTitle($event)"
+                />
             </div>
         </div>
     </div>
@@ -43,6 +48,7 @@
         @Prop({ required: true }) private task!: ITask;
 
         private checkbox: boolean = false;
+        private triggerEdit: boolean = false;
 
         private updateTask(): void {
             this.$store.dispatch('tasks/updateTask', {
@@ -118,8 +124,13 @@
             }
         }
 
-        private editTitle() {
-            //
+        private updateTitle(title: string) {
+            this.triggerEdit = false;
+
+            this.$store.dispatch('tasks/updateTask', {
+                id: this.task.id,
+                title,
+            });
         }
     }
 </script>
