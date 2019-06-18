@@ -1,13 +1,13 @@
 <template>
     <div id="app">
-        <BaseLayout/>
+        <BaseLayout />
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component } from '@/vue-script';
 
-    import BaseLayout from './components/BaseLayout.vue';
+    import BaseLayout from './components/layout/BaseLayout.vue';
 
     @Component({
         components: {

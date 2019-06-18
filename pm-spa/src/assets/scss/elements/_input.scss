@@ -3,10 +3,13 @@
 
     background: transparent;
     border: none;
+    border: var(--border-transparent);
 
     font-family: 'Montserrat';
     font-size: 1.5rem;
     color: var(--color-grey);
+
+    padding: 5px 7.5px;
 
     &::placeholder {
         color: var(--color-grey);
@@ -14,5 +17,6 @@
 
     &:focus {
         outline: none;
+        border: var(--border-black);
     }
 }

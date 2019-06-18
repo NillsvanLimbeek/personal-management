@@ -1,9 +1,9 @@
 .task {
-    display: flex;
+    @include flex-align;
     margin-left: 6px;
 
     &:not(:last-child) {
-        margin-bottom: 1rem;
+        margin-bottom: 3px;
     }
 
     &__checkbox {
@@ -32,7 +32,7 @@
     }
 
     &__body {
-        display: flex;
+        @include flex-align;
 
         width: 100%;
 
