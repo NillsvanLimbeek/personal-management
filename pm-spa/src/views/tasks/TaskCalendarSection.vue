@@ -2,7 +2,7 @@
     <div class="calendar">
         <h2>Calendar</h2>
 
-        <Datepicker :date="nextYear" />
+        <Datepicker />
     </div>
 </template>
 

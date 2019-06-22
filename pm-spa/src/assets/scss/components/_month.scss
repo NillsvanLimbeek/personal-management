@@ -1,0 +1,5 @@
+.month {
+    &__header {
+        @include flex-center;
+    }
+}

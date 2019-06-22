@@ -1,19 +1,41 @@
 <template>
     <div class="datepicker">
-        <button @click="previousMonth">
-            previous month
-        </button>
+        <i
+            class="datepicker__arrow fas fa-arrow-left"
+            @click="previousMonth"
+        />
 
-        {{ months[1][0] }}
+        <div class="datepicker__wrapper">
+            <div
+                class="datepicker__month-list"
+                :style="{ transform: `translateX(${35 * step}rem)` }"
+            >
+                <Month
+                    v-for="(startDate, index) in startDates"
+                    :key="index"
+                    :date="startDate"
+                    class="datepicker__month"
+                />
+            </div>
 
-        <button @click="nextMonth">
-            next month
-        </button>
+            <Month
+                v-if="visible"
+                class="datepicker__month datepicker__month--absolute"
+                :date="startDates[1]"
+            />
+        </div>
+
+        <i
+            class="datepicker__arrow fas fa-arrow-right"
+            @click="nextMonth"
+        />
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from '@/vue-script';
+
+    const Month = () => import('./Month.vue');
 
     import {
         startOfMonth,
@@ -24,12 +46,18 @@
         addMonths,
     } from 'date-fns';
 
-    @Component({})
+    @Component({
+        components: {
+            Month,
+        },
+    })
     export default class Datepicker extends Vue {
         @Prop() private date!: Date;
 
-        private months: any[] = [];
         private startDates: Date[] = [];
+        private step: number = -1;
+        private visible: boolean = false;
+        private disabled: boolean = false;
 
         private getDates(date?: Date) {
             let currentMonth: Date;
@@ -46,36 +74,52 @@
             this.startDates = [previousMonth, currentMonth, nextMonth];
         }
 
-        private getDays(date: Date) {
-            let month: Date[];
-
-            month = [...Array(getDaysInMonth(date))].map((y, x) => {
-                return addDays(date, x);
-            });
-
-            return month;
-        }
-
         private previousMonth() {
-            const previousMonth = subMonths(this.months[0][0], 1);
+            if (!this.disabled) {
+                this.step++;
+                this.disabled = true;
 
-            this.months.pop();
-            this.months.unshift(this.getDays(previousMonth));
+                setTimeout(() => {
+                    const previousMonth = subMonths(this.startDates[0], 1);
+
+                    this.startDates.pop();
+                    this.startDates.unshift(previousMonth);
+
+                    this.visible = true;
+                    this.step = -1;
+                }, 300);
+
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.visible = false;
+                }, 500);
+            }
         }
 
         private nextMonth() {
-            const nextMonth = addMonths(this.months[2][0], 1);
+            if (!this.disabled) {
+                this.step--;
+                this.disabled = true;
 
-            this.months.shift();
-            this.months.push(this.getDays(nextMonth));
+                setTimeout(() => {
+                    const nextMonth = addMonths(this.startDates[2], 1);
+
+                    this.startDates.shift();
+                    this.startDates.push(nextMonth);
+
+                    this.visible = true;
+                    this.step = -1;
+                }, 300);
+
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.visible = false;
+                }, 500);
+            }
         }
 
         private created() {
             this.date ? this.getDates(this.date) : this.getDates();
-
-            this.startDates.forEach((date: Date) => {
-                this.months.push(this.getDays(date));
-            });
         }
     }
 </script>

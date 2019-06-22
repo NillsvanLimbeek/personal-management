@@ -1,0 +1,34 @@
+.datepicker {
+    display: flex;
+
+    &__wrapper {
+        position: relative;
+        display: flex;
+
+        width: 35rem;
+        height: 2rem;
+        overflow: hidden;
+    }
+
+    &__arrow {
+        color: var(--color-grey);
+        cursor: pointer;
+    }
+
+    &__month-list {
+        display: flex;
+        transition: var(--transition-2);
+    }
+
+    &__month {
+        flex: 0 0 35rem;
+        background: var(--color-black-light);
+
+        &--absolute {
+            position: absolute;
+
+            width: 35rem;
+            background: var(--color-black-light);
+        }
+    }
+}
