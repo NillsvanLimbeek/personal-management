@@ -1,7 +1,35 @@
 .datepicker {
     display: flex;
+    position: relative;
 
-    &__wrapper {
+    &__trigger {
+        padding: 1rem 1.5rem;
+        border: var(--border-transparent);
+        cursor: pointer;
+
+        & > i {
+            margin-right: 1rem;
+        }
+
+        &:hover {
+            border: var(--border-black);
+        }
+    }
+
+    &__container {
+        position: absolute;
+        right: 0;
+        top: 4.5rem;
+
+        display: flex;
+
+        padding: 1rem;
+        background: var(--color-black-light);
+        border: 1px solid #13181f;
+        box-shadow: 0 5px 1rem 3px rgba(0, 0, 0, 0.3);
+    }
+
+    &__body {
         position: relative;
         display: flex;
 
@@ -29,10 +57,11 @@
 
     &__arrow {
         color: var(--color-grey);
+        padding: 0 1rem;
         cursor: pointer;
     }
 
-    &__month-list {
+    &__months {
         display: flex;
         transition: var(--transition-2);
     }

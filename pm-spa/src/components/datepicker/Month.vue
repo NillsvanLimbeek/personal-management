@@ -1,7 +1,7 @@
 <template>
     <div class="month">
         <div class="month__header">
-            {{ formatTitle }}
+            {{ date | date('MMMM YYYY') }}
         </div>
 
         <div class="month__body">
@@ -17,7 +17,7 @@
                     :style="{ gridColumn: startOfMonth(index) }"
                 >
 
-                    {{ formatDay(day) }}
+                    {{ day | date('D') }}
                 </div>
             </div>
         </div>
@@ -45,10 +45,6 @@
         @Prop({ required: true }) private date!: Date;
         @Prop() private selectedDate!: Date;
 
-        private get formatTitle() {
-            return format(this.date, 'MMMM YYYY');
-        }
-
         private get getDays() {
             let month: Date[];
 
@@ -57,10 +53,6 @@
             });
 
             return month;
-        }
-
-        private formatDay(day: Date) {
-            return format(day, 'D');
         }
 
         private startOfMonth(index: number) {

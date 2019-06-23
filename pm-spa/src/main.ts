@@ -1,4 +1,5 @@
 import './directives';
+import './filters';
 
 import Vue from 'vue';
 import App from './App.vue';

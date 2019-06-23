@@ -1,42 +1,61 @@
 <template>
-    <div class="datepicker">
-        <i
-            class="datepicker__arrow fas fa-arrow-left"
-            @click="previousMonth"
-        />
+    <div
+        v-click-outside="closeDatepicker"
+        class="datepicker"
+    >
 
-        <div class="datepicker__wrapper">
-            <div class="datepicker__weekdays">
-                <span v-for="weekday in getWeekDays">
-                    {{ weekday }}
-                </span>
-            </div>
+        <div
+            @click="showDatepicker = true"
+            class="datepicker__trigger"
+        >
 
-            <div
-                class="datepicker__month-list"
-                :style="{ transform: `translateX(${30 * step}rem)` }"
-            >
+            <i class="far fa-calendar-alt"></i>
+            {{ triggerTitle }}
+        </div>
+
+        <div
+            v-if="showDatepicker"
+            class="datepicker__container"
+        >
+
+            <i
+                class="datepicker__arrow fas fa-arrow-left"
+                @click="previousMonth"
+            />
+
+            <div class="datepicker__body">
+                <div class="datepicker__weekdays">
+                    <span v-for="weekday in getWeekDays">
+                        {{ weekday }}
+                    </span>
+                </div>
+
+                <div
+                    class="datepicker__months"
+                    :style="{ transform: `translateX(${30 * step}rem)` }"
+                >
+                    <Month
+                        v-for="(startDate, index) in startDates"
+                        :key="index"
+                        :date="startDate"
+                        :selected-date="date"
+                        class="datepicker__month"
+                    />
+                </div>
+
                 <Month
-                    v-for="(startDate, index) in startDates"
-                    :key="index"
-                    :date="startDate"
+                    v-if="visible"
+                    class="datepicker__month datepicker__month--absolute"
+                    :date="startDates[1]"
                     :selected-date="date"
-                    class="datepicker__month"
                 />
             </div>
 
-            <Month
-                v-if="visible"
-                class="datepicker__month datepicker__month--absolute"
-                :date="startDates[1]"
-                :selected-date="date"
+            <i
+                class="datepicker__arrow fas fa-arrow-right"
+                @click="nextMonth"
             />
         </div>
-
-        <i
-            class="datepicker__arrow fas fa-arrow-right"
-            @click="nextMonth"
-        />
     </div>
 </template>
 
@@ -65,6 +84,7 @@
     export default class Datepicker extends Vue {
         @Prop() private date!: Date;
 
+        private showDatepicker: boolean = false;
         private startDates: Date[] = [];
         private step: number = -1;
         private visible: boolean = false;
@@ -75,6 +95,10 @@
             const week = eachDay(startOfWeek(today), endOfWeek(today));
 
             return week.map((x) => format(x, 'dd'));
+        }
+
+        private get triggerTitle() {
+            return this.date ? format(this.date, 'MM DDDD') : 'Due Date';
         }
 
         private getDates(date?: Date) {
@@ -134,6 +158,10 @@
                     this.visible = false;
                 }, 500);
             }
+        }
+
+        private closeDatepicker() {
+            this.showDatepicker = false;
         }
 
         private created() {

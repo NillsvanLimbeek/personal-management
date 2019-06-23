@@ -25,14 +25,14 @@
                     v-model="getTask.title"
                     class="text-area"
                 />
-            </div>
+                </div>
 
             <div class="modals-container__assigned-to">
                 <i class="far fa-user"></i>
             </div>
 
             <div class="modals-container__due-date">
-                <i class="far fa-calendar-alt"></i>
+                <Datepicker />
             </div>
 
             <div class="modals-container__description"></div>
@@ -49,7 +49,13 @@
 
     import { ITask } from '@data/models';
 
-    @Component({})
+    const Datepicker = () => import('@components/datepicker/Datepicker.vue');
+
+    @Component({
+        components: {
+            Datepicker,
+        },
+    })
     export default class ModalsContainer extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
 
