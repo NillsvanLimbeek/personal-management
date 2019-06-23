@@ -6,14 +6,21 @@
         />
 
         <div class="datepicker__wrapper">
+            <div class="datepicker__weekdays">
+                <span v-for="weekday in getWeekDays">
+                    {{ weekday }}
+                </span>
+            </div>
+
             <div
                 class="datepicker__month-list"
-                :style="{ transform: `translateX(${35 * step}rem)` }"
+                :style="{ transform: `translateX(${30 * step}rem)` }"
             >
                 <Month
                     v-for="(startDate, index) in startDates"
                     :key="index"
                     :date="startDate"
+                    :selected-date="date"
                     class="datepicker__month"
                 />
             </div>
@@ -22,6 +29,7 @@
                 v-if="visible"
                 class="datepicker__month datepicker__month--absolute"
                 :date="startDates[1]"
+                :selected-date="date"
             />
         </div>
 
@@ -44,6 +52,9 @@
         format,
         subMonths,
         addMonths,
+        eachDay,
+        startOfWeek,
+        endOfWeek,
     } from 'date-fns';
 
     @Component({
@@ -58,6 +69,13 @@
         private step: number = -1;
         private visible: boolean = false;
         private disabled: boolean = false;
+
+        private get getWeekDays() {
+            const today = Date.now();
+            const week = eachDay(startOfWeek(today), endOfWeek(today));
+
+            return week.map((x) => format(x, 'dd'));
+        }
 
         private getDates(date?: Date) {
             let currentMonth: Date;
