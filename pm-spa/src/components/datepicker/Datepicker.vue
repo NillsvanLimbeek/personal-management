@@ -40,6 +40,7 @@
                         :date="startDate"
                         :selected-date="date"
                         class="datepicker__month"
+                        @select-date="selectDate($event)"
                     />
                 </div>
 
@@ -90,7 +91,7 @@
         private visible: boolean = false;
         private disabled: boolean = false;
 
-        private get getWeekDays() {
+        private get getWeekDays(): string[] {
             const today = Date.now();
             const week = eachDay(startOfWeek(today), endOfWeek(today));
 
@@ -98,10 +99,10 @@
         }
 
         private get triggerTitle() {
-            return this.date ? format(this.date, 'MM DDDD') : 'Due Date';
+            return this.date ? format(this.date, 'DD MMM') : 'Due Date';
         }
 
-        private getDates(date?: Date) {
+        private getDates(date?: Date): void {
             let currentMonth: Date;
 
             if (date) {
@@ -116,7 +117,7 @@
             this.startDates = [previousMonth, currentMonth, nextMonth];
         }
 
-        private previousMonth() {
+        private previousMonth(): void {
             if (!this.disabled) {
                 this.step++;
                 this.disabled = true;
@@ -138,7 +139,7 @@
             }
         }
 
-        private nextMonth() {
+        private nextMonth(): void {
             if (!this.disabled) {
                 this.step--;
                 this.disabled = true;
@@ -160,7 +161,12 @@
             }
         }
 
-        private closeDatepicker() {
+        private closeDatepicker(): void {
+            this.showDatepicker = false;
+        }
+
+        private selectDate(date: Date): void {
+            this.$emit('select-date', date);
             this.showDatepicker = false;
         }
 

@@ -32,7 +32,9 @@
             </div>
 
             <div class="modals-container__due-date">
-                <Datepicker />
+                <Datepicker
+                    :date="getTask.dueDate"
+                    @select-date="updateDueDate($event)"  />
             </div>
 
             <div class="modals-container__description"></div>
@@ -70,7 +72,7 @@
             }
         }
 
-        private autoResize() {
+        private autoResize(): void {
             const textarea = document.querySelector('textarea');
 
             if (textarea) {
@@ -78,6 +80,15 @@
 
                 textarea.style.height = 'auto';
                 textarea.style.height = textarea.scrollHeight + offset + 'px';
+            }
+        }
+
+        private updateDueDate(date: Date) {
+            if (this.getTask) {
+                this.$store.dispatch('tasks/updateTask', {
+                    id: this.getTask.id,
+                    dueDate: date,
+                });
             }
         }
     }

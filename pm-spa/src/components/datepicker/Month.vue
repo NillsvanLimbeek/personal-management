@@ -15,6 +15,7 @@
                         'month__day--selected': isSelected(day),
                     }"
                     :style="{ gridColumn: startOfMonth(index) }"
+                    @click="$emit('select-date', day)"
                 >
 
                     {{ day | date('D') }}
