@@ -19,7 +19,7 @@
         >
 
             <i
-                class="datepicker__arrow fas fa-arrow-left"
+                class="datepicker__arrow datepicker__arrow--left fas fa-arrow-left"
                 @click="previousMonth"
             />
 
@@ -46,7 +46,7 @@
 
                 <Month
                     v-if="visible"
-                    class="datepicker__month datepicker__month--absolute"
+                    class="datepicker__month datepicker__arrow--right datepicker__month--absolute"
                     :date="startDates[1]"
                     :selected-date="date"
                 />
@@ -72,7 +72,7 @@
         format,
         subMonths,
         addMonths,
-        eachDay,
+        eachDayOfInterval,
         startOfWeek,
         endOfWeek,
     } from 'date-fns';
@@ -93,13 +93,16 @@
 
         private get getWeekDays(): string[] {
             const today = Date.now();
-            const week = eachDay(startOfWeek(today), endOfWeek(today));
+            const week: Date[] = eachDayOfInterval({
+                start: startOfWeek(today),
+                end: endOfWeek(today),
+            });
 
-            return week.map((x) => format(x, 'dd'));
+            return week.map((x) => format(x, 'EEEEEE'));
         }
 
         private get triggerTitle() {
-            return this.date ? format(this.date, 'DD MMM') : 'Due Date';
+            return this.date ? format(this.date, 'dd MMM') : 'Due Date';
         }
 
         private getDates(date?: Date): void {

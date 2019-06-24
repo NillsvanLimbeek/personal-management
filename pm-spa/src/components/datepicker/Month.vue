@@ -1,7 +1,7 @@
 <template>
     <div class="month">
         <div class="month__header">
-            {{ date | date('MMMM YYYY') }}
+            {{ date | date('MMMM yyyy') }}
         </div>
 
         <div class="month__body">
@@ -18,7 +18,7 @@
                     @click="$emit('select-date', day)"
                 >
 
-                    {{ day | date('D') }}
+                    {{ day | date('d') }}
                 </div>
             </div>
         </div>
@@ -36,7 +36,6 @@
         getDay,
         startOfWeek,
         endOfWeek,
-        eachDay,
         isToday,
         isSameDay,
     } from 'date-fns';
