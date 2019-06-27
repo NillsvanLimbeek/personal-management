@@ -25,14 +25,16 @@
                     v-model="getTask.title"
                     class="text-area"
                 />
-            </div>
+                </div>
 
             <div class="modals-container__assigned-to">
                 <i class="far fa-user"></i>
             </div>
 
             <div class="modals-container__due-date">
-                <i class="far fa-calendar-alt"></i>
+                <Datepicker
+                    :date="getTask.dueDate"
+                    @select-date="updateDueDate($event)"  />
             </div>
 
             <div class="modals-container__description"></div>
@@ -49,7 +51,13 @@
 
     import { ITask } from '@data/models';
 
-    @Component({})
+    const Datepicker = () => import('@components/datepicker/Datepicker.vue');
+
+    @Component({
+        components: {
+            Datepicker,
+        },
+    })
     export default class ModalsContainer extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
 
@@ -64,7 +72,7 @@
             }
         }
 
-        private autoResize() {
+        private autoResize(): void {
             const textarea = document.querySelector('textarea');
 
             if (textarea) {
@@ -72,6 +80,15 @@
 
                 textarea.style.height = 'auto';
                 textarea.style.height = textarea.scrollHeight + offset + 'px';
+            }
+        }
+
+        private updateDueDate(date: Date) {
+            if (this.getTask) {
+                this.$store.dispatch('tasks/updateTask', {
+                    id: this.getTask.id,
+                    dueDate: date,
+                });
             }
         }
     }

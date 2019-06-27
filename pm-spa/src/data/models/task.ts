@@ -4,9 +4,9 @@ export interface ITask {
     description?: string;
     completed: boolean;
     taskSectionId: string;
+    dueDate?: Date;
 
     // TODO
     // assignedTo: string;
-    // dueDate: Date;
     // project: string
 }
