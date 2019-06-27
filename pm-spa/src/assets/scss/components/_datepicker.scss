@@ -56,9 +56,21 @@
     }
 
     &__arrow {
+        position: absolute;
+        top: 5px;
+        z-index: 100;
+
         color: var(--color-grey);
-        padding: 0 1rem;
+        padding: 1rem;
         cursor: pointer;
+
+        &--left {
+            left: 5px;
+        }
+
+        &--right {
+            right: 5px;
+        }
     }
 
     &__months {
@@ -72,6 +84,8 @@
 
         &--absolute {
             position: absolute;
+            top: 0;
+            left: 0;
 
             width: 30rem;
             background: var(--color-black-light);

@@ -53,7 +53,7 @@
             </div>
 
             <i
-                class="datepicker__arrow fas fa-arrow-right"
+                class="datepicker__arrow datepicker__arrow--right fas fa-arrow-right"
                 @click="nextMonth"
             />
         </div>
@@ -138,7 +138,7 @@
                 setTimeout(() => {
                     this.disabled = false;
                     this.visible = false;
-                }, 500);
+                }, 600);
             }
         }
 
@@ -160,7 +160,7 @@
                 setTimeout(() => {
                     this.disabled = false;
                     this.visible = false;
-                }, 500);
+                }, 600);
             }
         }
 
