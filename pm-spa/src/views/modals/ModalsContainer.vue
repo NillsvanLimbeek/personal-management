@@ -37,7 +37,9 @@
                     @select-date="updateDueDate($event)"  />
             </div>
 
-            <div class="modals-container__description"></div>
+            <div class="modals-container__description">
+                <TextEditor />
+            </div>
 
             <div class="modals-container__comments"></div>
         </div>
@@ -52,10 +54,12 @@
     import { ITask } from '@data/models';
 
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
+    const TextEditor = () => import('@components/editor/TextEditor.vue');
 
     @Component({
         components: {
             Datepicker,
+            TextEditor,
         },
     })
     export default class ModalsContainer extends Vue {
