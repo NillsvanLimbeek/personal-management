@@ -2,54 +2,55 @@
     <div class="text-editor">
         <EditorMenuBar
             :editor="editor"
-            v-slot="{ commands, isActive }"
+            v-slot="{ commands, isActive, focused }"
         >
-            <div>
-                <button
+            <div
+                class="text-editor__menu"
+                :class="{ 'text-editor__menu--active': focused }"
+            >
+
+                <i
                     @click="commands.bold"
+                    class="text-editor__icon fas fa-bold"
                     :class="{ 'is-active': isActive.bold() }"
-                >
-                    Bold
-                </button>
+                />
 
-                <button
+                <i
                     @click="commands.italic"
+                    class="text-editor__icon fas fa-italic"
                     :class="{ 'is-active': isActive.italic() }"
-                >
-                    Italic
-                </button>
+                />
 
-                <button
+                <i
                     @click="commands.underline"
+                    class="text-editor__icon fas fa-underline"
                     :class="{ 'is-active': isActive.underline() }"
-                >
-                    Underline
-                </button>
+                />
 
-                <button
+                <i
                     @click="commands.strike"
+                    class="text-editor__icon fas fa-strikethrough"
                     :class="{ 'is-active': isActive.strike() }"
-                >
-                    Strike
-                </button>
+                />
 
-                <button
+                <i
                     @click="commands.ordered_list"
+                    class="text-editor__icon fas fa-list-ol"
                     :class="{ 'is-active': isActive.ordered_list() }"
-                >
-                    Ordered List
-                </button>
+                />
 
-                <button
+                <i
                     @click="commands.bullet_list"
+                    class="text-editor__icon fas fa-list-ul"
                     :class="{ 'is-active': isActive.bullet_list() }"
-                >
-                    Bullet List
-                </button>
+                />
             </div>
         </EditorMenuBar>
 
-        <EditorContent :editor="editor" />
+        <EditorContent
+            :editor="editor"
+            class="text-editor__editor"
+        />
     </div>
 </template>
 
@@ -98,9 +99,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    .is-active {
-        background: red;
-    }
-</style>
