@@ -38,7 +38,9 @@
             </div>
 
             <div class="modals-container__description">
-                <TextEditor />
+                <TextEditor
+                    :task="getTask"
+                    @description="updateDescription($event)" />
             </div>
 
             <div class="modals-container__comments"></div>
@@ -92,6 +94,15 @@
                 this.$store.dispatch('tasks/updateTask', {
                     id: this.getTask.id,
                     dueDate: date,
+                });
+            }
+        }
+
+        private updateDescription(description: object): void {
+            if (this.getTask) {
+                this.$store.dispatch('tasks/updateTask', {
+                    id: this.getTask.id,
+                    description,
                 });
             }
         }

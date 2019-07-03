@@ -55,7 +55,9 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from '@/vue-script';
+    import { Vue, Component, Prop } from '@/vue-script';
+
+    import { ITask } from '@data/models';
 
     // @ts-ignore
     import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
@@ -77,7 +79,10 @@
         },
     })
     export default class TextEditor extends Vue {
+        @Prop({ required: true }) private task!: ITask;
+
         private editor: any = null;
+        private json: object = {};
 
         private mounted() {
             this.editor = new Editor({
@@ -90,7 +95,33 @@
                     new OrderedList(),
                     new ListItem(),
                 ],
-                content: '<p>This is just a boring paragraph</p>',
+                setContent: () => {
+                    // you can pass a json document
+                    this.editor.setContent(
+                        {
+                            type: 'doc',
+                            content: [
+                                {
+                                    type: 'paragraph',
+                                    content: [
+                                        {
+                                            type: 'text',
+                                            text: 'This is some inserted text. 👋',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        true,
+                    );
+                },
+                // content: '<p>This is just a boring paragraph</p>',
+                onUpdate: ({ getJSON }) => {
+                    this.json = getJSON();
+                },
+                onBlur: () => {
+                    this.$emit('description', this.json);
+                },
             });
         }
 
