@@ -48,6 +48,7 @@
         </EditorMenuBar>
 
         <EditorContent
+            :doc='json'
             :editor="editor"
             class="text-editor__editor"
         />
@@ -55,7 +56,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from '@/vue-script';
+    import { Vue, Component, Prop, Watch } from '@/vue-script';
 
     import { ITask } from '@data/models';
 
@@ -84,6 +85,11 @@
         private editor: any = null;
         private json: object = {};
 
+        @Watch('task.description', { deep: true })
+        private setJson() {
+            this.editor.setContent(this.task.description);
+        }
+
         private mounted() {
             this.editor = new Editor({
                 extensions: [
@@ -95,34 +101,15 @@
                     new OrderedList(),
                     new ListItem(),
                 ],
-                setContent: () => {
-                    // you can pass a json document
-                    this.editor.setContent(
-                        {
-                            type: 'doc',
-                            content: [
-                                {
-                                    type: 'paragraph',
-                                    content: [
-                                        {
-                                            type: 'text',
-                                            text: 'This is some inserted text. 👋',
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        true,
-                    );
-                },
-                // content: '<p>This is just a boring paragraph</p>',
-                onUpdate: ({ getJSON }) => {
+                onUpdate: ({ getJSON }: any) => {
                     this.json = getJSON();
                 },
                 onBlur: () => {
                     this.$emit('description', this.json);
                 },
             });
+
+            this.setJson();
         }
 
         private beforeDestroy() {

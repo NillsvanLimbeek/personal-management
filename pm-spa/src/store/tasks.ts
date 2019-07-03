@@ -1,4 +1,3 @@
-import { taskSections } from './task-sections';
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 
 import { IRootState, ITaskState } from '@data/state';
@@ -11,7 +10,20 @@ const state: ITaskState = {
         {
             id: '5346d3ca-169f-4584-8710-172d79224d4f',
             title: 'Task #1',
-            description: 'This is task one',
+            description: {
+                type: 'doc',
+                content: [
+                    {
+                        type: 'paragraph',
+                        content: [
+                            {
+                                type: 'text',
+                                text: 'This is some inserted text. 👋',
+                            },
+                        ],
+                    },
+                ],
+            },
             completed: false,
             taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
         },
