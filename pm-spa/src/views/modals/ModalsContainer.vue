@@ -37,7 +37,11 @@
                     @select-date="updateDueDate($event)"  />
             </div>
 
-            <div class="modals-container__description"></div>
+            <div class="modals-container__description">
+                <TextEditor
+                    :task="getTask"
+                    @description="updateDescription($event)" />
+            </div>
 
             <div class="modals-container__comments"></div>
         </div>
@@ -52,10 +56,12 @@
     import { ITask } from '@data/models';
 
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
+    const TextEditor = () => import('@components/editor/TextEditor.vue');
 
     @Component({
         components: {
             Datepicker,
+            TextEditor,
         },
     })
     export default class ModalsContainer extends Vue {
@@ -88,6 +94,15 @@
                 this.$store.dispatch('tasks/updateTask', {
                     id: this.getTask.id,
                     dueDate: date,
+                });
+            }
+        }
+
+        private updateDescription(description: object): void {
+            if (this.getTask) {
+                this.$store.dispatch('tasks/updateTask', {
+                    id: this.getTask.id,
+                    description,
                 });
             }
         }
