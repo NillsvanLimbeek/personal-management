@@ -90,6 +90,11 @@
             this.editor.setContent(this.task.description);
         }
 
+        @Watch('json')
+        private updateDescription() {
+            this.$emit('description', this.json);
+        }
+
         private mounted() {
             this.editor = new Editor({
                 extensions: [
@@ -103,9 +108,6 @@
                 ],
                 onUpdate: ({ getJSON }: any) => {
                     this.json = getJSON();
-                },
-                onBlur: () => {
-                    this.$emit('description', this.json);
                 },
             });
 

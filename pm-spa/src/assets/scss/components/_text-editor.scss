@@ -1,4 +1,12 @@
 .text-editor {
+    border: var(--border-transparent);
+    transition: var(--transition-3);
+
+    &:hover {
+        border: var(--border-black);
+        transition: var(--transition-3);
+    }
+
     &__menu {
         opacity: 0;
         transition: var(--transition-3);
@@ -10,5 +18,13 @@
     }
 
     &__icon {
+    }
+
+    &__editor {
+        padding: 5px 1rem;
+
+        & > div:focus {
+            outline: none;
+        }
     }
 }
