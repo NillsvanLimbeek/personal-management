@@ -18,7 +18,7 @@ const state: ITaskState = {
                         content: [
                             {
                                 type: 'text',
-                                text: 'This is some inserted text. 👋',
+                                text: 'This is Task# 1 ',
                             },
                         ],
                     },
@@ -30,14 +30,40 @@ const state: ITaskState = {
         {
             id: '6e5e1b1e-faf6-4120-bf4c-091ef2329315',
             title: 'Task #2',
-            description: 'This is task two',
+            description: {
+                type: 'doc',
+                content: [
+                    {
+                        type: 'paragraph',
+                        content: [
+                            {
+                                type: 'text',
+                                text: 'This is Task# 2 ',
+                            },
+                        ],
+                    },
+                ],
+            },
             completed: true,
             taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
         },
         {
             id: '5aa9d99e-f0ca-4ca6-a8ff-eec0c2191efd',
             title: 'Task #3',
-            description: 'This is task three',
+            description: {
+                type: 'doc',
+                content: [
+                    {
+                        type: 'paragraph',
+                        content: [
+                            {
+                                type: 'text',
+                                text: 'This is Task# 3 ',
+                            },
+                        ],
+                    },
+                ],
+            },
             completed: false,
             taskSectionId: '537d15b0-bd23-46f3-bcc9-c6749c06aaf3',
         },

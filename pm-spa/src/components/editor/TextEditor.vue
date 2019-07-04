@@ -1,5 +1,15 @@
 <template>
-    <div class="text-editor">
+    <div
+        class="text-editor"
+        :class="{ 'text-editor--active': editorFocus }"
+    >
+
+        <EditorContent
+            :doc='json'
+            :editor="editor"
+            class="text-editor__editor"
+        />
+
         <EditorMenuBar
             :editor="editor"
             v-slot="{ commands, isActive, focused }"
@@ -12,46 +22,40 @@
                 <i
                     @click="commands.bold"
                     class="text-editor__icon fas fa-bold"
-                    :class="{ 'is-active': isActive.bold() }"
+                    :class="{ 'text-editor__icon--active': isActive.bold() }"
                 />
 
                 <i
                     @click="commands.italic"
                     class="text-editor__icon fas fa-italic"
-                    :class="{ 'is-active': isActive.italic() }"
+                    :class="{ 'text-editor__icon--active': isActive.italic() }"
                 />
 
                 <i
                     @click="commands.underline"
                     class="text-editor__icon fas fa-underline"
-                    :class="{ 'is-active': isActive.underline() }"
+                    :class="{ 'text-editor__icon--active': isActive.underline() }"
                 />
 
                 <i
                     @click="commands.strike"
                     class="text-editor__icon fas fa-strikethrough"
-                    :class="{ 'is-active': isActive.strike() }"
+                    :class="{ 'text-editor__icon--active': isActive.strike() }"
                 />
 
                 <i
                     @click="commands.ordered_list"
                     class="text-editor__icon fas fa-list-ol"
-                    :class="{ 'is-active': isActive.ordered_list() }"
+                    :class="{ 'text-editor__icon--active': isActive.ordered_list() }"
                 />
 
                 <i
                     @click="commands.bullet_list"
                     class="text-editor__icon fas fa-list-ul"
-                    :class="{ 'is-active': isActive.bullet_list() }"
+                    :class="{ 'text-editor__icon--active': isActive.bullet_list() }"
                 />
             </div>
         </EditorMenuBar>
-
-        <EditorContent
-            :doc='json'
-            :editor="editor"
-            class="text-editor__editor"
-        />
     </div>
 </template>
 
@@ -70,6 +74,7 @@
         BulletList,
         OrderedList,
         ListItem,
+        Placeholder,
         // @ts-ignore
     } from 'tiptap-extensions';
 
@@ -84,14 +89,15 @@
 
         private editor: any = null;
         private json: object = {};
+        private editorFocus: boolean = false;
 
-        @Watch('task.description', { deep: true })
-        private setJson() {
+        @Watch('task.id')
+        private setJson(): void {
             this.editor.setContent(this.task.description);
         }
 
         @Watch('json')
-        private updateDescription() {
+        private updateDescription(): void {
             this.$emit('description', this.json);
         }
 
@@ -105,9 +111,20 @@
                     new BulletList(),
                     new OrderedList(),
                     new ListItem(),
+                    new Placeholder({
+                        emptyNodeClass: 'is-empty',
+                        emptyNodeText: 'Description',
+                        showOnlyWhenEditable: true,
+                    }),
                 ],
                 onUpdate: ({ getJSON }: any) => {
                     this.json = getJSON();
+                },
+                onFocus: () => {
+                    this.editorFocus = true;
+                },
+                onBlur: () => {
+                    this.editorFocus = false;
                 },
             });
 
