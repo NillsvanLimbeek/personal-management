@@ -2,23 +2,22 @@
     <div class="calendar">
         <h2>Calendar</h2>
 
-        <Datepicker />
+        <CalendarHeader />
+        <CalendarDays />
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component } from '@/vue-script';
-    import { startOfMonth, addYears } from 'date-fns';
 
-    const Datepicker = () => import('@components/datepicker/Datepicker.vue');
+    const CalendarHeader = () => import('@components/calendar/CalendarHeader.vue');
+    const CalendarDays = () => import('@components/calendar/CalendarDays.vue');
 
     @Component({
         components: {
-            Datepicker,
+            CalendarHeader,
+            CalendarDays,
         },
     })
-    export default class TaskCalendarSection extends Vue {
-        private today: Date = startOfMonth(Date.now());
-        private nextYear: Date = addYears(this.today, 1);
-    }
+    export default class TaskCalendarSection extends Vue {}
 </script>
