@@ -1,22 +1,17 @@
 <template>
-    <div class="calendar">
-        <h2>Calendar</h2>
-
-        <CalendarHeader />
-        <CalendarDays />
-    </div>
+    <!-- <div> -->
+    <Calendar />
+    <!-- </div> -->
 </template>
 
 <script lang="ts">
     import { Vue, Component } from '@/vue-script';
 
-    const CalendarHeader = () => import('@components/calendar/CalendarHeader.vue');
-    const CalendarDays = () => import('@components/calendar/CalendarDays.vue');
+    const Calendar = () => import('@components/calendar/Calendar.vue');
 
     @Component({
         components: {
-            CalendarHeader,
-            CalendarDays,
+            Calendar,
         },
     })
     export default class TaskCalendarSection extends Vue {}

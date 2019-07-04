@@ -1,0 +1,58 @@
+.calendar {
+    position: relative;
+    padding: 2.5rem;
+
+    &__header {
+        @include flex-center-align;
+        margin-bottom: 2.5rem;
+
+        & > span {
+            @include flex-center;
+            width: 15rem;
+        }
+    }
+
+    &__arrow {
+        color: var(--color-grey-light);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--color-grey);
+        }
+    }
+
+    &__button {
+        position: absolute;
+        right: 2.5rem;
+    }
+
+    &__weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+
+        margin-bottom: 2.5rem;
+
+        & > span {
+            @include flex-center;
+        }
+    }
+
+    &__days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-gap: 7.5px;
+    }
+
+    &__day {
+        @include flex-end;
+
+        height: 10rem;
+        padding: 5px;
+
+        border: 1px dashed var(--color-black);
+
+        &--today {
+            border: 1px dashed var(--color-blue-dark);
+        }
+    }
+}
