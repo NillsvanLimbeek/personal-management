@@ -61,7 +61,7 @@
 
     @Component({})
     export default class Calendar extends Vue {
-        private date: Date = new Date();
+        private date: Date = setDate(new Date(), 1);
 
         private get daysInMonth(): Date[] {
             const start: Date = startOfMonth(this.date);
