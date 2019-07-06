@@ -23,9 +23,8 @@ export const routes: RouteConfig[] = [
                 children: [
                     {
                         path: 'task/:id',
-                        name: 'taskModal',
-                        component: () =>
-                            import('@views/modals/ModalsContainer.vue'),
+                        name: 'listTaskModal',
+                        component: () => import('@views/modals/ModalRight.vue'),
                     },
                 ],
             },
@@ -33,6 +32,20 @@ export const routes: RouteConfig[] = [
                 path: 'calendar',
                 name: 'taskCalendar',
                 component: () => import('@views/tasks/TaskCalendarSection.vue'),
+                children: [
+                    {
+                        path: 'task/:id',
+                        name: 'calendarTaskModal',
+                        component: () => import('@views/modals/ModalRight.vue'),
+                    },
+                    {
+                        path: 'create',
+                        name: 'calendarCreateTaskModal',
+                        component: () =>
+                            import('@views/modals/ModalCenter.vue'),
+                        props: true,
+                    },
+                ],
             },
             {
                 path: 'files',

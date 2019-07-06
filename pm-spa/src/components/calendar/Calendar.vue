@@ -33,6 +33,7 @@
                 class="calendar__day"
                 :class="{ 'calendar__day--today': isToday(day) }"
                 :style="{ gridColumn: startOfMonth(index) }"
+                @click="openModal(day)"
             >
 
                 <div class="calendar__day-header">
@@ -91,7 +92,7 @@
     export default class Calendar extends Vue {
         @Prop({ required: true }) private tasks!: ITask[];
 
-        private date: Date = setDate(new Date(), 1);
+        private date: Date = startOfMonth(new Date());
 
         private get daysInMonth(): Date[] {
             const start: Date = startOfMonth(this.date);
@@ -127,7 +128,7 @@
         private switchDate(date: string) {
             switch (date) {
                 case (date = 'today'):
-                    this.date = setDate(new Date(), 1);
+                    this.date = startOfMonth(new Date());
                     break;
                 case (date = 'next-month'):
                     this.date = addMonths(this.date, 1);
@@ -136,6 +137,13 @@
                     this.date = subMonths(this.date, 1);
                     break;
             }
+        }
+
+        private openModal(day: Date) {
+            this.$router.push({
+                name: 'calendarCreateTaskModal',
+                params: { date: `${day}` },
+            });
         }
     }
 </script>

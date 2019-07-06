@@ -59,5 +59,7 @@
 
     &__day-header {
         @include flex-end;
+
+        margin-bottom: 5px;
     }
 }

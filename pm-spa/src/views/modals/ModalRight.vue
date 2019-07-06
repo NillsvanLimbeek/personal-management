@@ -1,7 +1,7 @@
 <template>
-    <div class="modals-container">
-        <div class="modals-container__header">
-            <div class="modals-container__complete">
+    <div class="modal-right">
+        <div class="modal-right__header">
+            <div class="modal-right__complete">
                 <div
                     :class="{ 'task__checkbox--active': getTask.completed }"
                     class="task__checkbox"
@@ -13,12 +13,12 @@
 
             <i
                 @click="$router.go(-1)"
-                class="modals-container__close fas fa-times"
+                class="modal-right__close fas fa-times"
             />
         </div>
 
-        <div class="modals-container__body">
-            <div class="modals-container__title">
+        <div class="modal-right__body">
+            <div class="modal-right__title">
                 <textarea
                     rows="1"
                     @input="autoResize"
@@ -27,26 +27,26 @@
                 />
                 </div>
 
-            <div class="modals-container__assigned-to">
+            <div class="modal-right__assigned-to">
                 <i class="far fa-user"></i>
             </div>
 
-            <div class="modals-container__due-date">
+            <div class="modal-right__due-date">
                 <Datepicker
                     :date="getTask.dueDate"
                     @select-date="updateDueDate($event)"  />
             </div>
 
-            <div class="modals-container__description">
+            <div class="modal-right__description">
                 <TextEditor
                     :task="getTask"
                     @description="updateDescription($event)" />
             </div>
 
-            <div class="modals-container__comments"></div>
+            <div class="modal-right__comments"></div>
         </div>
 
-        <div class="modals-container__footer"></div>
+        <div class="modal-right__footer"></div>
     </div>
 </template>
 
@@ -64,7 +64,7 @@
             TextEditor,
         },
     })
-    export default class ModalsContainer extends Vue {
+    export default class ModalRight extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
 
         private get getTask(): ITask | undefined {

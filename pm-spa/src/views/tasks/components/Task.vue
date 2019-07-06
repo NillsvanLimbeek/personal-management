@@ -8,14 +8,20 @@
             @rename-task="triggerEdit = true"
         />
 
-        <div @click="openModal(task.id)" class="task__body">
+        <div
+            @click="openModal(task.id)"
+            class="task__body"
+        >
             <div
                 :class="{ 'task__checkbox--active': task.completed }"
                 class="task__checkbox"
                 @click.stop="updateTask"
             />
 
-            <div @click.stop="triggerEdit = true" class="task__title">
+            <div
+                @click.stop="triggerEdit = true"
+                class="task__title"
+            >
                 <InlineEdit
                     :title="task.title"
                     :trigger-edit="triggerEdit"
@@ -117,7 +123,7 @@
         }
 
         private openModal(id: string) {
-            if (this.$route.name === 'taskModal') {
+            if (this.$route.name === 'listTaskModal') {
                 this.$router.replace({ path: `${id}` });
             } else {
                 this.$router.push({ path: `list/task/${id}` });

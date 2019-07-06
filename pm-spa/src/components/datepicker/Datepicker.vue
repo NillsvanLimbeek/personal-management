@@ -174,7 +174,7 @@
         }
 
         private created() {
-            this.date ? this.getDates(this.date) : this.getDates();
+            this.date ? this.getDates(startOfMonth(this.date)) : this.getDates();
         }
     }
 </script>
