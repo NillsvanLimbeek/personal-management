@@ -3,14 +3,14 @@
         <div class="calendar__header">
             <i
                 class="calendar__arrow fas fa-chevron-left"
-                @click="subtractMonth"
+                @click="switchDate('previous-month')"
             />
 
             <span>{{ date | date('MMMM yyyy') }}</span>
 
             <i
                 class="calendar__arrow fas fa-chevron-right"
-                @click="addMonth"
+                @click="switchDate('next-month')"
             />
 
             <button
@@ -35,14 +35,34 @@
                 :style="{ gridColumn: startOfMonth(index) }"
             >
 
-                {{ day | date('d') }}
+                <div class="calendar__day-header">
+                    {{ day | date('d') }}
+                </div>
+
+                <div
+                    class="calendar__task-list"
+                    v-if="tasks.length > 0"
+                >
+                    <div
+                        class="calendar__tasks"
+                        v-for="task in tasks"
+                    >
+
+                        <CalendarTask
+                            v-if="sameDay(day, task)"
+                            :task="task"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from '@/vue-script';
+    import { Vue, Component, Prop, Getter } from '@/vue-script';
+
+    import { ITask } from '@data/models';
 
     import {
         getDaysInMonth,
@@ -57,10 +77,20 @@
         addMonths,
         subMonths,
         setDate,
+        isSameMonth,
+        isSameDay,
     } from 'date-fns';
 
-    @Component({})
+    const CalendarTask = () => import('./CalendarTask.vue');
+
+    @Component({
+        components: {
+            CalendarTask,
+        },
+    })
     export default class Calendar extends Vue {
+        @Prop({ required: true }) private tasks!: ITask[];
+
         private date: Date = setDate(new Date(), 1);
 
         private get daysInMonth(): Date[] {
@@ -80,6 +110,10 @@
             });
         }
 
+        private sameDay(day: Date, task: ITask) {
+            return isSameDay(day, task.dueDate as Date);
+        }
+
         private startOfMonth(index: number) {
             if (index === 0) {
                 return getDay(this.date) + 1;
@@ -90,21 +124,16 @@
             return isToday(date);
         }
 
-        private addMonth() {
-            this.date = addMonths(this.date, 1);
-        }
-
-        private subtractMonth() {
-            this.date = subMonths(this.date, 1);
-        }
-
         private switchDate(date: string) {
             switch (date) {
                 case (date = 'today'):
                     this.date = setDate(new Date(), 1);
                     break;
-
-                default:
+                case (date = 'next-month'):
+                    this.date = addMonths(this.date, 1);
+                    break;
+                case (date = 'previous-month'):
+                    this.date = subMonths(this.date, 1);
                     break;
             }
         }

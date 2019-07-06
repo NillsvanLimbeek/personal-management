@@ -44,7 +44,8 @@
     }
 
     &__day {
-        @include flex-end;
+        display: flex;
+        flex-direction: column;
 
         height: 10rem;
         padding: 5px;
@@ -54,5 +55,9 @@
         &--today {
             border: 1px dashed var(--color-blue-dark);
         }
+    }
+
+    &__day-header {
+        @include flex-end;
     }
 }
