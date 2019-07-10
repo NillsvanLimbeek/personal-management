@@ -11,7 +11,7 @@
                 class="modal-center__close fas fa-times"
             />
 
-            {{ date }}
+            <component :is="modalContent" />
         </div>
     </div>
 </template>
@@ -19,11 +19,18 @@
 <script lang="ts">
     import { Vue, Component } from '@/vue-script';
 
-    import { toDate } from 'date-fns';
-
     @Component({})
     export default class ModalCenter extends Vue {
         private date: Date | undefined;
+
+        private get modalContent() {
+            switch (this.$route.name) {
+                case 'calendarTaskModal':
+                    return () => import('./content/TaskModal.vue');
+                case 'calendarCreateTaskModal':
+                    return () => import('./content/CreateTaskModal.vue');
+            }
+        }
 
         private created() {
             this.date = new Date(this.$attrs.date);

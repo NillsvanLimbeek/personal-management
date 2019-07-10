@@ -1,6 +1,9 @@
 <template>
     <div>
-        <Calendar :tasks="tasks" />
+        <Calendar
+            :tasks="tasks"
+            @create-task="openCreateModal($event)"
+        />
 
         <transition name="modal-center">
             <router-view />
@@ -24,7 +27,7 @@
     export default class TaskCalendarSection extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
 
-        private openModal(id: string) {
+        private openTaskModal(id: string) {
             if (this.$route.name === 'calendarTaskModal') {
                 this.$router.replace({ path: `${id}` });
             } else {
@@ -32,9 +35,16 @@
             }
         }
 
+        private openCreateModal(day: Date) {
+            this.$router.push({
+                name: 'calendarCreateTaskModal',
+                params: { date: `${day}` },
+            });
+        }
+
         private created() {
             EventBus.$on('task-modal', (id: string) => {
-                this.openModal(id);
+                this.openTaskModal(id);
             });
         }
     }

@@ -15,8 +15,9 @@
     @Component({})
     export default class ModalRight extends Vue {
         private get modalContent() {
-            if (this.$route.name === 'listTaskModal') {
-                return () => import('./content/TaskModal.vue');
+            switch (this.$route.name) {
+                case 'listTaskModal':
+                    return () => import('./content/TaskModal.vue');
             }
         }
     }

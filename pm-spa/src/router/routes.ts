@@ -36,7 +36,8 @@ export const routes: RouteConfig[] = [
                     {
                         path: 'task/:id',
                         name: 'calendarTaskModal',
-                        component: () => import('@views/modals/ModalRight.vue'),
+                        component: () =>
+                            import('@views/modals/ModalCenter.vue'),
                     },
                     {
                         path: 'create',

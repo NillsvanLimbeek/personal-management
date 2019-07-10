@@ -33,7 +33,7 @@
                 class="calendar__day"
                 :class="{ 'calendar__day--today': isToday(day) }"
                 :style="{ gridColumn: startOfMonth(index) }"
-                @click="openModal(day)"
+                @click="$emit('create-task', day)"
             >
 
                 <div class="calendar__day-header">
@@ -137,13 +137,6 @@
                     this.date = subMonths(this.date, 1);
                     break;
             }
-        }
-
-        private openModal(day: Date) {
-            this.$router.push({
-                name: 'calendarCreateTaskModal',
-                params: { date: `${day}` },
-            });
         }
     }
 </script>
