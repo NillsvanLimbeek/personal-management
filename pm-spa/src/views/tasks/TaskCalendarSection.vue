@@ -46,6 +46,10 @@
             EventBus.$on('task-modal', (id: string) => {
                 this.openTaskModal(id);
             });
+
+            EventBus.$on('update-task', (complete: boolean) => {
+                this.$store.dispatch('tasks/updateTask', complete);
+            });
         }
     }
 </script>

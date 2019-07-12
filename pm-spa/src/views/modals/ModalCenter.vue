@@ -6,18 +6,21 @@
         ></div>
 
         <div class="modal-center__body">
+            <!-- {{ date }} -->
+
             <i
                 @click="$router.go(-1)"
                 class="modal-center__close fas fa-times"
             />
 
-            <component :is="modalContent" />
+            <component :is="modalContent" :date="date" />
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component } from '@/vue-script';
+    import { parse, parseISO, format } from 'date-fns';
 
     @Component({})
     export default class ModalCenter extends Vue {

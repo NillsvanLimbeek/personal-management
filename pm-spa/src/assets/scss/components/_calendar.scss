@@ -51,9 +51,15 @@
         padding: 5px;
 
         border: 1px dashed var(--color-black);
+        cursor: pointer;
 
         &--today {
             border: 1px dashed var(--color-blue-dark);
+        }
+
+        &:hover {
+            background: var(--color-black-light-2-alpha);
+            transition: var(--transition-3);
         }
     }
 

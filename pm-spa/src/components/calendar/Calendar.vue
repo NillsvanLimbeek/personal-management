@@ -34,6 +34,8 @@
                 :class="{ 'calendar__day--today': isToday(day) }"
                 :style="{ gridColumn: startOfMonth(index) }"
                 @click="$emit('create-task', day)"
+                @mouseenter="showAdd = true"
+                @mouseleave="showAdd = false"
             >
 
                 <div class="calendar__day-header">
@@ -55,6 +57,12 @@
                         />
                     </div>
                 </div>
+
+                <!-- <span
+                    v-if="showAdd"
+                    class="calendar__add">
+                    Add
+                </span> -->
             </div>
         </div>
     </div>
@@ -93,6 +101,7 @@
         @Prop({ required: true }) private tasks!: ITask[];
 
         private date: Date = startOfMonth(new Date());
+        private showAdd: boolean = false;
 
         private get daysInMonth(): Date[] {
             const start: Date = startOfMonth(this.date);
