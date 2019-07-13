@@ -34,3 +34,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'calendar-task';
+</style>
