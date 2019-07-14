@@ -1,24 +1,55 @@
 <template>
-    <div class="calendar">
-        <h2>Calendar</h2>
+    <div>
+        <Calendar
+            :tasks="tasks"
+            @create-task="openCreateModal($event)"
+        />
 
-        <Datepicker />
+        <transition name="modal-center">
+            <router-view />
+        </transition>
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from '@/vue-script';
-    import { startOfMonth, addYears } from 'date-fns';
+    import { Vue, Component, Getter } from '@/vue-script';
 
-    const Datepicker = () => import('@components/datepicker/Datepicker.vue');
+    import { ITask } from '@/data/models';
+    import { EventBus } from '@/event-bus';
+
+    const Calendar = () => import('@components/calendar/Calendar.vue');
 
     @Component({
         components: {
-            Datepicker,
+            Calendar,
         },
     })
     export default class TaskCalendarSection extends Vue {
-        private today: Date = startOfMonth(Date.now());
-        private nextYear: Date = addYears(this.today, 1);
+        @Getter('tasks/getTasks') private tasks!: ITask[];
+
+        private openTaskModal(id: string) {
+            if (this.$route.name === 'calendarTaskModal') {
+                this.$router.replace({ path: `${id}` });
+            } else {
+                this.$router.push({ path: `calendar/task/${id}` });
+            }
+        }
+
+        private openCreateModal(day: Date) {
+            this.$router.push({
+                name: 'calendarCreateTaskModal',
+                params: { date: `${day}` },
+            });
+        }
+
+        private created() {
+            EventBus.$on('task-modal', (id: string) => {
+                this.openTaskModal(id);
+            });
+
+            EventBus.$on('update-task', (complete: boolean) => {
+                this.$store.dispatch('tasks/updateTask', complete);
+            });
+        }
     }
 </script>

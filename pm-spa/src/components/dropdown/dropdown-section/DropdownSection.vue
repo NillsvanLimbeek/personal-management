@@ -16,3 +16,7 @@
         @Prop() private lastSection!: boolean;
     }
 </script>
+
+<style lang="scss">
+    @import 'dropdown-section.scss';
+</style>

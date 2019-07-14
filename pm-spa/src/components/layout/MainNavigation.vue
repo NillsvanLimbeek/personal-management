@@ -29,5 +29,9 @@
     import { Vue, Component, Prop } from '@/vue-script';
 
     @Component({})
-    export default class MainNavigation extends Vue { }
+    export default class MainNavigation extends Vue {}
 </script>
+
+<style lang="scss">
+    @import 'main-navigation.scss';
+</style>

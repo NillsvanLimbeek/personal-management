@@ -31,3 +31,7 @@
         @Getter('tasks/getCurrentTab') private currentTab!: TaskTab;
     }
 </script>
+
+<style lang="scss">
+    @import 'main-header.scss';
+</style>

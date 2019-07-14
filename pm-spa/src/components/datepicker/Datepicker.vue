@@ -26,7 +26,7 @@
             <div class="datepicker__body">
                 <div class="datepicker__weekdays">
                     <span v-for="weekday in getWeekDays">
-                        {{ weekday }}
+                        {{ weekday | date('EEEEE') }}
                     </span>
                 </div>
 
@@ -91,14 +91,13 @@
         private visible: boolean = false;
         private disabled: boolean = false;
 
-        private get getWeekDays(): string[] {
+        private get getWeekDays(): Date[] {
             const today = Date.now();
-            const week: Date[] = eachDayOfInterval({
+
+            return eachDayOfInterval({
                 start: startOfWeek(today),
                 end: endOfWeek(today),
             });
-
-            return week.map((x) => format(x, 'EEEEEE'));
         }
 
         private get triggerTitle() {
@@ -174,7 +173,11 @@
         }
 
         private created() {
-            this.date ? this.getDates(this.date) : this.getDates();
+            this.date ? this.getDates(startOfMonth(this.date)) : this.getDates();
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'datepicker.scss';
+</style>

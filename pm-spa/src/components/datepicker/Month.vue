@@ -5,7 +5,6 @@
         </div>
 
         <div class="month__body">
-
             <div class="month__days">
                 <div
                     v-for="(day, index) in getDays"
@@ -70,3 +69,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'month.scss';
+</style>

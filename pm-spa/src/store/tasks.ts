@@ -26,6 +26,7 @@ const state: ITaskState = {
             },
             completed: false,
             taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
+            dueDate: new Date(),
         },
         {
             id: '6e5e1b1e-faf6-4120-bf4c-091ef2329315',

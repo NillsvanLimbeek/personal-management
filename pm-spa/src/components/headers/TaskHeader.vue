@@ -37,3 +37,7 @@
         @Prop({ required: true }) private currentTab!: TaskTab;
     }
 </script>
+
+<style lang="scss">
+    @import 'task-header.scss';
+</style>

@@ -85,7 +85,7 @@
         },
     })
     export default class TextEditor extends Vue {
-        @Prop({ required: true }) private task!: ITask;
+        @Prop() private task!: ITask;
 
         private editor: any = null;
         private json: object = {};
@@ -128,7 +128,9 @@
                 },
             });
 
-            this.setJson();
+            if (this.task) {
+                this.setJson();
+            }
         }
 
         private beforeDestroy() {
@@ -136,3 +138,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'text-editor.scss';
+</style>

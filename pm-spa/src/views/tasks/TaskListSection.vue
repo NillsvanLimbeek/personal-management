@@ -1,7 +1,10 @@
 <template>
     <div class="tasks">
         <div class="tasks__header">
-            <button class="tasks__button button" @click="addSection">
+            <button
+                class="tasks__button button"
+                @click="addSection"
+            >
                 Add Section
             </button>
         </div>
@@ -15,7 +18,7 @@
             />
         </div>
 
-        <transition name="modal">
+        <transition name="modal-right">
             <router-view />
         </transition>
     </div>
@@ -58,3 +61,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'task-list-section.scss';
+</style>
