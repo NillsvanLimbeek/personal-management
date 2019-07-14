@@ -92,5 +92,5 @@
 </script>
 
 <style lang="scss">
-    @import 'create-task.scss';
+    @import 'create-task-modal.scss';
 </style>
