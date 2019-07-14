@@ -13,7 +13,10 @@
                 class="modal-center__close fas fa-times"
             />
 
-            <component :is="modalContent" :date="date" />
+            <component
+                :is="modalContent"
+                :date="date"
+            />
         </div>
     </div>
 </template>
@@ -40,3 +43,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'modal-center.scss';
+</style>

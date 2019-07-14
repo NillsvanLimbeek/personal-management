@@ -104,3 +104,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'task-modal.scss';
+</style>

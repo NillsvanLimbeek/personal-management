@@ -18,7 +18,8 @@
                             v-for="taskSection in taskSections"
                             :key="taskSection.id"
                             :title="taskSection.title"
-                            @click="$emit('move-to-section', taskSection.id)" />
+                            @click="$emit('move-to-section', taskSection.id)"
+                        />
                     </DropdownSection>
 
                 </DropdownItem>
@@ -48,8 +49,9 @@
 
     const Dropdown = () => import('@components/dropdown/Dropdown.vue');
     const DropdownSection = () =>
-        import('@components/dropdown/DropdownSection.vue');
-    const DropdownItem = () => import('@components/dropdown/DropdownItem.vue');
+        import('@components/dropdown/dropdown-section/DropdownSection.vue');
+    const DropdownItem = () =>
+        import('@components/dropdown/dropdown-item/DropdownItem.vue');
 
     @Component({
         components: {

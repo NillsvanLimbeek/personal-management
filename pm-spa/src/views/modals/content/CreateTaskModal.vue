@@ -90,3 +90,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'create-task.scss';
+</style>

@@ -61,3 +61,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'task-list-section.scss';
+</style>

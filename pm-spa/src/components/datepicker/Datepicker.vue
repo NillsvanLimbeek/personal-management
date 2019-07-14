@@ -177,3 +177,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'datepicker.scss';
+</style>

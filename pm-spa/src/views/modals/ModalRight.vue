@@ -22,3 +22,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'modal-right.scss';
+</style>

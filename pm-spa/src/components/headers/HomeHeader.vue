@@ -9,5 +9,9 @@
     import { Vue, Component } from '@/vue-script';
 
     @Component({})
-    export default class HomeHeader extends Vue { }
+    export default class HomeHeader extends Vue {}
 </script>
+
+<style lang="scss">
+    @import 'task-header.scss';
+</style>

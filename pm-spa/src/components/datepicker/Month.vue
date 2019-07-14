@@ -69,3 +69,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'month.scss';
+</style>

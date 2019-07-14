@@ -76,3 +76,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'base-layout';
+</style>

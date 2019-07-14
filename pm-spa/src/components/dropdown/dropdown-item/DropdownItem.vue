@@ -46,3 +46,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'dropdown-item.scss';
+</style>

@@ -36,5 +36,5 @@
 </script>
 
 <style lang="scss">
-    @import 'calendar-task';
+    @import 'calendar-task.scss';
 </style>

@@ -39,7 +39,7 @@
     import { generateGuid } from '@/utils';
 
     const TaskDropdown = () => import('@components/tasks/TaskDropdown.vue');
-    const InlineEdit = () => import('@components/InlineEdit.vue');
+    const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
 
     @Component({
         components: {
@@ -140,3 +140,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'task.scss';
+</style>

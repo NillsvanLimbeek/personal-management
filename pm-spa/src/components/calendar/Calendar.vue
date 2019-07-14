@@ -90,7 +90,7 @@
         isSameDay,
     } from 'date-fns';
 
-    const CalendarTask = () => import('@components/calendar-task/CalendarTask.vue');
+    const CalendarTask = () => import('./calendar-task/CalendarTask.vue');
 
     @Component({
         components: {

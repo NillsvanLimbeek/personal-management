@@ -28,7 +28,10 @@
 
         </div>
 
-        <div class="task-section_list" v-if="taskSection.isOpen">
+        <div
+            class="task-section_list"
+            v-if="taskSection.isOpen"
+        >
             <Task
                 :key="task.id"
                 :task="task"
@@ -63,7 +66,7 @@
     const TaskSectionDropdown = () =>
         import('@components/tasks/TaskSectionDropdown.vue');
     const Task = () => import('./Task.vue');
-    const InlineEdit = () => import('@components/InlineEdit.vue');
+    const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
 
     @Component({
         components: {
@@ -177,3 +180,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import 'task-section.scss';
+</style>
