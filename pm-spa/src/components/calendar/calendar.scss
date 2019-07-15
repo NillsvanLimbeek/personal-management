@@ -44,6 +44,8 @@
     }
 
     &__day {
+        position: relative;
+
         display: flex;
         flex-direction: column;
 
@@ -67,5 +69,14 @@
         @include flex-end;
 
         margin-bottom: 5px;
+    }
+
+    &__add {
+        @include flex-center-align;
+
+        position: absolute;
+
+        height: 100%;
+        width: 100%;
     }
 }

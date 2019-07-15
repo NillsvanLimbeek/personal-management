@@ -33,9 +33,10 @@
                 class="calendar__day"
                 :class="{ 'calendar__day--today': isToday(day) }"
                 :style="{ gridColumn: startOfMonth(index) }"
+                :key="index"
                 @click="$emit('create-task', day)"
-                @mouseenter="showAdd = true"
-                @mouseleave="showAdd = false"
+                @mouseenter="showAdd = index"
+                @mouseleave="showAdd = null"
             >
 
                 <div class="calendar__day-header">
@@ -43,26 +44,23 @@
                 </div>
 
                 <div
-                    class="calendar__task-list"
-                    v-if="tasks.length > 0"
+                    class="calendar__tasks"
+                    v-for="(task, index) in filteredTasks(day)"
+                    :key="index"
                 >
-                    <div
-                        class="calendar__tasks"
-                        v-for="task in tasks"
-                    >
 
-                        <CalendarTask
-                            v-if="sameDay(day, task)"
-                            :task="task"
-                        />
-                    </div>
+                    <CalendarTask
+                        v-if="sameDay(day, task)"
+                        :task="task"
+                    />
                 </div>
 
-                <!-- <span
-                    v-if="showAdd"
-                    class="calendar__add">
-                    Add
-                </span> -->
+                <span
+                    :key="index"
+                    class="calendar__add"
+                >
+                    <i class="fas fa-plus"></i> Add
+                </span>
             </div>
         </div>
     </div>
@@ -117,6 +115,14 @@
             return eachDayOfInterval({
                 start: startOfWeek(today),
                 end: endOfWeek(today),
+            });
+        }
+
+        private filteredTasks(date: Date) {
+            return this.tasks.filter((x) => {
+                if (x.dueDate) {
+                    return isSameDay(x.dueDate, date);
+                }
             });
         }
 
