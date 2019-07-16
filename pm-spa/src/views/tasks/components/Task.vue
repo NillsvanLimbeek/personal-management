@@ -142,5 +142,5 @@
 </script>
 
 <style lang="scss">
-    @import 'task.scss';
+    @import 'Task.scss';
 </style>

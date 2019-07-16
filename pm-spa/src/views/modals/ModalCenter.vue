@@ -45,5 +45,5 @@
 </script>
 
 <style lang="scss">
-    @import 'modal-center.scss';
+    @import 'ModalCenter.scss';
 </style>

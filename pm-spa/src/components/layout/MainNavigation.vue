@@ -33,5 +33,5 @@
 </script>
 
 <style lang="scss">
-    @import 'main-navigation.scss';
+    @import 'MainNavigation.scss';
 </style>

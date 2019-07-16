@@ -33,5 +33,5 @@
 </script>
 
 <style lang="scss">
-    @import 'main-header.scss';
+    @import 'MainHeader.scss';
 </style>

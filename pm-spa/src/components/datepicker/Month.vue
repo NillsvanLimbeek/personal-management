@@ -71,5 +71,5 @@
 </script>
 
 <style lang="scss">
-    @import 'month.scss';
+    @import 'Month.scss';
 </style>

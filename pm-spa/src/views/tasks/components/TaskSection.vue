@@ -182,5 +182,5 @@
 </script>
 
 <style lang="scss">
-    @import 'task-section.scss';
+    @import 'TaskSection.scss';
 </style>

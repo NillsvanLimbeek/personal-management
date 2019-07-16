@@ -102,5 +102,5 @@
 </script>
 
 <style lang="scss">
-    @import 'create-task-modal.scss';
+    @import 'CreateTaskModal.scss';
 </style>

@@ -13,5 +13,5 @@
 </script>
 
 <style lang="scss">
-    @import 'task-header.scss';
+    @import 'TaskHeader.scss';
 </style>

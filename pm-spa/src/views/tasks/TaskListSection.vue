@@ -63,5 +63,5 @@
 </script>
 
 <style lang="scss">
-    @import 'task-list-section.scss';
+    @import 'TaskListSection.scss';
 </style>

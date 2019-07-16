@@ -39,5 +39,5 @@
 </script>
 
 <style lang="scss">
-    @import 'dropdown.scss';
+    @import 'Dropdown.scss';
 </style>

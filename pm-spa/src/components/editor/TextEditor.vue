@@ -140,5 +140,5 @@
 </script>
 
 <style lang="scss">
-    @import 'text-editor.scss';
+    @import 'TextEditor.scss';
 </style>
