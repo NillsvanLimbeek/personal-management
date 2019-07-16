@@ -38,7 +38,7 @@
     import { ITask, ITaskSection } from '@/data/models';
     import { generateGuid } from '@/utils';
 
-    const TaskDropdown = () => import('@components/tasks/TaskDropdown.vue');
+    const TaskDropdown = () => import('@components/dropdowns/TaskDropdown.vue');
     const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
 
     @Component({

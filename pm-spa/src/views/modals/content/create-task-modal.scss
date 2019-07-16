@@ -1,13 +1,13 @@
 .create-task {
     &__body {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-template-rows: 1fr 1fr 5fr 2fr;
         grid-template-areas:
-            'title title'
-            'assigned-to due-date'
-            'description description'
-            'comments comments';
+            'title title title'
+            'assigned-to due-date task-section'
+            'description description description'
+            'comments comments comments';
 
         height: calc(100% - 20rem);
     }
@@ -62,6 +62,14 @@
         @include flex-align-start;
 
         grid-area: due-date;
+
+        border-bottom: var(--border-black);
+    }
+
+    &__task-section {
+        @include flex-align-start;
+
+        grid-area: task-section;
 
         border-bottom: var(--border-black);
     }

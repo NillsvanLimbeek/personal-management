@@ -43,19 +43,14 @@
                     {{ day | date('d') }}
                 </div>
 
-                <div
-                    class="calendar__tasks"
+                <CalendarTask
                     v-for="(task, index) in filteredTasks(day)"
                     :key="index"
-                >
-
-                    <CalendarTask
-                        v-if="sameDay(day, task)"
-                        :task="task"
-                    />
-                </div>
+                    :task="task"
+                />
 
                 <span
+                    v-if="showAdd === index && filteredTasks(day).length == 0"
                     :key="index"
                     class="calendar__add"
                 >
