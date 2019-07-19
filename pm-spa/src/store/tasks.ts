@@ -3,7 +3,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
 
-import { generateGuid } from '@/utils';
+import { generateGuid, sortTasks } from '@/utils';
 
 const state: ITaskState = {
     tasks: [
@@ -133,12 +133,25 @@ const mutations: MutationTree<ITaskState> = {
         if (taskToMove) {
             const newTask = { ...taskToMove, ...task };
 
-            // remove old task
             state.tasks = state.tasks.filter((x) => x.id !== taskToMove.id);
 
-            // push new task
             state.tasks.push(newTask);
         }
+    },
+
+    sortTasks: (state, id: string) => {
+        const tasks: ITask[] = state.tasks.filter(
+            (x) => x.taskSectionId === id,
+        );
+
+        const sorted = sortTasks(tasks);
+
+        sorted.forEach((task) => {
+            const index = state.tasks.map((x) => x.id).indexOf(task.id);
+            state.tasks.splice(index, 1);
+
+            state.tasks.push(task);
+        });
     },
 };
 
@@ -168,6 +181,10 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async moveTask({ commit }, task: ITask) {
         await commit('moveTask', task);
+    },
+
+    async sortTasks({ commit }, id: string) {
+        commit('sortTasks', id);
     },
 };
 

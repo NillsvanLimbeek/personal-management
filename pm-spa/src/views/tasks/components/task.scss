@@ -36,6 +36,12 @@
 
         width: 100%;
 
+        transition: var(--transition-2);
         cursor: pointer;
+
+        &:hover {
+            background: var(--color-black-light-2-alpha);
+            transition: var(--transition-2);
+        }
     }
 }

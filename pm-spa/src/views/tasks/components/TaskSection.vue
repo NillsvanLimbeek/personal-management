@@ -18,6 +18,7 @@
                     }"
                     @click="collapseSection"
                 />
+
             </div>
 
             <InlineEdit
@@ -26,6 +27,9 @@
                 @update-title="renameSection($event)"
             />
 
+            <span @click="sortTasks(taskSection.id)">
+                Sort
+            </span>
         </div>
 
         <div
@@ -177,6 +181,10 @@
             }
 
             this.triggerEdit = false;
+        }
+
+        private sortTasks(id: string) {
+            this.$store.dispatch('tasks/sortTasks', id);
         }
     }
 </script>
