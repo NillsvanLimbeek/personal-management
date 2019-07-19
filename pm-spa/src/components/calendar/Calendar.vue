@@ -33,36 +33,29 @@
                 class="calendar__day"
                 :class="{ 'calendar__day--today': isToday(day) }"
                 :style="{ gridColumn: startOfMonth(index) }"
+                :key="index"
                 @click="$emit('create-task', day)"
-                @mouseenter="showAdd = true"
-                @mouseleave="showAdd = false"
+                @mouseenter="showAdd = index"
+                @mouseleave="showAdd = null"
             >
 
                 <div class="calendar__day-header">
                     {{ day | date('d') }}
                 </div>
 
-                <div
-                    class="calendar__task-list"
-                    v-if="tasks.length > 0"
+                <CalendarTask
+                    v-for="(task, index) in filteredTasks(day)"
+                    :key="index"
+                    :task="task"
+                />
+
+                <span
+                    v-if="showAdd === index && filteredTasks(day).length == 0"
+                    :key="index"
+                    class="calendar__add"
                 >
-                    <div
-                        class="calendar__tasks"
-                        v-for="task in tasks"
-                    >
-
-                        <CalendarTask
-                            v-if="sameDay(day, task)"
-                            :task="task"
-                        />
-                    </div>
-                </div>
-
-                <!-- <span
-                    v-if="showAdd"
-                    class="calendar__add">
-                    Add
-                </span> -->
+                    <i class="fas fa-plus"></i> Add
+                </span>
             </div>
         </div>
     </div>
@@ -120,6 +113,14 @@
             });
         }
 
+        private filteredTasks(date: Date) {
+            return this.tasks.filter((x) => {
+                if (x.dueDate) {
+                    return isSameDay(x.dueDate, date);
+                }
+            });
+        }
+
         private sameDay(day: Date, task: ITask) {
             return isSameDay(day, task.dueDate as Date);
         }
@@ -151,5 +152,5 @@
 </script>
 
 <style lang="scss">
-    @import 'calendar.scss';
+    @import 'Calendar.scss';
 </style>

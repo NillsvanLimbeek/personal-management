@@ -64,7 +64,7 @@
     import { generateGuid } from '@/utils';
 
     const TaskSectionDropdown = () =>
-        import('@components/tasks/TaskSectionDropdown.vue');
+        import('@components/dropdowns/TaskSectionDropdown.vue');
     const Task = () => import('./Task.vue');
     const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
 
@@ -182,5 +182,5 @@
 </script>
 
 <style lang="scss">
-    @import 'task-section.scss';
+    @import 'TaskSection.scss';
 </style>

@@ -25,9 +25,13 @@
                     @select-date="newTask.dueDate = $event"  />
             </div>
 
-            <!-- <div class="create-task__task-section">
-
-            </div> -->
+            <div class="create-task__task-section">
+                <!-- <i class="fas fa-bars" /> -->
+                <ModalTaskSectionDropdown
+                    :task-sections="taskSections"
+                    @select-section="newTask.taskSectionId = $event"
+                />
+            </div>
 
             <div class="create-task__description">
                 <TextEditor @description="newTask.description = $event" />
@@ -47,21 +51,27 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from '@/vue-script';
+    import { Vue, Component, Prop, Getter } from '@/vue-script';
 
-    import { ITask } from '@data/models';
+    import { ITask, ITaskSection } from '@data/models';
     import { generateGuid } from '@/utils';
 
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
     const TextEditor = () => import('@components/editor/TextEditor.vue');
+    const ModalTaskSectionDropdown = () =>
+        import('@components/dropdowns/ModalTaskSectionDropdown.vue');
 
     @Component({
         components: {
             Datepicker,
             TextEditor,
+            ModalTaskSectionDropdown,
         },
     })
     export default class CreateTaskModal extends Vue {
+        @Getter('taskSections/getTaskSections')
+        private taskSections!: ITaskSection[];
+
         @Prop() private date!: Date;
 
         private newTask: ITask = {
@@ -92,5 +102,5 @@
 </script>
 
 <style lang="scss">
-    @import 'create-task-modal.scss';
+    @import 'CreateTaskModal.scss';
 </style>
