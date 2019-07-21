@@ -19,17 +19,21 @@
                     @click="collapseSection"
                 />
 
+                <InlineEdit
+                    :title="taskSection.title"
+                    :trigger-edit="triggerEdit"
+                    @update-title="renameSection($event)"
+                />
             </div>
 
-            <InlineEdit
-                :title="taskSection.title"
-                :trigger-edit="triggerEdit"
-                @update-title="renameSection($event)"
-            />
+            <div
+                class="task-section__sort"
+                @click="sortTasks"
+            >
+                <span>Sort</span>
 
-            <span @click="sortTasks(taskSection.id)">
-                Sort
-            </span>
+                <i class="fas fa-arrows-alt-v" />
+            </div>
         </div>
 
         <div
@@ -66,6 +70,7 @@
 
     import { EventBus } from '@/event-bus';
     import { generateGuid } from '@/utils';
+    import { SortDirection } from '@data/type';
 
     const TaskSectionDropdown = () =>
         import('@components/dropdowns/TaskSectionDropdown.vue');
@@ -183,8 +188,24 @@
             this.triggerEdit = false;
         }
 
-        private sortTasks(id: string) {
-            this.$store.dispatch('tasks/sortTasks', id);
+        private sortTasks() {
+            this.taskSection.sort === 'up'
+                ? (this.taskSection.sort = 'down')
+                : (this.taskSection.sort = 'up');
+
+            this.$store.dispatch('tasks/sortTasks', {
+                id: this.taskSection.id,
+                sort: this.taskSection.sort,
+            });
+        }
+
+        private created() {
+            if (this.taskSection.sort) {
+                this.$store.dispatch('tasks/sortTasks', {
+                    id: this.taskSection.id,
+                    sort: this.taskSection.sort,
+                });
+            }
         }
     }
 </script>

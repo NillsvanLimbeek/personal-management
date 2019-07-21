@@ -2,7 +2,7 @@
     padding: 1rem;
 
     &__header {
-        @include flex-align;
+        @include flex-space-between;
 
         margin-bottom: 3px;
         padding-bottom: 3px;
@@ -14,6 +14,27 @@
         align-items: center;
 
         margin-left: 6px;
+    }
+
+    &__sort {
+        @include flex-align;
+
+        cursor: pointer;
+
+        & > span {
+            margin-right: 5px;
+        }
+
+        & > i {
+            margin-top: 1px;
+            color: var(--color-grey-light);
+        }
+
+        &:hover {
+            & > i {
+                color: var(--color-grey);
+            }
+        }
     }
 
     &__menu-button {

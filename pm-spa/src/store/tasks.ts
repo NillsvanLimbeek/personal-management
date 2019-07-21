@@ -4,6 +4,7 @@ import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
 
 import { generateGuid, sortTasks } from '@/utils';
+import { TaskSort, SortDirection } from '@type/index';
 
 const state: ITaskState = {
     tasks: [
@@ -139,12 +140,18 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
-    sortTasks: (state, id: string) => {
+    sortTasks: (state, { id, sort }: TaskSort) => {
+        let sorted: ITask[];
+
         const tasks: ITask[] = state.tasks.filter(
             (x) => x.taskSectionId === id,
         );
 
-        const sorted = sortTasks(tasks);
+        if (sort === 'up') {
+            sorted = sortTasks(tasks);
+        } else {
+            sorted = sortTasks(tasks).reverse();
+        }
 
         sorted.forEach((task) => {
             const index = state.tasks.map((x) => x.id).indexOf(task.id);
