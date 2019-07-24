@@ -2,9 +2,8 @@
     <div class="task-modal">
         <div class="task-modal__header">
             <div class="task-modal__complete">
-                <div
-                    :class="{ 'task__checkbox--active': getTask.completed }"
-                    class="task__checkbox"
+                <Checkbox
+                    :active="getTask.completed"
                     @click="updateTask(getTask.completed)"
                 />
 
@@ -51,11 +50,13 @@
 
     import { ITask } from '@data/models';
 
+    const Checkbox = () => import('@components/checkbox/Checkbox.vue');
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
     const TextEditor = () => import('@components/editor/TextEditor.vue');
 
     @Component({
         components: {
+            Checkbox,
             Datepicker,
             TextEditor,
         },

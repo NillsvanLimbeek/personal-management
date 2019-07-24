@@ -5,10 +5,9 @@
     >
         <span>{{ task.title }}</span>
 
-        <div
-            :class="{ 'task__checkbox--active': task.completed }"
-            class="task__checkbox"
-            @click.stop="updateTask(task.completed)"
+        <Checkbox
+            :active="task.completed"
+            @click.native.stop="updateTask(task.completed)"
         />
     </div>
 </template>
@@ -17,10 +16,15 @@
     import { Vue, Component, Prop } from '@/vue-script';
 
     import { ITask } from '@/data/models';
-
     import { EventBus } from '@/event-bus';
 
-    @Component({})
+    const Checkbox = () => import('@/components/checkbox/Checkbox.vue');
+
+    @Component({
+        components: {
+            Checkbox,
+        },
+    })
     export default class CalendarTask extends Vue {
         @Prop({ required: true }) private task!: ITask;
 

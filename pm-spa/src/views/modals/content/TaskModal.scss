@@ -8,6 +8,10 @@
 
     &__complete {
         @include flex-center-align;
+
+        & > div {
+            margin-right: 1.5rem;
+        }
     }
 
     &__body {

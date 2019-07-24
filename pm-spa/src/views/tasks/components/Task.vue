@@ -13,10 +13,9 @@
             class="task__body"
         >
             <div class="task__body--left">
-                <div
-                    :class="{ 'task__checkbox--active': task.completed }"
-                    class="task__checkbox"
-                    @click.stop="updateTask"
+                <Checkbox
+                    :active="task.completed"
+                    @click.native.stop="updateTask"
                 />
 
                 <div
@@ -48,11 +47,13 @@
     import { ITask, ITaskSection } from '@/data/models';
     import { generateGuid } from '@/utils';
 
+    const Checkbox = () => import('@components/checkbox/Checkbox.vue');
     const TaskDropdown = () => import('@components/dropdowns/TaskDropdown.vue');
     const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
 
     @Component({
         components: {
+            Checkbox,
             TaskDropdown,
             InlineEdit,
         },
@@ -66,7 +67,7 @@
         private checkbox: boolean = false;
         private triggerEdit: boolean = false;
 
-        private updateTask(): void {
+        private updateTask(e: any): void {
             this.$store.dispatch('tasks/updateTask', {
                 id: this.task.id,
                 completed: !this.task.completed,
