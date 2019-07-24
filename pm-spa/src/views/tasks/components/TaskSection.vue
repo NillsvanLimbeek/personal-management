@@ -1,7 +1,7 @@
 <template>
     <div class="task-section">
-        <div class="task-section__header">
-            <div class="task-section__menu">
+        <div class="task-section__body">
+            <div class="task-section__body--title">
                 <TaskSectionDropdown
                     :is-open="taskSection.isOpen"
                     @collapse-section="collapseSection"
@@ -24,16 +24,28 @@
                     :trigger-edit="triggerEdit"
                     @update-title="renameSection($event)"
                 />
+
+                <div
+                    v-if="taskSection.isOpen"
+                    class="task-section__sort"
+                    @click="sortTasks('name')"
+                >
+                    <span>Sort</span>
+
+                    <i class="fas fa-arrows-alt-v" />
+                </div>
             </div>
 
-            <div
-                v-if="taskSection.isOpen"
-                class="task-section__sort"
-                @click="sortTasks"
-            >
-                <span>Sort</span>
+            <div class="task-section__body--date">
+                <div
+                    v-if="taskSection.isOpen"
+                    class="task-section__sort"
+                    @click="sortTasks('date')"
+                >
+                    <span>Sort</span>
 
-                <i class="fas fa-arrows-alt-v" />
+                    <i class="fas fa-arrows-alt-v" />
+                </div>
             </div>
         </div>
 
@@ -71,7 +83,7 @@
 
     import { EventBus } from '@/event-bus';
     import { generateGuid } from '@/utils';
-    import { SortDirection } from '@data/type';
+    import { SortDirection, SortType } from '@data/type';
 
     const TaskSectionDropdown = () =>
         import('@components/dropdowns/TaskSectionDropdown.vue');
@@ -189,7 +201,7 @@
             this.triggerEdit = false;
         }
 
-        private sortTasks() {
+        private sortTasks(type: SortType) {
             this.taskSection.sort === 'up'
                 ? (this.taskSection.sort = 'down')
                 : (this.taskSection.sort = 'up');
@@ -197,16 +209,8 @@
             this.$store.dispatch('tasks/sortTasks', {
                 id: this.taskSection.id,
                 sort: this.taskSection.sort,
+                type,
             });
-        }
-
-        private created() {
-            if (this.taskSection.sort) {
-                this.$store.dispatch('tasks/sortTasks', {
-                    id: this.taskSection.id,
-                    sort: this.taskSection.sort,
-                });
-            }
         }
     }
 </script>

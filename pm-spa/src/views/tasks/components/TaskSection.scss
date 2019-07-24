@@ -1,19 +1,26 @@
 .task-section {
     padding: 1rem;
 
-    &__header {
-        @include flex-space-between;
+    &__body {
+        @include flex-align;
 
         margin-bottom: 3px;
         padding-bottom: 3px;
         border-bottom: var(--border-black);
-    }
 
-    &__menu {
-        display: flex;
-        align-items: center;
+        &--title {
+            @include flex-align;
+            flex: 1 1 auto;
 
-        margin-left: 6px;
+            margin-left: 6px;
+        }
+
+        &--date {
+            @include flex-center-align;
+
+            width: 15rem;
+            height: 100%;
+        }
     }
 
     &__sort {
