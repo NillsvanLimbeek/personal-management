@@ -23,8 +23,6 @@
             @include flex-align;
             flex: 1 1 auto;
 
-            border-right: 1px solid black;
-
             & > div {
                 margin-right: 0.75rem;
             }
@@ -34,6 +32,7 @@
             @include flex-center-align;
 
             width: 15rem;
+            height: 100%;
         }
     }
 }
