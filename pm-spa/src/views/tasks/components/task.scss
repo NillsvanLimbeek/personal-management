@@ -7,7 +7,7 @@
     }
 
     &__body {
-        @include flex-space-between;
+        @include flex-align;
 
         width: 100%;
 
@@ -19,12 +19,21 @@
             transition: var(--transition-2);
         }
 
-        &--left {
+        &--title {
             @include flex-align;
+            flex: 1 1 auto;
+
+            border-right: 1px solid black;
 
             & > div {
                 margin-right: 0.75rem;
             }
+        }
+
+        &--date {
+            @include flex-center-align;
+
+            width: 15rem;
         }
     }
 }

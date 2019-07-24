@@ -12,7 +12,7 @@
             @click="openModal(task.id)"
             class="task__body"
         >
-            <div class="task__body--left">
+            <div class="task__body--title">
                 <Checkbox
                     :active="task.completed"
                     @click.native.stop="updateTask"
@@ -30,12 +30,12 @@
                 </div>
             </div>
 
-            <div
-                v-if="task.dueDate"
-                class="task__date"
-            >
+            <div class="task__body--date">
+                <span v-if="task.dueDate">
+                    {{ task.dueDate | date }}
+                </span>
 
-                {{ task.dueDate | date }}
+                <div v-else></div>
             </div>
         </div>
     </div>
