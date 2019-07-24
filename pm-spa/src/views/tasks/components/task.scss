@@ -32,7 +32,7 @@
     }
 
     &__body {
-        @include flex-align;
+        @include flex-space-between;
 
         width: 100%;
 
@@ -42,6 +42,10 @@
         &:hover {
             background: var(--color-black-light-2-alpha);
             transition: var(--transition-2);
+        }
+
+        &--left {
+            @include flex-align;
         }
     }
 }

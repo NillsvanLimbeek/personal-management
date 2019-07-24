@@ -27,6 +27,7 @@
             </div>
 
             <div
+                v-if="taskSection.isOpen"
                 class="task-section__sort"
                 @click="sortTasks"
             >

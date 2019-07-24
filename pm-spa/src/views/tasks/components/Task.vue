@@ -12,21 +12,31 @@
             @click="openModal(task.id)"
             class="task__body"
         >
-            <div
-                :class="{ 'task__checkbox--active': task.completed }"
-                class="task__checkbox"
-                @click.stop="updateTask"
-            />
+            <div class="task__body--left">
+                <div
+                    :class="{ 'task__checkbox--active': task.completed }"
+                    class="task__checkbox"
+                    @click.stop="updateTask"
+                />
+
+                <div
+                    @click.stop="triggerEdit = true"
+                    class="task__title"
+                >
+                    <InlineEdit
+                        :title="task.title"
+                        :trigger-edit="triggerEdit"
+                        @update-title="updateTitle($event)"
+                    />
+                </div>
+            </div>
 
             <div
-                @click.stop="triggerEdit = true"
-                class="task__title"
+                v-if="task.dueDate"
+                class="task__date"
             >
-                <InlineEdit
-                    :title="task.title"
-                    :trigger-edit="triggerEdit"
-                    @update-title="updateTitle($event)"
-                />
+
+                {{ task.dueDate | date }}
             </div>
         </div>
     </div>
