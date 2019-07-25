@@ -3,6 +3,6 @@ import { SortDirection } from './sort-direction';
 
 export interface TaskSort {
     id: string;
-    direction: SortDirection;
+    sort: SortDirection;
     type: SortType;
 }

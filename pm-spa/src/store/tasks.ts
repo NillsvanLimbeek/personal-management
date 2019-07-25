@@ -140,17 +140,17 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
-    sortTasks: (state, { id, direction, type }: TaskSort) => {
+    sortTasks: (state, { id, sort }: TaskSort) => {
         let sorted: ITask[];
 
         const tasks: ITask[] = state.tasks.filter(
             (x) => x.taskSectionId === id,
         );
 
-        if (direction === 'up') {
-            sorted = sortTasks(tasks, type);
+        if (sort === 'up') {
+            sorted = sortTasks(tasks);
         } else {
-            sorted = sortTasks(tasks, type).reverse();
+            sorted = sortTasks(tasks).reverse();
         }
 
         sorted.forEach((task) => {
@@ -190,8 +190,8 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('moveTask', task);
     },
 
-    async sortTasks({ commit }, { id, type }) {
-        commit('sortTasks', { id, type });
+    async sortTasks({ commit }, id) {
+        commit('sortTasks', id);
     },
 };
 
