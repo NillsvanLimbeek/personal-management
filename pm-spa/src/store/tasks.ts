@@ -4,7 +4,7 @@ import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
 
 import { generateGuid, sortTasks } from '@/utils';
-import { TaskSort, SortDirection } from '@type/index';
+import { TaskSort, SortDirection, SortType } from '@type/index';
 
 const state: ITaskState = {
     tasks: [
@@ -140,17 +140,17 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
-    sortTasks: (state, { id, sort }: TaskSort) => {
+    sortTasks: (state, { id, direction, type }: TaskSort) => {
         let sorted: ITask[];
 
         const tasks: ITask[] = state.tasks.filter(
             (x) => x.taskSectionId === id,
         );
 
-        if (sort === 'up') {
-            sorted = sortTasks(tasks);
+        if (direction === 'up') {
+            sorted = sortTasks(tasks, type);
         } else {
-            sorted = sortTasks(tasks).reverse();
+            sorted = sortTasks(tasks, type).reverse();
         }
 
         sorted.forEach((task) => {
@@ -190,8 +190,8 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('moveTask', task);
     },
 
-    async sortTasks({ commit }, id: string) {
-        commit('sortTasks', id);
+    async sortTasks({ commit }, { id, type }) {
+        commit('sortTasks', { id, type });
     },
 };
 
