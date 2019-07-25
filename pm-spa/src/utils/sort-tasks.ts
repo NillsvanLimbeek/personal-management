@@ -1,5 +1,4 @@
 import { ITask } from '@models/task';
-import { SortType } from '@type/index';
 
 export function sortTasks(arr: ITask[]): ITask[] {
     return arr.sort((a, b) => {

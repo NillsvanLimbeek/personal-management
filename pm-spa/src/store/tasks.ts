@@ -3,7 +3,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
 
-import { generateGuid, sortTasks } from '@/utils';
+import { generateGuid, sortTasks, sortDate } from '@/utils';
 import { TaskSort, SortDirection, SortType } from '@type/index';
 
 const state: ITaskState = {
@@ -140,7 +140,8 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
-    sortTasks: (state, { id, sort }: TaskSort) => {
+    // TODO
+    sortName: (state, { id, sort }: TaskSort) => {
         let sorted: ITask[];
 
         const tasks: ITask[] = state.tasks.filter(
@@ -151,6 +152,28 @@ const mutations: MutationTree<ITaskState> = {
             sorted = sortTasks(tasks);
         } else {
             sorted = sortTasks(tasks).reverse();
+        }
+
+        sorted.forEach((task) => {
+            const index = state.tasks.map((x) => x.id).indexOf(task.id);
+            state.tasks.splice(index, 1);
+
+            state.tasks.push(task);
+        });
+    },
+
+    // TODO
+    sortDate: (state, { id, sort }: TaskSort) => {
+        let sorted: ITask[];
+
+        const tasks: ITask[] = state.tasks.filter(
+            (x) => x.taskSectionId === id,
+        );
+
+        if (sort === 'up') {
+            sorted = sortDate(tasks);
+        } else {
+            sorted = sortDate(tasks).reverse();
         }
 
         sorted.forEach((task) => {
@@ -190,8 +213,14 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('moveTask', task);
     },
 
-    async sortTasks({ commit }, id) {
-        commit('sortTasks', id);
+    // TODO
+    async sortName({ commit }, id) {
+        commit('sortName', id);
+    },
+
+    // TODO
+    async sortDate({ commit }, id) {
+        commit('sortDate', id);
     },
 };
 
