@@ -4,7 +4,7 @@ function checkDate(date?: Date): number {
     return date != null ? date.getTime() : 0;
 }
 
-export function sortDate(arr: ITask[]): ITask[] {
+export function sortByDate(arr: ITask[]): ITask[] {
     return arr.sort((a, b) => {
         const dateA = checkDate(a.dueDate);
         const dateB = checkDate(b.dueDate);

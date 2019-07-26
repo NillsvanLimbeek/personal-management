@@ -28,7 +28,7 @@
                 <div
                     v-if="taskSection.isOpen"
                     class="task-section__sort"
-                    @click="sortName"
+                    @click="sortTasks('name')"
                 >
                     <span>Sort</span>
 
@@ -40,7 +40,7 @@
                 <div
                     v-if="taskSection.isOpen"
                     class="task-section__sort"
-                    @click="sortDate"
+                    @click="sortTasks('date')"
                 >
                     <span>Sort</span>
 
@@ -201,27 +201,15 @@
             this.triggerEdit = false;
         }
 
-        //TODO
-        private sortName() {
+        private sortTasks(type: SortType) {
             this.taskSection.sort === 'up'
                 ? (this.taskSection.sort = 'down')
                 : (this.taskSection.sort = 'up');
 
-            this.$store.dispatch('tasks/sortName', {
+            this.$store.dispatch('tasks/sortTasks', {
                 id: this.taskSection.id,
-                sort: this.taskSection.sort,
-            });
-        }
-
-        // TODO
-        private sortDate() {
-            this.taskSection.sort === 'up'
-                ? (this.taskSection.sort = 'down')
-                : (this.taskSection.sort = 'up');
-
-            this.$store.dispatch('tasks/sortDate', {
-                id: this.taskSection.id,
-                sort: this.taskSection.sort,
+                direction: this.taskSection.sort,
+                type,
             });
         }
     }

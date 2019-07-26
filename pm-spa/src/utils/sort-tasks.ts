@@ -1,6 +1,6 @@
 import { ITask } from '@models/task';
 
-export function sortTasks(arr: ITask[]): ITask[] {
+export function sortByName(arr: ITask[]): ITask[] {
     return arr.sort((a, b) => {
         const nameA = a.title.toUpperCase();
         const nameB = b.title.toUpperCase();
