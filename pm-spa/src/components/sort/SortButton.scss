@@ -1,0 +1,17 @@
+.sort-button {
+    cursor: pointer;
+
+    & > span {
+        margin-right: 5px;
+    }
+
+    & > i {
+        color: var(--color-grey-light);
+    }
+
+    &:hover {
+        & > i {
+            color: var(--color-grey);
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
 
 import { generateGuid, sortByName, sortByDate } from '@/utils';
-import { TaskSort, SortDirection, SortType } from '@type/index';
+import { TaskSort } from '@type/index';
 
 const state: ITaskState = {
     tasks: [

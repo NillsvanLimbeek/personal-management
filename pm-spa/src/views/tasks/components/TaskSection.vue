@@ -25,27 +25,17 @@
                     @update-title="renameSection($event)"
                 />
 
-                <div
+                <SortButton
                     v-if="taskSection.isOpen"
-                    class="task-section__sort"
                     @click="sortTasks('name')"
-                >
-                    <span>Sort</span>
-
-                    <i class="fas fa-arrows-alt-v" />
-                </div>
+                />
             </div>
 
             <div class="task-section__body--date">
-                <div
+                <SortButton
                     v-if="taskSection.isOpen"
-                    class="task-section__sort"
                     @click="sortTasks('date')"
-                >
-                    <span>Sort</span>
-
-                    <i class="fas fa-arrows-alt-v" />
-                </div>
+                />
             </div>
         </div>
 
@@ -89,12 +79,14 @@
         import('@components/dropdowns/TaskSectionDropdown.vue');
     const Task = () => import('./Task.vue');
     const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
+    const SortButton = () => import('@components/sort/SortButton.vue');
 
     @Component({
         components: {
             TaskSectionDropdown,
             Task,
             InlineEdit,
+            SortButton,
         },
     })
     export default class TaskSection extends Vue {

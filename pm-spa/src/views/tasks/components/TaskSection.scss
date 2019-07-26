@@ -23,27 +23,6 @@
         }
     }
 
-    &__sort {
-        @include flex-align;
-
-        cursor: pointer;
-
-        & > span {
-            margin-right: 5px;
-        }
-
-        & > i {
-            margin-top: 1px;
-            color: var(--color-grey-light);
-        }
-
-        &:hover {
-            & > i {
-                color: var(--color-grey);
-            }
-        }
-    }
-
     &__menu-button {
         cursor: pointer;
     }
