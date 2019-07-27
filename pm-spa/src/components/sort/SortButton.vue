@@ -1,11 +1,12 @@
 <template>
-    <div
-        class="sort-button"
-        @click="$emit('click')"
-    >
-        <span>Sort</span>
+    <div class="sort-button">
+        <span @click="$emit('sort')">Sort</span>
 
         <i class="fas fa-arrows-alt-v" />
+
+        <span @click="$emit('cancel')">Cancel</span>
+
+        <span @click="$emit('save')">Save</span>
     </div>
 </template>
 

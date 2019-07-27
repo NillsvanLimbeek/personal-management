@@ -15,7 +15,6 @@ const state: ITaskSectionState = {
                 '6e5e1b1e-faf6-4120-bf4c-091ef2329315',
             ],
             isOpen: true,
-            sort: 'up',
         },
         {
             id: '537d15b0-bd23-46f3-bcc9-c6749c06aaf3',

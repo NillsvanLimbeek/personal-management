@@ -4,7 +4,6 @@ import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
 
 import { generateGuid, sortByName, sortByDate } from '@/utils';
-import { TaskSort } from '@type/index';
 
 const state: ITaskState = {
     tasks: [
@@ -124,8 +123,13 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
+    // TODO rename to delete by id
     deleteTask: (state, id: string) => {
         state.tasks = state.tasks.filter((x) => x.id !== id);
+    },
+
+    deleteByTaskSectionId: (state, id: string) => {
+        state.tasks = state.tasks.filter((x) => x.taskSectionId !== id);
     },
 
     moveTask: (state, task: ITask) => {
@@ -140,33 +144,8 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
-    sortTasks: (state, { id, direction, type }: TaskSort) => {
-        let sorted: ITask[];
-
-        const tasks: ITask[] = state.tasks.filter(
-            (x) => x.taskSectionId === id,
-        );
-
-        if (direction === 'up') {
-            if (type === 'name') {
-                sorted = sortByName(tasks);
-            } else {
-                sorted = sortByDate(tasks);
-            }
-        } else {
-            if (type === 'name') {
-                sorted = sortByName(tasks).reverse();
-            } else {
-                sorted = sortByDate(tasks).reverse();
-            }
-        }
-
-        sorted.forEach((task) => {
-            const index = state.tasks.map((x) => x.id).indexOf(task.id);
-            state.tasks.splice(index, 1);
-
-            state.tasks.push(task);
-        });
+    saveSortedTasks: (state, tasks: ITask[]) => {
+        state.tasks = [...state.tasks, ...tasks];
     },
 };
 
@@ -181,6 +160,10 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async deleteTask({ commit }, id: string) {
         await commit('deleteTask', id);
+    },
+
+    async deleteByTaskSectionId({ commit }, id: string) {
+        await commit('deleteByTaskSectionId', id);
     },
 
     async deleteTasks({ commit }, ids: string[]) {
@@ -198,8 +181,8 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('moveTask', task);
     },
 
-    async sortTasks({ commit }, { id, direction, type }: TaskSort) {
-        commit('sortTasks', { id, direction, type });
+    async saveSortedTasks({ commit }, tasks: ITask[]) {
+        await commit('saveSortedTasks', tasks);
     },
 };
 
