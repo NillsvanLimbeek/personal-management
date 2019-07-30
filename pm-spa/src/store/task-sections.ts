@@ -33,12 +33,12 @@ const getters: GetterTree<ITaskSectionState, IRootState> = {
     },
 
     getTaskSection: (state, id: string) => {
-        return state.taskSections.find((x) => x.id === id);
+        return state.taskSections.find((taskSection) => taskSection.id === id);
     },
 
     getDuplicateSection: (state) => {
         return state.taskSections.find(
-            (x) => x.id === state.duplicateSectionId,
+            (taskSection) => taskSection.id === state.duplicateSectionId,
         );
     },
 };
@@ -50,7 +50,7 @@ const mutations: MutationTree<ITaskSectionState> = {
 
     addTaskToSection: (state, ids: ITaskSectionAddIds) => {
         const section = state.taskSections.find(
-            (x) => x.id === ids.taskSectionId,
+            (taskSection) => taskSection.id === ids.taskSectionId,
         );
 
         if (section && section.taskIds) {
@@ -59,9 +59,9 @@ const mutations: MutationTree<ITaskSectionState> = {
     },
 
     updateSection: (state, section: ITaskSection) => {
-        const index = state.taskSections.map((x) => x.id).indexOf(section.id);
+        const index = state.taskSections.map((taskSection) => taskSection.id).indexOf(section.id);
         const sectionToUpdate = state.taskSections.find(
-            (x) => x.id === section.id,
+            (taskSection) => taskSection.id === section.id,
         );
 
         if (sectionToUpdate) {
@@ -74,15 +74,15 @@ const mutations: MutationTree<ITaskSectionState> = {
     },
 
     deleteSection: (state, id: string) => {
-        state.taskSections = state.taskSections.filter((x) => x.id !== id);
+        state.taskSections = state.taskSections.filter((taskSection) => taskSection.id !== id);
     },
 
     duplicateSection: (state, id: string) => {
         // section to duplicate
-        const sectionToDuplicate = state.taskSections.find((x) => x.id === id);
+        const sectionToDuplicate = state.taskSections.find((taskSection) => taskSection.id === id);
 
         // find index of section
-        const index: number = state.taskSections.map((x) => x.id).indexOf(id);
+        const index: number = state.taskSections.map((taskSection) => taskSection.id).indexOf(id);
 
         // make copy and put in array after the original
         if (sectionToDuplicate) {

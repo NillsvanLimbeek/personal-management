@@ -47,8 +47,8 @@
         private get getDays() {
             let month: Date[];
 
-            month = [...Array(getDaysInMonth(this.date))].map((y, x) => {
-                return addDays(this.date, x);
+            month = [...Array(getDaysInMonth(this.date))].map((_, index) => {
+                return addDays(this.date, index);
             });
 
             return month;

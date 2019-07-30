@@ -3,7 +3,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
 
-import { generateGuid, sortByName, sortByDate } from '@/utils';
+import { generateGuid } from '@/utils';
 
 const state: ITaskState = {
     tasks: [
@@ -78,7 +78,7 @@ const getters: GetterTree<ITaskState, IRootState> = {
     },
 
     getTask: (state, id: string) => {
-        return state.tasks.find((x) => x.id === id);
+        return state.tasks.find((task) => task.id === id);
     },
 
     getDuplicateTaskId: (state) => {
@@ -92,8 +92,8 @@ const mutations: MutationTree<ITaskState> = {
     },
 
     updateTask: (state, task: ITask) => {
-        const index = state.tasks.map((x) => x.id).indexOf(task.id);
-        const taskToUpdate = state.tasks.find((x) => x.id === task.id);
+        const index = state.tasks.map((task) => task.id).indexOf(task.id);
+        const taskToUpdate = state.tasks.find((task) => task.id === task.id);
 
         if (taskToUpdate) {
             // make copy
@@ -106,7 +106,9 @@ const mutations: MutationTree<ITaskState> = {
 
     duplicateTask: (state, ids: ITaskSectionAddIds) => {
         // find task
-        const taskToDuplicate = state.tasks.find((x) => x.id === ids.taskId);
+        const taskToDuplicate = state.tasks.find(
+            (task) => task.id === ids.taskId,
+        );
 
         // push task to task array
         if (taskToDuplicate) {
@@ -125,20 +127,22 @@ const mutations: MutationTree<ITaskState> = {
 
     // TODO rename to delete by id
     deleteTask: (state, id: string) => {
-        state.tasks = state.tasks.filter((x) => x.id !== id);
+        state.tasks = state.tasks.filter((task) => task.id !== id);
     },
 
     deleteByTaskSectionId: (state, id: string) => {
-        state.tasks = state.tasks.filter((x) => x.taskSectionId !== id);
+        state.tasks = state.tasks.filter((task) => task.taskSectionId !== id);
     },
 
     moveTask: (state, task: ITask) => {
-        const taskToMove = state.tasks.find((x) => x.id === task.id);
+        const taskToMove = state.tasks.find((task) => task.id === task.id);
 
         if (taskToMove) {
             const newTask = { ...taskToMove, ...task };
 
-            state.tasks = state.tasks.filter((x) => x.id !== taskToMove.id);
+            state.tasks = state.tasks.filter(
+                (task) => task.id !== taskToMove.id,
+            );
 
             state.tasks.push(newTask);
         }
