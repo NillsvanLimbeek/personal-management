@@ -125,8 +125,7 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
-    // TODO rename to delete by id
-    deleteTask: (state, id: string) => {
+    deleteById: (state, id: string) => {
         state.tasks = state.tasks.filter((task) => task.id !== id);
     },
 
@@ -162,8 +161,8 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('updateTask', task);
     },
 
-    async deleteTask({ commit }, id: string) {
-        await commit('deleteTask', id);
+    async deleteById({ commit }, id: string) {
+        await commit('deleteById', id);
     },
 
     async deleteByTaskSectionId({ commit }, id: string) {
@@ -172,7 +171,7 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async deleteTasks({ commit }, ids: string[]) {
         await ids.forEach((id) => {
-            commit('deleteTask', id);
+            commit('deleteById', id);
         });
     },
 

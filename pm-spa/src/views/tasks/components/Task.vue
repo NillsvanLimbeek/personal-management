@@ -117,7 +117,7 @@
         }
 
         private deleteTask() {
-            this.$store.dispatch('tasks/deleteTask', this.task.id);
+            this.$store.dispatch('tasks/deleteById', this.task.id);
 
             const taskSection = this.taskSections.find(
                 (x) => x.id === this.task.taskSectionId,
