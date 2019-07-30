@@ -14,10 +14,9 @@
 
         <div class="task-modal__body">
             <div class="task-modal__title">
-                <textarea
-                    rows="1"
-                    @input="autoResize"
-                    v-model="getTask.title"
+                <TextArea
+                    :title="getTask.title"
+                    @input="getTask.title = $event"
                     class="text-area"
                 />
                 </div>
@@ -53,12 +52,14 @@
     const Checkbox = () => import('@components/checkbox/Checkbox.vue');
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
     const TextEditor = () => import('@components/editor/TextEditor.vue');
+    const TextArea = () => import('@components/text-area/TextArea.vue');
 
     @Component({
         components: {
             Checkbox,
             Datepicker,
             TextEditor,
+            TextArea,
         },
     })
     export default class ModalRight extends Vue {
@@ -75,18 +76,7 @@
             }
         }
 
-        private autoResize(): void {
-            const textarea = document.querySelector('textarea');
-
-            if (textarea) {
-                const offset = textarea.offsetHeight - textarea.clientHeight;
-
-                textarea.style.height = 'auto';
-                textarea.style.height = textarea.scrollHeight + offset + 'px';
-            }
-        }
-
-        private updateDueDate(date: Date) {
+        private updateDueDate(date: Date): void {
             if (this.getTask) {
                 this.$store.dispatch('tasks/updateTask', {
                     id: this.getTask.id,
