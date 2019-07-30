@@ -99,8 +99,8 @@
         private get daysInMonth(): Date[] {
             const start: Date = startOfMonth(this.date);
 
-            return [...Array(getDaysInMonth(start))].map((y, x) => {
-                return addDays(start, x);
+            return [...Array(getDaysInMonth(start))].map((_, index) => {
+                return addDays(start, index);
             });
         }
 
@@ -114,9 +114,9 @@
         }
 
         private filteredTasks(date: Date) {
-            return this.tasks.filter((x) => {
-                if (x.dueDate) {
-                    return isSameDay(x.dueDate, date);
+            return this.tasks.filter((task) => {
+                if (task.dueDate) {
+                    return isSameDay(task.dueDate, date);
                 }
             });
         }

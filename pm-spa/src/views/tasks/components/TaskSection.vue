@@ -1,7 +1,7 @@
 <template>
     <div class="task-section">
-        <div class="task-section__header">
-            <div class="task-section__menu">
+        <div class="task-section__body">
+            <div class="task-section__body--title">
                 <TaskSectionDropdown
                     :is-open="taskSection.isOpen"
                     @collapse-section="collapseSection"
@@ -18,14 +18,29 @@
                     }"
                     @click="collapseSection"
                 />
+
+                <InlineEdit
+                    :title="taskSection.title"
+                    :trigger-edit="triggerEdit"
+                    @update-title="renameSection($event)"
+                />
+
+                <SortButton
+                    v-if="taskSection.isOpen"
+                    @sort="sortTasks('name')"
+                    @cancel="cancelSort"
+                    @save="saveSortedTasks"
+                />
+
             </div>
 
-            <InlineEdit
-                :title="taskSection.title"
-                :trigger-edit="triggerEdit"
-                @update-title="renameSection($event)"
-            />
-
+            <div class="task-section__body--date">
+                <SortButton
+                    v-if="taskSection.isOpen"
+                    @sort="sortTasks('date')"
+                    @cancel="cancelSort"
+                />
+            </div>
         </div>
 
         <div
@@ -61,18 +76,21 @@
     import { ITaskSection, ITask } from '@models/index';
 
     import { EventBus } from '@/event-bus';
-    import { generateGuid } from '@/utils';
+    import { generateGuid, sortByName, sortByDate } from '@/utils';
+    import { SortDirection, SortType } from '@data/type';
 
     const TaskSectionDropdown = () =>
         import('@components/dropdowns/TaskSectionDropdown.vue');
     const Task = () => import('./Task.vue');
     const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
+    const SortButton = () => import('@components/sort/SortButton.vue');
 
     @Component({
         components: {
             TaskSectionDropdown,
             Task,
             InlineEdit,
+            SortButton,
         },
     })
     export default class TaskSection extends Vue {
@@ -82,11 +100,29 @@
         private sectionTitle: string = '';
         private newTaskTitle: string = '';
         private triggerEdit: boolean = false;
+        private sortDirection: SortDirection | null = null;
+        private sortType: SortType | null = null;
 
         private get getTasks(): ITask[] {
-            return this.tasks.filter((task) => {
+            let tasks = this.tasks.filter((task) => {
                 return task.taskSectionId === this.taskSection.id;
             });
+
+            if (this.sortType === 'name') {
+                if (this.sortDirection === 'up') {
+                    tasks = sortByName(tasks);
+                } else {
+                    tasks = sortByName(tasks).reverse();
+                }
+            } else if (this.sortType === 'date') {
+                if (this.sortDirection === 'up') {
+                    tasks = sortByDate(tasks);
+                } else {
+                    tasks = sortByDate(tasks).reverse();
+                }
+            }
+
+            return tasks;
         }
 
         private collapseSection(): void {
@@ -177,6 +213,37 @@
             }
 
             this.triggerEdit = false;
+        }
+
+        private sortTasks(type: SortType) {
+            type === 'name' ? (this.sortType = 'name') : (this.sortType = 'date');
+
+            switch (this.sortDirection) {
+                case null:
+                    this.sortDirection = 'up';
+                    break;
+                case 'up':
+                    this.sortDirection = 'down';
+                    break;
+                case 'down':
+                    this.sortDirection = 'up';
+                    break;
+            }
+        }
+
+        private cancelSort() {
+            this.sortDirection = null;
+            this.sortType = null;
+        }
+
+        private saveSortedTasks() {
+            const tasks = this.getTasks;
+
+            this.$store
+                .dispatch('tasks/deleteByTaskSectionId', this.taskSection.id)
+                .then(() => this.$store.dispatch('tasks/saveSortedTasks', tasks));
+
+            this.cancelSort();
         }
     }
 </script>

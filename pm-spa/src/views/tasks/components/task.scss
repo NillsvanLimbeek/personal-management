@@ -6,36 +6,33 @@
         margin-bottom: 3px;
     }
 
-    &__checkbox {
-        width: 2rem;
-        height: 2rem;
-
-        margin-right: 1.5rem;
-        border: 2px solid var(--color-grey);
-        border-radius: 5rem;
-        cursor: pointer;
-
-        &:hover {
-            background: var(--checkbox-green-dark);
-            border: 2px solid var(--checkbox-green);
-        }
-
-        &--active {
-            background: var(--checkbox-green);
-            border: 2px solid var(--checkbox-green);
-
-            &:hover {
-                border: 2px solid var(--checkbox-green-dark);
-                background: var(--checkbox-green-dark);
-            }
-        }
-    }
-
     &__body {
         @include flex-align;
 
         width: 100%;
 
+        transition: var(--transition-2);
         cursor: pointer;
+
+        &:hover {
+            background: var(--color-black-light-2-alpha);
+            transition: var(--transition-2);
+        }
+
+        &--title {
+            @include flex-align;
+            flex: 1 1 auto;
+
+            & > div {
+                margin-right: 0.75rem;
+            }
+        }
+
+        &--date {
+            @include flex-center-align;
+
+            width: 15rem;
+            height: 100%;
+        }
     }
 }

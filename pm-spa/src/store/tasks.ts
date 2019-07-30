@@ -78,7 +78,7 @@ const getters: GetterTree<ITaskState, IRootState> = {
     },
 
     getTask: (state, id: string) => {
-        return state.tasks.find((x) => x.id === id);
+        return state.tasks.find((task) => task.id === id);
     },
 
     getDuplicateTaskId: (state) => {
@@ -92,8 +92,8 @@ const mutations: MutationTree<ITaskState> = {
     },
 
     updateTask: (state, task: ITask) => {
-        const index = state.tasks.map((x) => x.id).indexOf(task.id);
-        const taskToUpdate = state.tasks.find((x) => x.id === task.id);
+        const index = state.tasks.map((task) => task.id).indexOf(task.id);
+        const taskToUpdate = state.tasks.find((task) => task.id === task.id);
 
         if (taskToUpdate) {
             // make copy
@@ -106,7 +106,9 @@ const mutations: MutationTree<ITaskState> = {
 
     duplicateTask: (state, ids: ITaskSectionAddIds) => {
         // find task
-        const taskToDuplicate = state.tasks.find((x) => x.id === ids.taskId);
+        const taskToDuplicate = state.tasks.find(
+            (task) => task.id === ids.taskId,
+        );
 
         // push task to task array
         if (taskToDuplicate) {
@@ -123,22 +125,31 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
+    // TODO rename to delete by id
     deleteTask: (state, id: string) => {
-        state.tasks = state.tasks.filter((x) => x.id !== id);
+        state.tasks = state.tasks.filter((task) => task.id !== id);
+    },
+
+    deleteByTaskSectionId: (state, id: string) => {
+        state.tasks = state.tasks.filter((task) => task.taskSectionId !== id);
     },
 
     moveTask: (state, task: ITask) => {
-        const taskToMove = state.tasks.find((x) => x.id === task.id);
+        const taskToMove = state.tasks.find((task) => task.id === task.id);
 
         if (taskToMove) {
             const newTask = { ...taskToMove, ...task };
 
-            // remove old task
-            state.tasks = state.tasks.filter((x) => x.id !== taskToMove.id);
+            state.tasks = state.tasks.filter(
+                (task) => task.id !== taskToMove.id,
+            );
 
-            // push new task
             state.tasks.push(newTask);
         }
+    },
+
+    saveSortedTasks: (state, tasks: ITask[]) => {
+        state.tasks = [...state.tasks, ...tasks];
     },
 };
 
@@ -155,6 +166,10 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('deleteTask', id);
     },
 
+    async deleteByTaskSectionId({ commit }, id: string) {
+        await commit('deleteByTaskSectionId', id);
+    },
+
     async deleteTasks({ commit }, ids: string[]) {
         await ids.forEach((id) => {
             commit('deleteTask', id);
@@ -168,6 +183,10 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async moveTask({ commit }, task: ITask) {
         await commit('moveTask', task);
+    },
+
+    async saveSortedTasks({ commit }, tasks: ITask[]) {
+        await commit('saveSortedTasks', tasks);
     },
 };
 
