@@ -23,4 +23,8 @@ textarea {
         outline: none;
         border: var(--border-black);
     }
+
+    &::placeholder {
+        color: var(--color-grey-light);
+    }
 }

@@ -15,9 +15,8 @@
         <div class="task-modal__body">
             <div class="task-modal__title">
                 <TextArea
-                    :title="getTask.title"
                     @input="getTask.title = $event"
-                    class="text-area"
+                    :title="getTask.title"
                 />
                 </div>
 

@@ -6,12 +6,9 @@
 
         <div class="create-task__body">
             <div class="create-task__title">
-                <textarea
-                    rows="1"
-                    @input="autoResize"
-                    placeholder="Task title"
-                    v-model="newTask.title"
-                    class="text-area"
+                <TextArea
+                    @input="newTask.title = $event"
+                    :title="newTask.title"
                 />
                 </div>
 
@@ -60,12 +57,14 @@
     const TextEditor = () => import('@components/editor/TextEditor.vue');
     const ModalTaskSectionDropdown = () =>
         import('@components/dropdowns/ModalTaskSectionDropdown.vue');
+    const TextArea = () => import('@components/text-area/TextArea.vue');
 
     @Component({
         components: {
             Datepicker,
             TextEditor,
             ModalTaskSectionDropdown,
+            TextArea,
         },
     })
     export default class CreateTaskModal extends Vue {
