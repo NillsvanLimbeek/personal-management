@@ -11,6 +11,12 @@
 
             <i class="far fa-calendar-alt"></i>
             {{ triggerTitle }}
+
+            <i
+                v-show="date"
+                class="fas fa-times"
+                @click.stop="$emit('select-date', null)"
+            />
         </div>
 
         <div
@@ -171,6 +177,10 @@
             this.$emit('select-date', date);
             this.showDatepicker = false;
         }
+
+        // private removeDate() {
+        //     this.date = null;
+        // }
 
         private created() {
             this.date ? this.getDates(startOfMonth(this.date)) : this.getDates();
