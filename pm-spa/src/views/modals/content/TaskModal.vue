@@ -33,13 +33,25 @@
             <div class="task-modal__description">
                 <TextEditor
                     :task="getTask"
-                    @description="updateDescription($event)" />
+                    placeholder="Task title"
+                    @submit="addTaskComment($event)" />
             </div>
 
-            <div class="task-modal__comments"></div>
+            <div class="task-modal__comments">
+                <TaskComment
+                    v-for="(comment, index) in getTask.comments"
+                    :key="index"
+                    :comment="comment"
+                />
+            </div>
         </div>
 
-        <div class="task-modal__footer"></div>
+        <div class="task-modal__footer">
+            <TextEditor
+                placeholder="Add a comment"
+                has-button="true"
+                @comment="addTaskComment($event)" />
+        </div>
     </div>
 </template>
 
@@ -52,6 +64,7 @@
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
     const TextEditor = () => import('@components/editor/TextEditor.vue');
     const TextArea = () => import('@components/text-area/TextArea.vue');
+    const TaskComment = () => import('@components/task-comment/TaskComment.vue');
 
     @Component({
         components: {
@@ -59,6 +72,7 @@
             Datepicker,
             TextEditor,
             TextArea,
+            TaskComment,
         },
     })
     export default class ModalRight extends Vue {
@@ -89,6 +103,15 @@
                 this.$store.dispatch('tasks/updateTask', {
                     id: this.getTask.id,
                     description,
+                });
+            }
+        }
+
+        private addTaskComment(comment: object): void {
+            if (this.getTask) {
+                this.$store.dispatch('tasks/addComment', {
+                    id: this.getTask.id,
+                    comment,
                 });
             }
         }

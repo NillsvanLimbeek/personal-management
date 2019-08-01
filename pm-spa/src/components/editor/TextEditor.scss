@@ -1,4 +1,6 @@
 .text-editor {
+    position: relative;
+
     margin-top: 1rem;
     border: var(--border-transparent);
     transition: var(--transition-3);
@@ -22,6 +24,12 @@
         &--active {
             opacity: 1;
             transition: var(--transition-3);
+        }
+
+        & > button {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
         }
     }
 

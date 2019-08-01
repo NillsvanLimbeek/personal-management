@@ -23,7 +23,6 @@
             </div>
 
             <div class="create-task__task-section">
-                <!-- <i class="fas fa-bars" /> -->
                 <ModalTaskSectionDropdown
                     :task-sections="taskSections"
                     @select-section="newTask.taskSectionId = $event"
@@ -80,6 +79,7 @@
             taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
             dueDate: this.date,
             description: [],
+            comments: [],
         };
 
         private autoResize(): void {

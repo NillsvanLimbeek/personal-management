@@ -5,6 +5,7 @@ export interface ITask {
     completed: boolean;
     taskSectionId: string;
     dueDate?: Date;
+    comments: object[];
 
     // TODO
     // assignedTo: string;
