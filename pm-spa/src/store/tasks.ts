@@ -2,6 +2,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 
 import { IRootState, ITaskState } from '@data/state';
 import { ITask, ITaskSectionAddIds } from '@data/models';
+import { AddComment } from '@data/type';
 
 import { generateGuid } from '@/utils';
 
@@ -27,6 +28,7 @@ const state: ITaskState = {
             completed: false,
             taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
             dueDate: new Date(),
+            comments: [],
         },
         {
             id: '6e5e1b1e-faf6-4120-bf4c-091ef2329315',
@@ -47,6 +49,7 @@ const state: ITaskState = {
             },
             completed: true,
             taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
+            comments: [],
         },
         {
             id: '5aa9d99e-f0ca-4ca6-a8ff-eec0c2191efd',
@@ -67,6 +70,7 @@ const state: ITaskState = {
             },
             completed: false,
             taskSectionId: '537d15b0-bd23-46f3-bcc9-c6749c06aaf3',
+            comments: [],
         },
     ],
     duplicateTaskId: '',
@@ -125,8 +129,7 @@ const mutations: MutationTree<ITaskState> = {
         }
     },
 
-    // TODO rename to delete by id
-    deleteTask: (state, id: string) => {
+    deleteById: (state, id: string) => {
         state.tasks = state.tasks.filter((task) => task.id !== id);
     },
 
@@ -151,6 +154,14 @@ const mutations: MutationTree<ITaskState> = {
     saveSortedTasks: (state, tasks: ITask[]) => {
         state.tasks = [...state.tasks, ...tasks];
     },
+
+    addComment: (state, { id, comment }: AddComment) => {
+        const task = state.tasks.find((task) => task.id === id);
+
+        if (task) {
+            task.comments.push(comment);
+        }
+    },
 };
 
 const actions: ActionTree<ITaskState, IRootState> = {
@@ -162,8 +173,8 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('updateTask', task);
     },
 
-    async deleteTask({ commit }, id: string) {
-        await commit('deleteTask', id);
+    async deleteById({ commit }, id: string) {
+        await commit('deleteById', id);
     },
 
     async deleteByTaskSectionId({ commit }, id: string) {
@@ -172,7 +183,7 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async deleteTasks({ commit }, ids: string[]) {
         await ids.forEach((id) => {
-            commit('deleteTask', id);
+            commit('deleteById', id);
         });
     },
 
@@ -187,6 +198,10 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async saveSortedTasks({ commit }, tasks: ITask[]) {
         await commit('saveSortedTasks', tasks);
+    },
+
+    async addComment({ commit }, content: AddComment) {
+        await commit('addComment', content);
     },
 };
 

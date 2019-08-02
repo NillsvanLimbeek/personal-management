@@ -1,14 +1,13 @@
 <template>
-    <div class="text-area">
-        <textarea
-            rows="1"
-            @input="autoResize"
-            @blur="$emit('title', title)"
-            v-model="internalTitle"
-            class="text-area"
-        />
-        </div>
-</template>
+    <textarea
+        rows="1"
+        placeholder="Task title"
+        @input="autoResize"
+        @blur="$emit('title', title)"
+        v-model="internalTitle"
+        class="text-area"
+    />
+    </template>
 
 <script lang="ts">
     import { Vue, Component, Prop } from '@/vue-script';

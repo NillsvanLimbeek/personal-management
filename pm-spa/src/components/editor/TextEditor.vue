@@ -54,8 +54,17 @@
                     class="text-editor__icon fas fa-list-ul"
                     :class="{ 'text-editor__icon--active': isActive.bullet_list() }"
                 />
+
+                <button
+                    v-if="hasButton"
+                    class="button"
+                    @click="submitComment"
+                >
+                    Submit
+                </button>
             </div>
         </EditorMenuBar>
+
     </div>
 </template>
 
@@ -86,9 +95,12 @@
     })
     export default class TextEditor extends Vue {
         @Prop() private task!: ITask;
+        @Prop() private placeholder!: string;
+        @Prop() private hasButton!: boolean;
 
         private editor: any = null;
         private json: object = {};
+        private html: object = {};
         private editorFocus: boolean = false;
 
         @Watch('task.id')
@@ -98,7 +110,13 @@
 
         @Watch('json')
         private updateDescription(): void {
-            this.$emit('description', this.json);
+            if (!this.hasButton) {
+                this.$emit('description', JSON.stringify(this.json));
+            }
+        }
+
+        private submitComment() {
+            this.$emit('comment', JSON.stringify(this.json));
         }
 
         private mounted() {
@@ -113,7 +131,7 @@
                     new ListItem(),
                     new Placeholder({
                         emptyNodeClass: 'is-empty',
-                        emptyNodeText: 'Description',
+                        emptyNodeText: this.placeholder,
                         showOnlyWhenEditable: true,
                     }),
                 ],

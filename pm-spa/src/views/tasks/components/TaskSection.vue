@@ -152,6 +152,7 @@
                 taskSectionId: this.taskSection.id,
                 title: this.newTaskTitle,
                 completed: false,
+                comments: [],
             };
 
             if (this.newTaskTitle) {

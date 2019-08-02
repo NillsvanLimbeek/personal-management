@@ -20,33 +20,7 @@
         grid-area: title;
 
         border-bottom: var(--border-black);
-
-        textarea {
-            width: 100%;
-            overflow: hidden;
-
-            background: transparent;
-            border: none;
-            border: 1px solid transparent;
-            resize: none;
-
-            font-family: 'Montserrat';
-            font-size: 2rem;
-            color: var(--color-grey);
-            border-radius: 3px;
-            padding: 5px 7.5px;
-            margin: 1rem 0;
-            transition: var(--transition-2);
-
-            &:hover {
-                border: var(--border-black);
-            }
-
-            &:focus {
-                outline: none;
-                border: var(--border-black);
-            }
-        }
+        width: 100%;
     }
 
     &__assigned-to {
