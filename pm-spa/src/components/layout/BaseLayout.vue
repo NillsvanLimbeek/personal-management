@@ -77,6 +77,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'BaseLayout';
+<style lang="scss" src="./BaseLayout.scss">
 </style>

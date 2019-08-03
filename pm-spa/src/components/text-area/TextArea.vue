@@ -39,6 +39,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import './TextArea.scss';
+<style lang="scss" lang="./TextArea.scss">
 </style>

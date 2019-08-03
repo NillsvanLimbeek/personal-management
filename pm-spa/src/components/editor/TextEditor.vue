@@ -157,6 +157,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'TextEditor.scss';
+<style lang="scss" src="./TextEditor.vue">
 </style>

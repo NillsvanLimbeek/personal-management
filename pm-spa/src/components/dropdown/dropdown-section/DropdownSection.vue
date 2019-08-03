@@ -17,6 +17,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'DropdownSection.scss';
+<style lang="scss" src="./DropdownSection.scss">
 </style>

@@ -32,6 +32,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'MainHeader.scss';
+<style lang="scss" src="./MainHeader.scss">
 </style>

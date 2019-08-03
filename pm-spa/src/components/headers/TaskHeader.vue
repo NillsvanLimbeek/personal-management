@@ -38,6 +38,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'TaskHeader.scss';
+<style lang="scss" src="./TaskHeader.scss">
 </style>

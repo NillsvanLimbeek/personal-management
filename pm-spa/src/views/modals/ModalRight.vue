@@ -23,6 +23,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'ModalRight.scss';
+<style lang="scss" src="./ModalRight.scss">
 </style>

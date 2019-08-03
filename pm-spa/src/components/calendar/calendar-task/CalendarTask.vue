@@ -39,6 +39,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'CalendarTask.scss';
+<style lang="scss" src="./CalendarTask.scss">
 </style>

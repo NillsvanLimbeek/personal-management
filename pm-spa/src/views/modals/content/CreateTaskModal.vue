@@ -100,6 +100,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'CreateTaskModal.scss';
+<style lang="scss" src="./CreateTaskModal.scss">
 </style>

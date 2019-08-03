@@ -118,6 +118,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'TaskModal.scss';
+<style lang="scss" lang="./TaskModal.scss">
 </style>

@@ -66,6 +66,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'InlineEdit.scss';
+<style lang="scss" src="./InlineEdit.scss">
 </style>

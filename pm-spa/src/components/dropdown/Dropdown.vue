@@ -38,6 +38,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'Dropdown.scss';
+<style lang="scss" src="./Dropdown.scss">
 </style>
