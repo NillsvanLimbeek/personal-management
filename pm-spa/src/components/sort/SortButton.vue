@@ -17,6 +17,5 @@
     export default class SortButton extends Vue {}
 </script>
 
-<style lang="scss">
-    @import './SortButton.scss';
+<style lang="scss" src="./SortButton.scss">
 </style>

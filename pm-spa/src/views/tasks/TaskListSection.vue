@@ -62,6 +62,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'TaskListSection.scss';
+<style lang="scss" src="./TaskListSection.scss">
 </style>

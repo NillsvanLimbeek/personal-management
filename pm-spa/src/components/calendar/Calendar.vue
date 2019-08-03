@@ -151,6 +151,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'Calendar.scss';
+<style lang="scss" src="./Calendar.scss">
 </style>

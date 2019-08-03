@@ -12,6 +12,5 @@
     export default class HomeHeader extends Vue {}
 </script>
 
-<style lang="scss">
-    @import 'TaskHeader.scss';
+<style lang="scss" src="./TaskHeader.scss">
 </style>

@@ -15,6 +15,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import './Checkbox';
+<style lang="scss" src="./Checkbox.scss">
 </style>

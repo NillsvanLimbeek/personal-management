@@ -249,6 +249,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'TaskSection.scss';
+<style lang="scss" src="./TaskSection.scss">
 </style>

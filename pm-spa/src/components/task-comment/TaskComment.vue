@@ -52,6 +52,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import './TaskComment.scss';
+<style lang="scss" src="./TaskComment.scss">
 </style>

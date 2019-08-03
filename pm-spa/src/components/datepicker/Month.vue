@@ -70,6 +70,5 @@
     }
 </script>
 
-<style lang="scss">
-    @import 'Month.scss';
+<style lang="scss" src="./Month.scss">
 </style>

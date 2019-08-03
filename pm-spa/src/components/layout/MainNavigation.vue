@@ -32,6 +32,5 @@
     export default class MainNavigation extends Vue {}
 </script>
 
-<style lang="scss">
-    @import 'MainNavigation.scss';
+<style lang="scss" src="./MainNavigation.scss">
 </style>
