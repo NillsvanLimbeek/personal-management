@@ -118,5 +118,5 @@
     }
 </script>
 
-<style lang="scss" lang="./TaskModal.scss">
+<style lang="scss" src="./TaskModal.scss">
 </style>

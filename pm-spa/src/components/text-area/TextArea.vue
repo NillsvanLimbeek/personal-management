@@ -39,5 +39,5 @@
     }
 </script>
 
-<style lang="scss" lang="./TextArea.scss">
+<style lang="scss" src="./TextArea.scss">
 </style>

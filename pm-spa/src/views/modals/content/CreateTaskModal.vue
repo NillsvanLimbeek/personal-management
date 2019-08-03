@@ -82,17 +82,6 @@
             comments: [],
         };
 
-        private autoResize(): void {
-            const textarea = document.querySelector('textarea');
-
-            if (textarea) {
-                const offset = textarea.offsetHeight - textarea.clientHeight;
-
-                textarea.style.height = 'auto';
-                textarea.style.height = textarea.scrollHeight + offset + 'px';
-            }
-        }
-
         private onSubmit() {
             this.$store.dispatch('tasks/addTask', this.newTask);
             this.$router.go(-1);

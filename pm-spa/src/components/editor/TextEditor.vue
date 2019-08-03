@@ -157,5 +157,5 @@
     }
 </script>
 
-<style lang="scss" src="./TextEditor.vue">
+<style lang="scss" src="./TextEditor.scss">
 </style>
