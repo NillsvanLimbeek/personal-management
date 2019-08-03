@@ -97,7 +97,7 @@ const mutations: MutationTree<ITaskState> = {
 
     updateTask: (state, task: ITask) => {
         const index = state.tasks.map((task) => task.id).indexOf(task.id);
-        const taskToUpdate = state.tasks.find((task) => task.id === task.id);
+        const taskToUpdate = state.tasks.find((x) => x.id === task.id);
 
         if (taskToUpdate) {
             // make copy
@@ -138,7 +138,7 @@ const mutations: MutationTree<ITaskState> = {
     },
 
     moveTask: (state, task: ITask) => {
-        const taskToMove = state.tasks.find((task) => task.id === task.id);
+        const taskToMove = state.tasks.find((x) => x.id === task.id);
 
         if (taskToMove) {
             const newTask = { ...taskToMove, ...task };
