@@ -33,8 +33,8 @@
             <div class="task-modal__description">
                 <TextEditor
                     :task="getTask"
-                    placeholder="Task title"
-                    @submit="addTaskComment($event)" />
+                    placeholder="Task description"
+                    @description="updateDescription($event)" />
             </div>
 
             <div class="task-modal__comments">

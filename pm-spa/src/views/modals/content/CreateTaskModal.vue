@@ -78,7 +78,6 @@
             completed: false,
             taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
             dueDate: this.date,
-            description: [],
             comments: [],
         };
 

@@ -105,7 +105,9 @@
 
         @Watch('task.id')
         private setJson(): void {
-            this.editor.setContent(this.task.description);
+            if (this.task.description) {
+                this.editor.setContent(JSON.parse(this.task.description));
+            }
         }
 
         @Watch('json')
