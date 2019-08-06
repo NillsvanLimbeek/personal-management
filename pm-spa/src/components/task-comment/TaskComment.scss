@@ -1,2 +1,9 @@
 .task-comment {
+    @include flex-align;
+
+    padding: 7.5px;
+
+    &:not(:last-child) {
+        margin-bottom: 5px;
+    }
 }

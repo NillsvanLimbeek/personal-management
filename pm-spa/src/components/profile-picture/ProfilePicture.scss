@@ -1,0 +1,10 @@
+.profile-picture {
+    @include flex-center-align;
+
+    width: 2.75rem;
+    height: 2.75rem;
+
+    border-radius: 5rem;
+    border: 2px solid var(--color-grey);
+    margin-right: 1rem;
+}

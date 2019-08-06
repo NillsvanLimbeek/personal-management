@@ -100,7 +100,6 @@
 
         private editor: any = null;
         private json: object = {};
-        private html: object = {};
         private editorFocus: boolean = false;
 
         @Watch('task.id')
