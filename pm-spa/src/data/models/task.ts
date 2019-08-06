@@ -1,7 +1,7 @@
 export interface ITask {
     id: string;
     title: string;
-    description?: any;
+    description?: string;
     completed: boolean;
     taskSectionId: string;
     dueDate?: Date;

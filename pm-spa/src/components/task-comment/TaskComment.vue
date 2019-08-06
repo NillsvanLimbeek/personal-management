@@ -1,5 +1,6 @@
 <template>
     <div class="task-comment">
+        <ProfilePicture />
         <editor-content :editor="editor" />
     </div>
 </template>
@@ -20,9 +21,13 @@
         // @ts-ignore
     } from 'tiptap-extensions';
 
+    const ProfilePicture = () =>
+        import('@components/profile-picture/ProfilePicture.vue');
+
     @Component({
         components: {
             EditorContent,
+            ProfilePicture,
         },
     })
     export default class TaskComment extends Vue {
