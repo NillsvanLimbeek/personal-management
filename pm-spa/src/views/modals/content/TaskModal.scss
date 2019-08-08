@@ -15,16 +15,17 @@
     }
 
     &__body {
+        height: calc(100vh - 18rem);
+        overflow-y: auto;
+    }
+
+    &__body-top {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: 1fr 1fr 5fr 2fr;
+        grid-template-rows: 1fr 1fr;
         grid-template-areas:
             'title title'
-            'assigned-to due-date'
-            'description description'
-            'comments comments';
-
-        height: calc(100% - 20rem);
+            'assigned-to due-date';
     }
 
     &__title {
@@ -55,16 +56,15 @@
     }
 
     &__description {
-        grid-area: description;
         border-bottom: var(--border-black);
     }
 
     &__comments {
-        grid-area: comments;
-        border-bottom: var(--border-black);
     }
 
     &__footer {
-        height: 15rem;
+        height: 8rem;
+
+        border-top: var(--border-black);
     }
 }

@@ -13,36 +13,40 @@
         </div>
 
         <div class="task-modal__body">
-            <div class="task-modal__title">
-                <TextArea
-                    @input="getTask.title = $event"
-                    :title="getTask.title"
-                />
+            <div class="task-modal__body-top">
+                <div class="task-modal__title">
+                    <TextArea
+                        @input="getTask.title = $event"
+                        :title="getTask.title"
+                    />
+                    </div>
+
+                <div class="task-modal__assigned-to">
+                    <i class="far fa-user"></i>
                 </div>
 
-            <div class="task-modal__assigned-to">
-                <i class="far fa-user"></i>
+                <div class="task-modal__due-date">
+                    <Datepicker
+                        :date="getTask.dueDate"
+                        @select-date="updateDueDate($event)"  />
+                </div>
             </div>
 
-            <div class="task-modal__due-date">
-                <Datepicker
-                    :date="getTask.dueDate"
-                    @select-date="updateDueDate($event)"  />
-            </div>
+            <div class="task-modal__body-middle">
+                <div class="task-modal__description">
+                    <TextEditor
+                        :task="getTask"
+                        placeholder="Task description"
+                        @description="updateDescription($event)" />
+                </div>
 
-            <div class="task-modal__description">
-                <TextEditor
-                    :task="getTask"
-                    placeholder="Task description"
-                    @description="updateDescription($event)" />
-            </div>
-
-            <div class="task-modal__comments">
-                <TaskComment
-                    v-for="(comment, index) in getTask.comments"
-                    :key="index"
-                    :comment="comment"
-                />
+                <div class="task-modal__comments">
+                    <TaskComment
+                        v-for="(comment, index) in getTask.comments"
+                        :key="index"
+                        :comment="comment"
+                    />
+                </div>
             </div>
         </div>
 
