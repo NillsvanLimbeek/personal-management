@@ -2,4 +2,8 @@
     @include flex-align;
 
     padding: 7.5px;
+
+    &__body {
+        width: 90%;
+    }
 }

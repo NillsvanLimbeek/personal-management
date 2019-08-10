@@ -15,7 +15,8 @@
     }
 
     &__body {
-        height: calc(100vh - 18rem);
+        // height: calc(100vh - 18rem);
+        height: 100%;
         overflow-y: auto;
     }
 
@@ -63,8 +64,15 @@
     }
 
     &__footer {
-        height: 8rem;
+        height: auto;
 
         border-top: var(--border-black);
+
+        position: absolute;
+        bottom: 2rem;
+        width: calc(100% - 4rem);
     }
+}
+
+.test {
 }

@@ -12,7 +12,10 @@
 
         </div>
 
-        <div class="task-modal__body">
+        <div
+            class="task-modal__body"
+            :style="{ height: `calc(100vh - ${commentsEditorHeight + 80}px)` }"
+        >
             <div class="task-modal__body-top">
                 <div class="task-modal__title">
                     <TextArea
@@ -52,8 +55,10 @@
 
         <div class="task-modal__footer">
             <TextEditor
+                ref="editor"
                 placeholder="Add a comment"
                 has-button="true"
+                @input="resizeModalBody"
                 @comment="addTaskComment($event)" />
         </div>
     </div>
@@ -81,6 +86,8 @@
     })
     export default class ModalRight extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
+
+        private commentsEditorHeight: number | null = null;
 
         private get getTask(): ITask | undefined {
             return this.tasks.find((x) => x.id === this.$route.params.id);
@@ -117,6 +124,16 @@
                     id: this.getTask.id,
                     comment,
                 });
+            }
+        }
+
+        private resizeModalBody(): void {
+            const footer = document.querySelector(
+                '.task-modal__footer',
+            ) as HTMLElement;
+
+            if (footer) {
+                this.commentsEditorHeight = footer.offsetHeight;
             }
         }
     }
