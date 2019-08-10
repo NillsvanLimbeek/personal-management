@@ -3,7 +3,7 @@
 
     padding: 7.5px;
 
-    &:not(:last-child) {
-        margin-bottom: 5px;
+    &__body {
+        width: 90%;
     }
 }

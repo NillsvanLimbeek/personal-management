@@ -137,6 +137,7 @@
                     }),
                 ],
                 onUpdate: ({ getJSON }: any) => {
+                    this.$emit('input');
                     this.json = getJSON();
                 },
                 onFocus: () => {

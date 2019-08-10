@@ -1,7 +1,10 @@
 <template>
     <div class="task-comment">
         <ProfilePicture />
-        <editor-content :editor="editor" />
+        <editor-content
+            class="task-comment__body"
+            :editor="editor"
+        />
     </div>
 </template>
 

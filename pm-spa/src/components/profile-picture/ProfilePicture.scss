@@ -1,5 +1,6 @@
 .profile-picture {
     @include flex-center-align;
+    flex: 0 0 2.75rem;
 
     width: 2.75rem;
     height: 2.75rem;
