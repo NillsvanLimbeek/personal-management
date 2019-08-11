@@ -4,14 +4,30 @@ import { ICommentState, IRootState } from '@data/state';
 import { IComment } from '@data/models';
 
 const state: ICommentState = {
-    tasks: [],
+    comments: [],
 };
 
-const getters: GetterTree<ICommentState, IRootState> = {};
+const getters: GetterTree<ICommentState, IRootState> = {
+    getComments: (state) => {
+        return state.comments;
+    },
 
-const mutations: MutationTree<ICommentState> = {};
+    getComment: (state, id: string) => {
+        return state.comments.find((comment) => comment.id === id);
+    },
+};
 
-const actions: ActionTree<ICommentState, IRootState> = {};
+const mutations: MutationTree<ICommentState> = {
+    addComment: (state, comment: IComment) => {
+        state.comments.push(comment);
+    },
+};
+
+const actions: ActionTree<ICommentState, IRootState> = {
+    async addComment({ commit }, comment: IComment) {
+        await commit('addComment', comment);
+    },
+};
 
 export const comments: Module<ICommentState, IRootState> = {
     namespaced: true,

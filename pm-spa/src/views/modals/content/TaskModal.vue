@@ -67,7 +67,8 @@
 <script lang="ts">
     import { Vue, Component, Getter } from '@/vue-script';
 
-    import { ITask } from '@data/models';
+    import { ITask, IComment } from '@data/models';
+    import { generateGuid } from '@utils/index';
 
     const Checkbox = () => import('@components/checkbox/Checkbox.vue');
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
@@ -118,12 +119,18 @@
             }
         }
 
-        private addTaskComment(comment: object): void {
+        private addTaskComment(description: string): void {
             if (this.getTask) {
-                this.$store.dispatch('tasks/addComment', {
-                    id: this.getTask.id,
-                    comment,
-                });
+                const comment: IComment = {
+                    createdAt: new Date(),
+                    createdBy: 'Nills van Limbeek',
+                    id: generateGuid(),
+                    taskId: this.getTask.id,
+                    description,
+                };
+
+                this.$store.dispatch('comments/addComment', comment);
+                // TODO add commentId to task
             }
         }
 
