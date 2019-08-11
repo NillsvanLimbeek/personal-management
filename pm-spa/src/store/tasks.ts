@@ -119,13 +119,13 @@ const mutations: MutationTree<ITaskState> = {
         state.tasks = [...state.tasks, ...tasks];
     },
 
-    addComment: (state, { id, comment }: AddComment) => {
-        const task = state.tasks.find((task) => task.id === id);
+    // addComment: (state, { id, comment }: AddComment) => {
+    //     const task = state.tasks.find((task) => task.id === id);
 
-        if (task) {
-            task.comments.push(comment);
-        }
-    },
+    //     if (task) {
+    //         task.comments.push(comment);
+    //     }
+    // },
 };
 
 const actions: ActionTree<ITaskState, IRootState> = {

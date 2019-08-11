@@ -30,7 +30,9 @@
             </div>
 
             <div class="create-task__description">
-                <TextEditor @description="newTask.description = $event" />
+                <TextEditor
+                    placeholder="Task description"
+                    @description="newTask.description = $event" />
             </div>
         </div>
 
