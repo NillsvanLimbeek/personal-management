@@ -1,15 +1,32 @@
 <template>
     <div class="task-comment">
-        <ProfilePicture />
-        <editor-content
-            class="task-comment__body"
-            :editor="editor"
-        />
+        <ProfilePicture class="task-comment__profile" />
+
+        <div class="task-comment__body">
+            <div class="task-comment__title">
+                <span class="task-comment__name">
+                    {{ comment.createdBy }}
+                </span>
+
+                <span class="task-comment__date">
+                    {{ dateCreated }}
+                </span>
+
+            </div>
+
+            <editor-content
+                class="task-comment__comment"
+                :editor="editor"
+            />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from '@/vue-script';
+
+    import { IComment } from '@data/models';
+    import { formatDistance, format } from 'date-fns';
 
     // @ts-ignore
     import { Editor, EditorContent } from 'tiptap';
@@ -34,9 +51,15 @@
         },
     })
     export default class TaskComment extends Vue {
-        @Prop() private comment!: string;
+        @Prop({ required: true }) private comment!: IComment;
 
         private editor: any = null;
+
+        private get dateCreated(): string {
+            return formatDistance(this.comment.createdAt, Date.now(), {
+                addSuffix: true,
+            });
+        }
 
         private mounted() {
             this.editor = new Editor({
@@ -50,7 +73,7 @@
                     new ListItem(),
                 ],
                 editable: false,
-                content: JSON.parse(this.comment),
+                content: JSON.parse(this.comment.description),
             });
         }
 

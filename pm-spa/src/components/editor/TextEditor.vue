@@ -118,6 +118,7 @@
 
         private submitComment() {
             this.$emit('comment', JSON.stringify(this.json));
+            this.editor.clearContent();
         }
 
         private mounted() {

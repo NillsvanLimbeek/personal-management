@@ -45,7 +45,7 @@
 
                 <div class="task-modal__comments">
                     <TaskComment
-                        v-for="(comment, index) in getTask.comments"
+                        v-for="(comment, index) in getComments"
                         :key="index"
                         :comment="comment"
                     />
@@ -87,11 +87,18 @@
     })
     export default class ModalRight extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
+        @Getter('comments/getComments') private comments!: IComment[];
 
         private commentsEditorHeight: number | null = null;
 
         private get getTask(): ITask | undefined {
-            return this.tasks.find((x) => x.id === this.$route.params.id);
+            return this.tasks.find((task) => task.id === this.$route.params.id);
+        }
+
+        private get getComments() {
+            return this.comments.filter(
+                (comment) => comment.taskId === this.$route.params.id,
+            );
         }
 
         private updateTask(msg: boolean): void {
@@ -129,8 +136,12 @@
                     description,
                 };
 
-                this.$store.dispatch('comments/addComment', comment);
-                // TODO add commentId to task
+                this.$store.dispatch('comments/addComment', comment).then(() => {
+                    this.$store.dispatch('tasks/addCommentId', {
+                        commentId: comment.id,
+                        taskId: comment.taskId,
+                    });
+                });
             }
         }
 

@@ -164,8 +164,8 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('saveSortedTasks', tasks);
     },
 
-    async addComment({ commit }, content: AddComment) {
-        await commit('addComment', content);
+    async addCommentId({ commit }, comment: AddComment) {
+        await commit('addCommentId', comment);
     },
 };
 
