@@ -1,11 +1,15 @@
 .dropdown {
     position: relative;
 
-    margin-right: 1rem;
+    // margin-right: 1rem;
 
     &__button {
+        color: var(--color-grey-light);
         cursor: pointer;
-        margin-right: 5px;
+
+        &:hover {
+            color: var(--color-grey);
+        }
     }
 
     &__body {
