@@ -21,11 +21,19 @@ const mutations: MutationTree<ICommentState> = {
     addComment: (state, comment: IComment) => {
         state.comments.push(comment);
     },
+
+    deleteComment: (state, id: string) => {
+        state.comments = state.comments.filter((comment) => comment.id !== id);
+    },
 };
 
 const actions: ActionTree<ICommentState, IRootState> = {
     async addComment({ commit }, comment: IComment) {
         await commit('addComment', comment);
+    },
+
+    async deleteComment({ commit }, id: string) {
+        await commit('deleteComment', id);
     },
 };
 

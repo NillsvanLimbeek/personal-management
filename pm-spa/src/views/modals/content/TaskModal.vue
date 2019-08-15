@@ -48,6 +48,7 @@
                         v-for="(comment, index) in getComments"
                         :key="index"
                         :comment="comment"
+                        @delete-comment="deleteComment($event)"
                     />
                 </div>
             </div>
@@ -126,7 +127,7 @@
             }
         }
 
-        private addTaskComment(description: string): void {
+        private async addTaskComment(description: string) {
             if (this.getTask) {
                 const comment: IComment = {
                     createdAt: new Date(),
@@ -136,11 +137,10 @@
                     description,
                 };
 
-                this.$store.dispatch('comments/addComment', comment).then(() => {
-                    this.$store.dispatch('tasks/addCommentId', {
-                        commentId: comment.id,
-                        taskId: comment.taskId,
-                    });
+                await this.$store.dispatch('comments/addComment', comment);
+                this.$store.dispatch('tasks/addCommentId', {
+                    commentId: comment.id,
+                    taskId: comment.taskId,
                 });
             }
         }
@@ -153,6 +153,14 @@
             if (footer) {
                 this.commentsEditorHeight = footer.offsetHeight;
             }
+        }
+
+        private async deleteComment(comment: IComment) {
+            await this.$store.dispatch('comments/deleteComment', comment.id);
+            this.$store.dispatch('tasks/deleteCommentId', {
+                commentId: comment.id,
+                taskId: comment.taskId,
+            });
         }
     }
 </script>

@@ -12,7 +12,10 @@
                     {{ dateCreated }}
                 </span>
 
-                <TaskCommentDropdown />
+                <TaskCommentDropdown
+                    @edit-comment="$emit('edit-comment', comment)"
+                    @delete-comment="$emit('delete-comment', comment)"
+                />
             </div>
 
             <editor-content
