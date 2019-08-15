@@ -17,5 +17,9 @@
 
         background: var(--color-black-light-2);
         border-radius: 2px;
+
+        &--left {
+            right: 0;
+        }
     }
 }

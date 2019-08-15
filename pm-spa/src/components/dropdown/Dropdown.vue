@@ -10,6 +10,7 @@
 
         <div
             class="dropdown__body"
+            :class="{ 'dropdown__body--left': position === 'left' }"
             v-if="showDropdown"
         >
             <slot />
@@ -24,6 +25,8 @@
 
     @Component({})
     export default class Dropdown extends Vue {
+        @Prop() private position!: string;
+
         private showDropdown: boolean = false;
 
         public closeDropdown(): void {

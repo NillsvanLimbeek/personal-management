@@ -12,6 +12,7 @@
                     {{ dateCreated }}
                 </span>
 
+                <TaskCommentDropdown />
             </div>
 
             <editor-content
@@ -19,6 +20,7 @@
                 :editor="editor"
             />
         </div>
+
     </div>
 </template>
 
@@ -43,11 +45,14 @@
 
     const ProfilePicture = () =>
         import('@components/profile-picture/ProfilePicture.vue');
+    const TaskCommentDropdown = () =>
+        import('@/components/dropdowns/TaskCommentDropdown.vue');
 
     @Component({
         components: {
             EditorContent,
             ProfilePicture,
+            TaskCommentDropdown,
         },
     })
     export default class TaskComment extends Vue {
