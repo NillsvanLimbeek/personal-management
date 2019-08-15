@@ -2,6 +2,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 
 import { ICommentState, IRootState } from '@data/state';
 import { IComment } from '@data/models';
+import { UpdateComment } from '@data/type';
 
 const state: ICommentState = {
     comments: [],
@@ -25,6 +26,20 @@ const mutations: MutationTree<ICommentState> = {
     deleteComment: (state, id: string) => {
         state.comments = state.comments.filter((comment) => comment.id !== id);
     },
+
+    updateComment: (state, newComment: UpdateComment) => {
+        const index = state.comments
+            .map((comment) => comment.id)
+            .indexOf(newComment.id);
+        const comment = state.comments.find(
+            (comment) => comment.id === newComment.id,
+        );
+
+        // TODO update comment
+        if (comment) {
+            // const newComment: IComment = [...comment, ...newComment];
+        }
+    },
 };
 
 const actions: ActionTree<ICommentState, IRootState> = {
@@ -34,6 +49,10 @@ const actions: ActionTree<ICommentState, IRootState> = {
 
     async deleteComment({ commit }, id: string) {
         await commit('deleteComment', id);
+    },
+
+    async updateComment({ commit }, newComment: UpdateComment) {
+        await commit('updateComment', newComment);
     },
 };
 

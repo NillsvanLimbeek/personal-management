@@ -48,7 +48,8 @@
                         v-for="(comment, index) in getComments"
                         :key="index"
                         :comment="comment"
-                        @delete-comment="deleteComment($event)"
+                        @delete-comment="deleteTaskComment($event)"
+                        @edit-comment="edit = $event;"
                     />
                 </div>
             </div>
@@ -59,8 +60,11 @@
                 ref="editor"
                 placeholder="Add a comment"
                 has-button="true"
+                :edit="edit"
                 @input="resizeModalBody"
-                @comment="addTaskComment($event)" />
+                @add-comment="addTaskComment($event)"
+                @update-comment="updateTaskComment($event)"
+            />
         </div>
     </div>
 </template>
@@ -91,6 +95,7 @@
         @Getter('comments/getComments') private comments!: IComment[];
 
         private commentsEditorHeight: number | null = null;
+        private edit: IComment | null = null;
 
         private get getTask(): ITask | undefined {
             return this.tasks.find((task) => task.id === this.$route.params.id);
@@ -155,12 +160,17 @@
             }
         }
 
-        private async deleteComment(comment: IComment) {
+        private async deleteTaskComment(comment: IComment) {
             await this.$store.dispatch('comments/deleteComment', comment.id);
             this.$store.dispatch('tasks/deleteCommentId', {
                 commentId: comment.id,
                 taskId: comment.taskId,
             });
+        }
+
+        private updateTaskComment(comment: IComment) {
+            this.$store.dispatch('comments/updateComment', comment);
+            this.edit = null;
         }
     }
 </script>
