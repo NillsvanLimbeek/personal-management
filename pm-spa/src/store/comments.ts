@@ -27,17 +27,16 @@ const mutations: MutationTree<ICommentState> = {
         state.comments = state.comments.filter((comment) => comment.id !== id);
     },
 
-    updateComment: (state, newComment: UpdateComment) => {
-        const index = state.comments
-            .map((comment) => comment.id)
-            .indexOf(newComment.id);
-        const comment = state.comments.find(
-            (comment) => comment.id === newComment.id,
+    updateComment: (state, { id, description }: UpdateComment) => {
+        const index = state.comments.map((comment) => comment.id).indexOf(id);
+        const commentToUpdate = state.comments.find(
+            (comment) => comment.id === id,
         );
 
-        // TODO update comment
-        if (comment) {
-            // const newComment: IComment = [...comment, ...newComment];
+        if (commentToUpdate) {
+            const newComment: IComment = { ...commentToUpdate, description };
+
+            state.comments.splice(index, 1, newComment);
         }
     },
 };

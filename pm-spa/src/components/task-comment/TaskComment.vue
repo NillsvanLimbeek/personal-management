@@ -63,6 +63,11 @@
 
         private editor: any = null;
 
+        @Watch('comment.description')
+        private setDescription() {
+            this.editor.setContent(JSON.parse(this.comment.description));
+        }
+
         private get dateCreated(): string {
             return formatDistance(this.comment.createdAt, Date.now(), {
                 addSuffix: true,
