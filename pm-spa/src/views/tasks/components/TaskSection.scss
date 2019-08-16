@@ -23,14 +23,16 @@
         }
     }
 
-    &__menu-button {
-        cursor: pointer;
-    }
+    // &__menu-button {
+    //     cursor: pointer;
+    // }
 
     &__dropdown {
-        &--hide {
-            opacity: 0;
-        }
+        margin-right: 5px;
+
+        // &--hide {
+        //     opacity: 0;
+        // }
     }
 
     &__arrow {

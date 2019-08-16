@@ -71,7 +71,7 @@
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from '@/vue-script';
 
-    import { ITask } from '@data/models';
+    import { ITask, IComment } from '@data/models';
 
     // @ts-ignore
     import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
@@ -97,6 +97,7 @@
         @Prop() private task!: ITask;
         @Prop() private placeholder!: string;
         @Prop() private hasButton!: boolean;
+        @Prop() private edit!: IComment | null;
 
         private editor: any = null;
         private json: object = {};
@@ -116,8 +117,25 @@
             }
         }
 
+        @Watch('edit')
+        private editComment() {
+            if (this.edit !== null) {
+                this.editor.setContent(JSON.parse(this.edit.description));
+                this.editor.focus();
+            }
+        }
+
         private submitComment() {
-            this.$emit('comment', JSON.stringify(this.json));
+            if (this.edit !== null) {
+                this.$emit('update-comment', {
+                    id: this.edit.id,
+                    description: JSON.stringify(this.json),
+                });
+            } else {
+                this.$emit('add-comment', JSON.stringify(this.json));
+            }
+
+            this.editor.clearContent();
         }
 
         private mounted() {

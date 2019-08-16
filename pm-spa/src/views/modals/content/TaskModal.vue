@@ -45,9 +45,11 @@
 
                 <div class="task-modal__comments">
                     <TaskComment
-                        v-for="(comment, index) in getTask.comments"
+                        v-for="(comment, index) in getComments"
                         :key="index"
                         :comment="comment"
+                        @delete-comment="deleteTaskComment($event)"
+                        @edit-comment="edit = $event;"
                     />
                 </div>
             </div>
@@ -58,8 +60,11 @@
                 ref="editor"
                 placeholder="Add a comment"
                 has-button="true"
+                :edit="edit"
                 @input="resizeModalBody"
-                @comment="addTaskComment($event)" />
+                @add-comment="addTaskComment($event)"
+                @update-comment="updateTaskComment($event)"
+            />
         </div>
     </div>
 </template>
@@ -67,7 +72,8 @@
 <script lang="ts">
     import { Vue, Component, Getter } from '@/vue-script';
 
-    import { ITask } from '@data/models';
+    import { ITask, IComment } from '@data/models';
+    import { generateGuid } from '@utils/index';
 
     const Checkbox = () => import('@components/checkbox/Checkbox.vue');
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
@@ -86,11 +92,19 @@
     })
     export default class ModalRight extends Vue {
         @Getter('tasks/getTasks') private tasks!: ITask[];
+        @Getter('comments/getComments') private comments!: IComment[];
 
         private commentsEditorHeight: number | null = null;
+        private edit: IComment | null = null;
 
         private get getTask(): ITask | undefined {
-            return this.tasks.find((x) => x.id === this.$route.params.id);
+            return this.tasks.find((task) => task.id === this.$route.params.id);
+        }
+
+        private get getComments() {
+            return this.comments.filter(
+                (comment) => comment.taskId === this.$route.params.id,
+            );
         }
 
         private updateTask(msg: boolean): void {
@@ -118,11 +132,20 @@
             }
         }
 
-        private addTaskComment(comment: object): void {
+        private async addTaskComment(description: string) {
             if (this.getTask) {
-                this.$store.dispatch('tasks/addComment', {
-                    id: this.getTask.id,
-                    comment,
+                const comment: IComment = {
+                    createdAt: new Date(),
+                    createdBy: 'Nills van Limbeek',
+                    id: generateGuid(),
+                    taskId: this.getTask.id,
+                    description,
+                };
+
+                await this.$store.dispatch('comments/addComment', comment);
+                this.$store.dispatch('tasks/addCommentId', {
+                    commentId: comment.id,
+                    taskId: comment.taskId,
                 });
             }
         }
@@ -135,6 +158,19 @@
             if (footer) {
                 this.commentsEditorHeight = footer.offsetHeight;
             }
+        }
+
+        private async deleteTaskComment(comment: IComment) {
+            await this.$store.dispatch('comments/deleteComment', comment.id);
+            this.$store.dispatch('tasks/deleteCommentId', {
+                commentId: comment.id,
+                taskId: comment.taskId,
+            });
+        }
+
+        private updateTaskComment(comment: IComment) {
+            this.$store.dispatch('comments/updateComment', comment);
+            this.edit = null;
         }
     }
 </script>

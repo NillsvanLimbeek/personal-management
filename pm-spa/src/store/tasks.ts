@@ -119,11 +119,21 @@ const mutations: MutationTree<ITaskState> = {
         state.tasks = [...state.tasks, ...tasks];
     },
 
-    addComment: (state, { id, comment }: AddComment) => {
-        const task = state.tasks.find((task) => task.id === id);
+    addCommentId: (state, { taskId, commentId }: AddComment) => {
+        const task = state.tasks.find((task) => task.id === taskId);
 
         if (task) {
-            task.comments.push(comment);
+            task.comments.push(commentId);
+        }
+    },
+
+    deleteCommentId: (state, { taskId, commentId }: AddComment) => {
+        const task = state.tasks.find((task) => task.id === taskId);
+
+        if (task) {
+            task.comments = task.comments.filter(
+                (comment) => comment !== commentId,
+            );
         }
     },
 };
@@ -164,8 +174,12 @@ const actions: ActionTree<ITaskState, IRootState> = {
         await commit('saveSortedTasks', tasks);
     },
 
-    async addComment({ commit }, content: AddComment) {
-        await commit('addComment', content);
+    async addCommentId({ commit }, comment: AddComment) {
+        await commit('addCommentId', comment);
+    },
+
+    async deleteCommentId({ commit }, comment: AddComment) {
+        await commit('deleteCommentId', comment);
     },
 };
 

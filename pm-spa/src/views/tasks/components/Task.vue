@@ -1,6 +1,7 @@
 <template>
     <div class="task">
         <TaskDropdown
+            class="task__dropdown"
             :task-sections="taskSections"
             @move-to-section="moveTask($event)"
             @duplicate-task="duplicateTask"

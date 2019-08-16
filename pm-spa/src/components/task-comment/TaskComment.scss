@@ -1,9 +1,30 @@
 .task-comment {
     @include flex-align;
 
+    width: 95%;
     padding: 7.5px;
 
+    &__profile {
+        align-self: flex-start;
+    }
+
+    &__title {
+        @include flex-space-between;
+
+        margin: 3px 0 5px 0;
+    }
+
+    &__name {
+        font-size: 14px;
+        margin-right: 1rem;
+    }
+
+    &__date {
+        font-size: 14px;
+        color: var(--color-grey-light);
+    }
+
     &__body {
-        width: 90%;
+        width: 95%;
     }
 }

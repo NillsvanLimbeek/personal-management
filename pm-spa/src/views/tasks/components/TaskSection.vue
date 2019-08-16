@@ -3,6 +3,7 @@
         <div class="task-section__body">
             <div class="task-section__body--title">
                 <TaskSectionDropdown
+                    class="task-section__dropdown"
                     :is-open="taskSection.isOpen"
                     @collapse-section="collapseSection"
                     @delete-section="deleteSection"

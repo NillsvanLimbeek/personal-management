@@ -19,7 +19,8 @@
             "@data/*": ["src/data/*"],
             "@state/*": ["src/data/state/*"],
             "@type/*": ["src/data/type/*"],
-            "@models/*": ["src/data/models/*"]
+            "@models/*": ["src/data/models/*"],
+            "@utils/*": ["src/utils/*"]
         },
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
     },

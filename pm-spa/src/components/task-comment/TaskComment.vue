@@ -1,15 +1,37 @@
 <template>
     <div class="task-comment">
-        <ProfilePicture />
-        <editor-content
-            class="task-comment__body"
-            :editor="editor"
-        />
+        <ProfilePicture class="task-comment__profile" />
+
+        <div class="task-comment__body">
+            <div class="task-comment__title">
+                <span class="task-comment__name">
+                    {{ comment.createdBy }}
+                </span>
+
+                <span class="task-comment__date">
+                    {{ dateCreated }}
+                </span>
+
+                <TaskCommentDropdown
+                    @edit-comment="$emit('edit-comment', comment)"
+                    @delete-comment="$emit('delete-comment', comment)"
+                />
+            </div>
+
+            <editor-content
+                class="task-comment__comment"
+                :editor="editor"
+            />
+        </div>
+
     </div>
 </template>
 
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from '@/vue-script';
+
+    import { IComment } from '@data/models';
+    import { formatDistance, format } from 'date-fns';
 
     // @ts-ignore
     import { Editor, EditorContent } from 'tiptap';
@@ -26,17 +48,31 @@
 
     const ProfilePicture = () =>
         import('@components/profile-picture/ProfilePicture.vue');
+    const TaskCommentDropdown = () =>
+        import('@/components/dropdowns/TaskCommentDropdown.vue');
 
     @Component({
         components: {
             EditorContent,
             ProfilePicture,
+            TaskCommentDropdown,
         },
     })
     export default class TaskComment extends Vue {
-        @Prop() private comment!: string;
+        @Prop({ required: true }) private comment!: IComment;
 
         private editor: any = null;
+
+        @Watch('comment.description')
+        private setDescription() {
+            this.editor.setContent(JSON.parse(this.comment.description));
+        }
+
+        private get dateCreated(): string {
+            return formatDistance(this.comment.createdAt, Date.now(), {
+                addSuffix: true,
+            });
+        }
 
         private mounted() {
             this.editor = new Editor({
@@ -50,7 +86,7 @@
                     new ListItem(),
                 ],
                 editable: false,
-                content: JSON.parse(this.comment),
+                content: JSON.parse(this.comment.description),
             });
         }
 

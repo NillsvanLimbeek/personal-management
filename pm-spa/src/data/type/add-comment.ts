@@ -1,4 +1,4 @@
 export interface AddComment {
-    id: string;
-    comment: object;
+    commentId: string;
+    taskId: string;
 }
