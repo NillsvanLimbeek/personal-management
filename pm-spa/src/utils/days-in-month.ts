@@ -9,7 +9,7 @@ export function daysInMonth(day?: Date): Date[] {
         date = startOfMonth(new Date());
     }
 
-    return [...Array(getDaysInMonth(date))].map((y, x) => {
-        return addDays(date, x);
+    return [...Array(getDaysInMonth(date))].map((_, index) => {
+        return addDays(date, index);
     });
 }

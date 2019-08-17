@@ -1,1 +1,1 @@
-export type SortType = 'name' | 'date';
+export type SortType = 'title' | 'date';

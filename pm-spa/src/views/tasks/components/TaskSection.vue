@@ -77,7 +77,7 @@
     import { ITaskSection, ITask } from '@models/index';
 
     import { EventBus } from '@/event-bus';
-    import { generateGuid, sortByName, sortByDate } from '@/utils';
+    import { generateGuid, sortBy } from '@/utils';
     import { SortDirection, SortType } from '@data/type';
 
     const TaskSectionDropdown = () =>
@@ -109,17 +109,17 @@
                 return task.taskSectionId === this.taskSection.id;
             });
 
-            if (this.sortType === 'name') {
+            if (this.sortType === 'title') {
                 if (this.sortDirection === 'up') {
-                    tasks = sortByName(tasks);
+                    tasks = sortBy(tasks, 'title');
                 } else {
-                    tasks = sortByName(tasks).reverse();
+                    tasks = sortBy(tasks, 'title').reverse();
                 }
             } else if (this.sortType === 'date') {
                 if (this.sortDirection === 'up') {
-                    tasks = sortByDate(tasks);
+                    tasks = sortBy(tasks, 'date');
                 } else {
-                    tasks = sortByDate(tasks).reverse();
+                    tasks = sortBy(tasks, 'date').reverse();
                 }
             }
 
@@ -218,7 +218,7 @@
         }
 
         private sortTasks(type: SortType) {
-            type === 'name' ? (this.sortType = 'name') : (this.sortType = 'date');
+            type === 'title' ? (this.sortType = 'title') : (this.sortType = 'date');
 
             switch (this.sortDirection) {
                 case null:

@@ -1,15 +1,28 @@
+import { SortType } from '@data/type';
 import { ITask } from '@models/task';
 
-export function sortByName(arr: ITask[]): ITask[] {
-    return arr.sort((a, b) => {
-        const nameA = a.title.toUpperCase();
-        const nameB = b.title.toUpperCase();
+function checkDate(date?: Date): number {
+    return date != null ? date.getTime() : 0;
+}
 
-        if (nameA < nameB) {
+export function sortBy(arr: any, type: SortType): ITask[] {
+    return arr.sort((a: any, b: any) => {
+        let objA;
+        let objB;
+
+        if (type === 'date') {
+            objA = checkDate(a.dueDate);
+            objB = checkDate(b.dueDate);
+        } else {
+            objA = a[type].toUpperCase();
+            objB = b[type].toUpperCase();
+        }
+
+        if (objA < objB) {
             return -1;
         }
 
-        if (nameA > nameB) {
+        if (objA > objB) {
             return 1;
         }
 
