@@ -1,7 +1,7 @@
 .dropdown {
-    position: relative;
+    @include flex-align;
 
-    // margin-right: 1rem;
+    position: relative;
 
     &__button {
         color: var(--color-grey-light);

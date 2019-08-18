@@ -26,7 +26,8 @@
                 <div class="create-task__task-section">
                     <ModalTaskSectionDropdown
                         :task-sections="taskSections"
-                        @select-section="newTask.taskSectionId = $event"
+                        :selected-item="taskSection.title"
+                        @select-section="taskSection = $event"
                     />
                 </div>
             </div>
@@ -75,6 +76,8 @@
         private taskSections!: ITaskSection[];
 
         @Prop() private date!: Date;
+
+        private taskSection: string = '';
 
         // TODO taskSectionId
         private newTask: ITask = {

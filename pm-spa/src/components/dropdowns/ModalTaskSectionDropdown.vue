@@ -1,12 +1,12 @@
 <template>
     <div class="modal-task-section">
-        <Dropdown>
+        <Dropdown :selected-item="selectedItem">
             <DropdownSection>
                 <DropdownItem
                     v-for="taskSection in taskSections"
                     :key="taskSection.id"
                     :title="taskSection.title"
-                    @click="$emit('select-section', taskSection.id)"
+                    @click="$emit('select-section', taskSection)"
                 />
             </DropdownSection>
         </Dropdown>
@@ -33,5 +33,6 @@
     })
     export default class ModalTaskSection extends Vue {
         @Prop() private taskSections!: ITaskSection[];
+        @Prop() private selectedItem!: string;
     }
 </script>
