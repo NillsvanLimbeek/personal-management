@@ -5,28 +5,30 @@
         </div>
 
         <div class="create-task__body">
-            <div class="create-task__title">
-                <TextArea
-                    @input="newTask.title = $event"
-                    :title="newTask.title"
-                />
+            <div class="create-task__body-top">
+                <div class="create-task__title">
+                    <TextArea
+                        @input="newTask.title = $event"
+                        :title="newTask.title"
+                    />
+                    </div>
+
+                <div class="create-task__assigned-to">
+                    <i class="far fa-user"></i>
                 </div>
 
-            <div class="create-task__assigned-to">
-                <i class="far fa-user"></i>
-            </div>
+                <div class="create-task__due-date">
+                    <Datepicker
+                        :date="newTask.dueDate"
+                        @select-date="newTask.dueDate = $event"  />
+                </div>
 
-            <div class="create-task__due-date">
-                <Datepicker
-                    :date="newTask.dueDate"
-                    @select-date="newTask.dueDate = $event"  />
-            </div>
-
-            <div class="create-task__task-section">
-                <ModalTaskSectionDropdown
-                    :task-sections="taskSections"
-                    @select-section="newTask.taskSectionId = $event"
-                />
+                <div class="create-task__task-section">
+                    <ModalTaskSectionDropdown
+                        :task-sections="taskSections"
+                        @select-section="newTask.taskSectionId = $event"
+                    />
+                </div>
             </div>
 
             <div class="create-task__description">
@@ -74,6 +76,7 @@
 
         @Prop() private date!: Date;
 
+        // TODO taskSectionId
         private newTask: ITask = {
             title: '',
             id: generateGuid(),
@@ -83,8 +86,13 @@
             comments: [],
         };
 
-        private onSubmit() {
-            this.$store.dispatch('tasks/addTask', this.newTask);
+        private async onSubmit() {
+            await this.$store.dispatch('tasks/addTask', this.newTask);
+            await this.$store.dispatch('taskSections/addTaskToSection', {
+                taskId: this.newTask.id,
+                taskSectionId: this.newTask.taskSectionId,
+            });
+
             this.$router.go(-1);
         }
     }
