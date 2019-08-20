@@ -41,7 +41,7 @@
     @Component({})
     export default class Dropdown extends Vue {
         @Prop() private position!: string;
-        @Prop() withSelection!: boolean;
+        @Prop() private withSelection!: boolean;
         @Prop() private selectedItem!: string;
 
         private showDropdown: boolean = false;

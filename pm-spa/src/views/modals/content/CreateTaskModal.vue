@@ -78,14 +78,10 @@
         @Prop() private date!: Date;
 
         private taskSection: ITaskSection | null = null;
-        // TODO move to onSubmit
-        private newTask: ITask = {
+        private newTask = {
             title: '',
-            id: generateGuid(),
-            completed: false,
-            taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
             dueDate: this.date,
-            comments: [],
+            description: '',
         };
 
         private get selectedTaskSection() {
@@ -99,6 +95,9 @@
         private async onSubmit() {
             const task: ITask = {
                 ...this.newTask,
+                id: generateGuid(),
+                comments: [],
+                completed: false,
                 taskSectionId: this.selectedTaskSection.id,
             };
 
