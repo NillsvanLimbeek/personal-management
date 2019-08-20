@@ -183,6 +183,7 @@
             this.$store.dispatch('tasks/deleteTasks', this.taskSection.taskIds);
         }
 
+        // TODO refactor
         private async duplicateSection() {
             const section: ITaskSection = await this.$store.dispatch(
                 'taskSections/duplicateSection',

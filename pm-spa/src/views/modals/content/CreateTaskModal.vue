@@ -5,28 +5,31 @@
         </div>
 
         <div class="create-task__body">
-            <div class="create-task__title">
-                <TextArea
-                    @input="newTask.title = $event"
-                    :title="newTask.title"
-                />
+            <div class="create-task__body-top">
+                <div class="create-task__title">
+                    <TextArea
+                        @input="newTask.title = $event"
+                        :title="newTask.title"
+                    />
+                    </div>
+
+                <div class="create-task__assigned-to">
+                    <i class="far fa-user"></i>
                 </div>
 
-            <div class="create-task__assigned-to">
-                <i class="far fa-user"></i>
-            </div>
+                <div class="create-task__due-date">
+                    <Datepicker
+                        :date="newTask.dueDate"
+                        @select-date="newTask.dueDate = $event"  />
+                </div>
 
-            <div class="create-task__due-date">
-                <Datepicker
-                    :date="newTask.dueDate"
-                    @select-date="newTask.dueDate = $event"  />
-            </div>
-
-            <div class="create-task__task-section">
-                <ModalTaskSectionDropdown
-                    :task-sections="taskSections"
-                    @select-section="newTask.taskSectionId = $event"
-                />
+                <div class="create-task__task-section">
+                    <ModalTaskSectionDropdown
+                        :task-sections="taskSections"
+                        :selected-item="selectedTaskSection.title"
+                        @select-section="taskSection = $event"
+                    />
+                </div>
             </div>
 
             <div class="create-task__description">
@@ -74,17 +77,36 @@
 
         @Prop() private date!: Date;
 
-        private newTask: ITask = {
+        private taskSection: ITaskSection | null = null;
+        private newTask = {
             title: '',
-            id: generateGuid(),
-            completed: false,
-            taskSectionId: '60c126ae-2e15-4b0e-aebd-ac2e78e80644',
             dueDate: this.date,
-            comments: [],
+            description: '',
         };
 
-        private onSubmit() {
-            this.$store.dispatch('tasks/addTask', this.newTask);
+        private get selectedTaskSection() {
+            if (this.taskSection !== null) {
+                return this.taskSection;
+            } else {
+                return this.taskSections[0];
+            }
+        }
+
+        private async onSubmit() {
+            const task: ITask = {
+                ...this.newTask,
+                id: generateGuid(),
+                comments: [],
+                completed: false,
+                taskSectionId: this.selectedTaskSection.id,
+            };
+
+            await this.$store.dispatch('tasks/addTask', task);
+            await this.$store.dispatch('taskSections/addTaskToSection', {
+                taskId: task.id,
+                taskSectionId: task.taskSectionId,
+            });
+
             this.$router.go(-1);
         }
     }

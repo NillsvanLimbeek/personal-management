@@ -5,9 +5,10 @@
             @click.self="$router.go(-1)"
         ></div>
 
-        <div class="modal-center__body">
-            <!-- {{ date }} -->
-
+        <div
+            class="modal-center__body"
+            :class="{ 'modal-center__body--height': modalType }"
+        >
             <i
                 @click="$router.go(-1)"
                 class="modal-center__close fas fa-times"
@@ -36,6 +37,10 @@
                 case 'calendarCreateTaskModal':
                     return () => import('./content/CreateTaskModal.vue');
             }
+        }
+
+        private get modalType() {
+            return this.$route.name === 'calendarTaskModal' ? true : false;
         }
 
         private created() {

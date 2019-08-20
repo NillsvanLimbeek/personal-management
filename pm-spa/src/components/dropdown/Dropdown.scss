@@ -1,7 +1,8 @@
 .dropdown {
-    position: relative;
+    @include flex-align;
+    @include width-height-100;
 
-    // margin-right: 1rem;
+    position: relative;
 
     &__button {
         color: var(--color-grey-light);
@@ -24,6 +25,27 @@
 
         &--left {
             right: 0;
+        }
+
+        &--selection {
+            top: 4rem;
+        }
+    }
+
+    &__selection {
+        @include flex-align;
+        @include width-height-100;
+
+        padding: 5px;
+        border: var(--border-transparent);
+
+        &:hover {
+            border: var(--border-black);
+            cursor: pointer;
+        }
+
+        & > i {
+            margin-right: 1rem;
         }
     }
 }

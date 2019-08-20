@@ -6,8 +6,4 @@ export interface ITask {
     taskSectionId: string;
     dueDate?: Date;
     comments: string[];
-
-    // TODO
-    // assignedTo: string;
-    // project: string
 }
