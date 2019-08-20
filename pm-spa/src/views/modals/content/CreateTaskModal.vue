@@ -26,7 +26,7 @@
                 <div class="create-task__task-section">
                     <ModalTaskSectionDropdown
                         :task-sections="taskSections"
-                        :selected-item="taskSection.title"
+                        :selected-item="selectedTaskSection.title"
                         @select-section="taskSection = $event"
                     />
                 </div>
@@ -77,9 +77,8 @@
 
         @Prop() private date!: Date;
 
-        private taskSection: string = '';
-
-        // TODO taskSectionId
+        private taskSection: ITaskSection | null = null;
+        // TODO move to onSubmit
         private newTask: ITask = {
             title: '',
             id: generateGuid(),
@@ -89,11 +88,24 @@
             comments: [],
         };
 
+        private get selectedTaskSection() {
+            if (this.taskSection !== null) {
+                return this.taskSection;
+            } else {
+                return this.taskSections[0];
+            }
+        }
+
         private async onSubmit() {
-            await this.$store.dispatch('tasks/addTask', this.newTask);
+            const task: ITask = {
+                ...this.newTask,
+                taskSectionId: this.selectedTaskSection.id,
+            };
+
+            await this.$store.dispatch('tasks/addTask', task);
             await this.$store.dispatch('taskSections/addTaskToSection', {
-                taskId: this.newTask.id,
-                taskSectionId: this.newTask.taskSectionId,
+                taskId: task.id,
+                taskSectionId: task.taskSectionId,
             });
 
             this.$router.go(-1);

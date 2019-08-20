@@ -1,6 +1,9 @@
 <template>
     <div class="modal-task-section">
-        <Dropdown :selected-item="selectedItem">
+        <Dropdown
+            with-selection="true"
+            :selected-item="selectedItem">
+
             <DropdownSection>
                 <DropdownItem
                     v-for="taskSection in taskSections"
@@ -36,3 +39,6 @@
         @Prop() private selectedItem!: string;
     }
 </script>
+
+<style lang="scss" src="./ModalTaskSectionDropdown.scss">
+</style>
