@@ -15,16 +15,7 @@ Front-End development stack:
 - Vue
 - TypeScript
 
-## Back-end is for later, not sure about the stack...
-Possible choices for Back-End development stack:
+## Back-end is for later
 
 - NodeJS
 - Express/Koa
-- NestJS
-
-&nbsp;
-
-- .Net Core
-- C#
-- Miscrosoft SQL Server
-
