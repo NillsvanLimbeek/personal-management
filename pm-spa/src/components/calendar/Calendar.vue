@@ -91,12 +91,12 @@
         },
     })
     export default class Calendar extends Vue {
-        @Prop({ required: true }) private tasks!: ITask[];
+        @Prop() private tasks!: ITask[];
 
         private date: Date = startOfMonth(new Date());
         private showAdd: boolean = false;
 
-        private get daysInMonth(): Date[] {
+        public get daysInMonth(): Date[] {
             const start: Date = startOfMonth(this.date);
 
             return [...Array(getDaysInMonth(start))].map((_, index) => {
@@ -114,11 +114,13 @@
         }
 
         private filteredTasks(date: Date) {
-            return this.tasks.filter((task) => {
-                if (task.dueDate) {
-                    return isSameDay(task.dueDate, date);
-                }
-            });
+            if (this.tasks) {
+                return this.tasks.filter((task) => {
+                    if (task.dueDate) {
+                        return isSameDay(task.dueDate, date);
+                    }
+                });
+            }
         }
 
         private sameDay(day: Date, task: ITask) {
@@ -131,7 +133,7 @@
             }
         }
 
-        private isToday(date: Date) {
+        public isToday(date: Date) {
             return isToday(date);
         }
 
