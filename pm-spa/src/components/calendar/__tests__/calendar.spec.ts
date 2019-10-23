@@ -18,6 +18,5 @@ describe('Calendar', () => {
     });
 
     // it('Renders a list of dates', () => {
-    //     expect(wrapper.)
     // })
 });
