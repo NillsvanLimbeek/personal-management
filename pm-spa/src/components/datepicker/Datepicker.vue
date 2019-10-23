@@ -178,10 +178,6 @@
             this.showDatepicker = false;
         }
 
-        // private removeDate() {
-        //     this.date = null;
-        // }
-
         private created() {
             this.date ? this.getDates(startOfMonth(this.date)) : this.getDates();
         }
