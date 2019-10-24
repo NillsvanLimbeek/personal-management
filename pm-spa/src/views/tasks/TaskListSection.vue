@@ -1,12 +1,12 @@
 <template>
     <div class="tasks">
         <div class="tasks__header">
-            <button
-                class="tasks__button button"
+            <Button
+                class="tasks__button"
                 @click="addSection"
             >
                 Add Section
-            </button>
+            </Button>
         </div>
 
         <div class="tasks__section">
@@ -37,10 +37,12 @@
 
     import { generateGuid } from '@/utils';
 
+    const Button = () => import('@/components/button/Button.vue');
     const TaskSection = () => import('./components/TaskSection.vue');
 
     @Component({
         components: {
+            Button,
             TaskSection,
         },
     })
