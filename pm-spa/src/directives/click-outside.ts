@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import { DirectiveOptions } from 'vue';
 
-const clickOutside: DirectiveOptions = {
+export const clickOutside: DirectiveOptions = {
     bind(el: any, binding) {
         el.__ClickOutsideHandler__ = (event: any) => {
             if (!(el === event.target || el.contains(event.target))) {

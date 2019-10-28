@@ -28,8 +28,6 @@
 <script lang="ts">
     import { Vue, Component, Prop, Watch } from '@/vue-script';
 
-    import { EventBus } from '@/event-bus';
-
     @Component({})
     export default class InlineEdit extends Vue {
         @Prop({ required: true }) private title!: string;
