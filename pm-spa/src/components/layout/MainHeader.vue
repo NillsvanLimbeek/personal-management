@@ -4,9 +4,8 @@
 
         <TaskHeader
             :current-tab="$route.matched[1].path"
-            @calendar="$router.push({ path: '/tasks/calendar' })"
-            @files="$router.push({ path: '/tasks/files' })"
             @list="$router.push({ path: '/tasks/list' })"
+            @calendar="$router.push({ path: '/tasks/calendar' })"
             v-if="$route.matched[0].path === '/tasks'"
         />
     </div>

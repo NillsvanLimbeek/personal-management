@@ -13,12 +13,12 @@
                 @click="switchDate('next-month')"
             />
 
-            <button
-                class="button calendar__button"
+            <BaseButton
+                class="calendar__button"
                 @click="switchDate('today')"
             >
                 Today
-            </button>
+            </BaseButton>
         </div>
 
         <div class="calendar__weekdays">
@@ -83,10 +83,12 @@
         isSameDay,
     } from 'date-fns';
 
+    const BaseButton = () => import('@/components/base-button/BaseButton.vue');
     const CalendarTask = () => import('./calendar-task/CalendarTask.vue');
 
     @Component({
         components: {
+            BaseButton,
             CalendarTask,
         },
     })

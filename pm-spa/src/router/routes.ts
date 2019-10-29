@@ -48,11 +48,6 @@ export const routes: RouteConfig[] = [
                     },
                 ],
             },
-            {
-                path: 'files',
-                name: 'taskFiles',
-                component: () => import('@views/tasks/TaskFilesSection.vue'),
-            },
         ],
     },
 ];

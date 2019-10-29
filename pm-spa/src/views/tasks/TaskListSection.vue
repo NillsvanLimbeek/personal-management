@@ -1,12 +1,14 @@
 <template>
     <div class="tasks">
         <div class="tasks__header">
-            <button
-                class="tasks__button button"
+            <BaseButton
+                class="tasks__button"
                 @click="addSection"
             >
                 Add Section
-            </button>
+            </BaseButton>
+
+            <SearchBar />
         </div>
 
         <div class="tasks__section">
@@ -37,10 +39,14 @@
 
     import { generateGuid } from '@/utils';
 
+    const BaseButton = () => import('@/components/base-button/BaseButton.vue');
+    const SearchBar = () => import('@/components/search-bar/SearchBar.vue');
     const TaskSection = () => import('./components/TaskSection.vue');
 
     @Component({
         components: {
+            BaseButton,
+            SearchBar,
             TaskSection,
         },
     })

@@ -1,0 +1,7 @@
+.search-bar__input {
+    @include flex-center-align;
+
+    input {
+        margin-right: 1rem;
+    }
+}
