@@ -1,5 +1,5 @@
 <template>
-    <button class="button" v-on="$listeners">
+    <button class="base-button" v-on="$listeners">
         <slot />
     </button>
 </template>
@@ -8,8 +8,8 @@
     import { Vue, Component } from '@/vue-script';
 
     @Component({})
-    export default class Button extends Vue {}
+    export default class BaseButton extends Vue {}
 </script>
 
-<style lang="scss" src="./Button.scss">
+<style lang="scss" src="./BaseButton.scss">
 </style>

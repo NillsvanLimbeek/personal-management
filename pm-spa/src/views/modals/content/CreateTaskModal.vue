@@ -40,12 +40,12 @@
         </div>
 
         <div class="create-task__footer">
-            <Button
+            <BaseButton
                 :disabled="!newTask.title"
                 @click="onSubmit">
 
                     Create
-            </Button>
+            </BaseButton>
         </div>
     </div>
 </template>
@@ -56,7 +56,7 @@
     import { ITask, ITaskSection } from '@data/models';
     import { generateGuid } from '@/utils';
 
-    const Button = () => import('@/components/button/Button.vue');
+    const BaseButton = () => import('@/components/base-button/BaseButton.vue');
     const Datepicker = () => import('@components/datepicker/Datepicker.vue');
     const TextEditor = () => import('@components/editor/TextEditor.vue');
     const ModalTaskSectionDropdown = () =>
@@ -65,7 +65,7 @@
 
     @Component({
         components: {
-            Button,
+            BaseButton,
             Datepicker,
             TextEditor,
             ModalTaskSectionDropdown,

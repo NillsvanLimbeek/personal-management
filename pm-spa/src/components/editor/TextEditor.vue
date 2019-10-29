@@ -55,12 +55,12 @@
                     :class="{ 'text-editor__icon--active': isActive.bullet_list() }"
                 />
 
-                <Button
+                <BaseButton
                     v-if="hasButton"
                     @click="submitComment"
                 >
                     Submit
-                </Button>
+                </BaseButton>
             </div>
         </EditorMenuBar>
 
@@ -86,13 +86,13 @@
         // @ts-ignore
     } from 'tiptap-extensions';
 
-    const Button = () => import('@/components/button/Button.vue');
+    const BaseButton = () => import('@/components/base-button/BaseButton.vue');
 
     @Component({
         components: {
             EditorMenuBar,
             EditorContent,
-            Button,
+            BaseButton,
         },
     })
     export default class TextEditor extends Vue {
