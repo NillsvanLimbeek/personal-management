@@ -17,12 +17,6 @@
                 @click="$emit('calendar')"
                 class="task-header__link"
             >Calendar</p>
-
-            <p
-                :class="{'task-header__link--active': currentTab === '/tasks/files'}"
-                @click="$emit('files')"
-                class="task-header__link"
-            >Files</p>
         </div>
     </div>
 </template>
