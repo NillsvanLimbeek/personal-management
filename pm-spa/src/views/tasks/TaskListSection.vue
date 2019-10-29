@@ -7,6 +7,8 @@
             >
                 Add Section
             </BaseButton>
+
+            <SearchBar />
         </div>
 
         <div class="tasks__section">
@@ -38,11 +40,13 @@
     import { generateGuid } from '@/utils';
 
     const BaseButton = () => import('@/components/base-button/BaseButton.vue');
+    const SearchBar = () => import('@/components/search-bar/SearchBar.vue');
     const TaskSection = () => import('./components/TaskSection.vue');
 
     @Component({
         components: {
             BaseButton,
+            SearchBar,
             TaskSection,
         },
     })

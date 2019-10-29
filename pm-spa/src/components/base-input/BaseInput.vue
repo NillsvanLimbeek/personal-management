@@ -1,6 +1,6 @@
 <template>
     <div class="base-input">
-        <label for="input">{{ label }}</label>
+        <label v-if="label" for="input">{{ label }}</label>
         <input type="text" v-on="$listeners" v-bind="$attrs" name="input">
     </div>
 </template>

@@ -6,10 +6,14 @@
             @click="showInput = true"
         />
 
-        <BaseInput
+        <div
+            class="search-bar__input"
             v-else
-            label="Search..."
-        />
+        >
+            <BaseInput placeholder="Search..." />
+
+            <i class="fas fa-times" @click="showInput = false"/>
+        </div>
     </div>
 </template>
 
