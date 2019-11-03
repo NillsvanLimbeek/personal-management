@@ -7,10 +7,14 @@
         />
 
         <div
-            class="search-bar__input"
             v-else
+            class="search-bar__input"
         >
-            <BaseInput placeholder="Search..." />
+            <BaseInput
+                placeholder="Search..."
+                ref="input"
+                v-model="search"
+            />
 
             <i class="fas fa-times" @click="showInput = false"/>
         </div>
@@ -29,6 +33,7 @@
     })
     export default class SearchBar extends Vue {
         private showInput: boolean = false;
+        private search: string = '';
     }
 </script>
 
