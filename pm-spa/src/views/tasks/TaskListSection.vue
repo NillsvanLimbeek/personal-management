@@ -8,7 +8,7 @@
                 Add Section
             </BaseButton>
 
-            <SearchBar />
+            <SearchBar v-model="search" @clear="search = null" />
         </div>
 
         <div class="tasks__section">
@@ -16,7 +16,7 @@
                 v-for="taskSection in taskSections"
                 :key="taskSections.id"
                 :task-section="taskSection"
-                :tasks="tasks"
+                :tasks="searchedTasks"
             />
         </div>
 
@@ -30,12 +30,7 @@
     import { Vue, Component, Getter } from '@/vue-script';
 
     import { ITaskState } from '@state/index';
-    import {
-        ITask,
-        ITaskSection,
-        ITaskSectionDeleteIds,
-        ITaskSectionAddIds,
-    } from '@models/index';
+    import { ITask, ITaskSection } from '@models/index';
 
     import { generateGuid } from '@/utils';
 
@@ -54,6 +49,18 @@
         @Getter('taskSections/getTaskSections')
         private taskSections!: ITaskSection[];
         @Getter('tasks/getTasks') private tasks!: ITask[];
+
+        private search: string = '';
+
+        private get searchedTasks() {
+            if (this.search) {
+                return this.tasks.filter((task) =>
+                    task.title.includes(this.search),
+                );
+            }
+
+            return this.tasks;
+        }
 
         private addSection(): void {
             const taskSection: ITaskSection = {

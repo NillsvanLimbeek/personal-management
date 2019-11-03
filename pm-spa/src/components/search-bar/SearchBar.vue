@@ -1,22 +1,16 @@
 <template>
     <div class="search-bar">
-        <i
-            v-if="!showInput"
-            class="fas fa-search"
-            @click="showInput = true"
-        />
-
-        <div
-            v-else
-            class="search-bar__input"
-        >
+        <div class="search-bar__input">
             <BaseInput
                 placeholder="Search..."
-                ref="input"
-                v-model="search"
+                :value="value"
+                @input="updateValue"
             />
 
-            <i class="fas fa-times" @click="showInput = false"/>
+            <i
+                class="search-bar__cross fas fa-times"
+                @click="clearInput"
+            />
         </div>
     </div>
 </template>
@@ -33,7 +27,16 @@
     })
     export default class SearchBar extends Vue {
         private showInput: boolean = false;
-        private search: string = '';
+        private value: string | null = '';
+
+        private updateValue(event: any) {
+            this.$emit('input', event);
+        }
+
+        private clearInput() {
+            this.value = null;
+            this.$emit('clear');
+        }
     }
 </script>
 
