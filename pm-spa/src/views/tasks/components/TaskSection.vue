@@ -55,14 +55,14 @@
                 :move="onDragStart"
                 @end="onDragEnd"
             >
-                <transition-group :name="!drag ? 'flip-list' : null">
-                    <Task
-                        :key="task.id"
-                        :task="task"
-                        v-for="task in getTasks"
-                        @update-task="$emit('update-task', $event)"
-                    />
-                </transition-group>
+                <!-- <transition-group :name="!drag ? 'flip-list' : null"> -->
+                <Task
+                    :key="task.id"
+                    :task-id="task"
+                    v-for="task in getTasks"
+                    @update-task="$emit('update-task', $event)"
+                />
+                <!-- </transition-group> -->
             </Draggable>
 
             <div class="task-section__add">
@@ -90,13 +90,20 @@
     import { generateGuid, sortBy } from '@/utils';
     import { SortDirection, SortType } from '@data/type';
 
-    import Draggable from 'vuedraggable';
+    import Draggable, { MoveEvent } from 'vuedraggable';
 
     const TaskSectionDropdown = () =>
         import('@components/dropdowns/TaskSectionDropdown.vue');
     const Task = () => import('./Task.vue');
     const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
     const SortButton = () => import('@components/sort/SortButton.vue');
+
+    // TODO
+    interface DraggedObj {
+        id: string;
+        oldIndex: number;
+        newIndex: number;
+    }
 
     @Component({
         components: {
@@ -128,41 +135,45 @@
         }
 
         private get dragList() {
-            return this.tasks;
+            // return this.taskSection.taskIds;
         }
 
-        private set dragList(tasks: ITask[]) {
-            console.log(tasks);
+        private set dragList(tasksIds: string[]) {
+            // console.log(tasksIds);
         }
 
-        private onDragStart(e: any) {
-            console.log(e);
+        private onDragStart(e: MoveEvent<ITask>) {
+            this.drag = true;
         }
 
-        private onDragEnd(e: any) {
-            // console.log(e);
+        private onDragEnd() {
+            this.drag = false;
         }
 
-        private get getTasks(): ITask[] {
-            let tasks = this.tasks.filter((task) => {
-                return task.taskSectionId === this.taskSection.id;
-            });
-
-            if (this.sortType === 'title') {
-                if (this.sortDirection === 'up') {
-                    tasks = sortBy(tasks, 'title');
-                } else {
-                    tasks = sortBy(tasks, 'title').reverse();
-                }
-            } else if (this.sortType === 'date') {
-                if (this.sortDirection === 'up') {
-                    tasks = sortBy(tasks, 'date');
-                } else {
-                    tasks = sortBy(tasks, 'date').reverse();
-                }
+        private get getTasks(): string[] {
+            if (this.taskSection.taskIds) {
+                return this.taskSection.taskIds;
             }
 
-            return tasks;
+            return [];
+
+            // let tasks = this.tasks.filter((task) => {
+            //     return task.taskSectionId === this.taskSection.id;
+            // });
+            // if (this.sortType === 'title') {
+            //     if (this.sortDirection === 'up') {
+            //         tasks = sortBy(tasks, 'title');
+            //     } else {
+            //         tasks = sortBy(tasks, 'title').reverse();
+            //     }
+            // } else if (this.sortType === 'date') {
+            //     if (this.sortDirection === 'up') {
+            //         tasks = sortBy(tasks, 'date');
+            //     } else {
+            //         tasks = sortBy(tasks, 'date').reverse();
+            //     }
+            // }
+            // return tasks;
         }
 
         private collapseSection(): void {

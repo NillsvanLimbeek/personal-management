@@ -62,11 +62,20 @@
     export default class Task extends Vue {
         @Getter('taskSections/getTaskSections')
         private taskSections!: ITaskSection[];
+        @Getter('tasks/getTasks') private tasks!: ITask[];
 
-        @Prop({ required: true }) private task!: ITask;
+        @Prop({ required: true }) private taskId!: string;
 
         private checkbox: boolean = false;
         private triggerEdit: boolean = false;
+
+        private get task(): ITask {
+            const task = this.tasks.find((task) => task.id === this.taskId);
+
+            if (task) {
+                return task;
+            }
+        }
 
         private updateTask(e: any): void {
             this.$store.dispatch('tasks/updateTask', {

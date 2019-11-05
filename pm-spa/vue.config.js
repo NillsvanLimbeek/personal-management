@@ -21,6 +21,4 @@ module.exports = {
             },
         },
     },
-    // resolve building error
-    productionSourceMap: false,
 };

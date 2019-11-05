@@ -59,7 +59,9 @@ const mutations: MutationTree<ITaskSectionState> = {
     },
 
     updateSection: (state, section: ITaskSection) => {
-        const index = state.taskSections.map((taskSection) => taskSection.id).indexOf(section.id);
+        const index = state.taskSections
+            .map((taskSection) => taskSection.id)
+            .indexOf(section.id);
         const sectionToUpdate = state.taskSections.find(
             (taskSection) => taskSection.id === section.id,
         );
@@ -74,15 +76,21 @@ const mutations: MutationTree<ITaskSectionState> = {
     },
 
     deleteSection: (state, id: string) => {
-        state.taskSections = state.taskSections.filter((taskSection) => taskSection.id !== id);
+        state.taskSections = state.taskSections.filter(
+            (taskSection) => taskSection.id !== id,
+        );
     },
 
     duplicateSection: (state, id: string) => {
         // section to duplicate
-        const sectionToDuplicate = state.taskSections.find((taskSection) => taskSection.id === id);
+        const sectionToDuplicate = state.taskSections.find(
+            (taskSection) => taskSection.id === id,
+        );
 
         // find index of section
-        const index: number = state.taskSections.map((taskSection) => taskSection.id).indexOf(id);
+        const index: number = state.taskSections
+            .map((taskSection) => taskSection.id)
+            .indexOf(id);
 
         // make copy and put in array after the original
         if (sectionToDuplicate) {
