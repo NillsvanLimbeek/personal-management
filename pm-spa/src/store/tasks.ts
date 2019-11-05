@@ -5,6 +5,7 @@ import { ITask, ITaskSectionAddIds } from '@data/models';
 import { AddComment } from '@data/type';
 
 import { generateGuid } from '@/utils';
+import { toDate } from 'date-fns';
 
 const state: ITaskState = {
     tasks: [
@@ -136,6 +137,11 @@ const mutations: MutationTree<ITaskState> = {
             );
         }
     },
+
+    setNewOrder: (state, newOrder: ITask[]) => {
+        state.tasks = newOrder;
+        console.log(state.tasks);
+    },
 };
 
 const actions: ActionTree<ITaskState, IRootState> = {
@@ -180,6 +186,10 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async deleteCommentId({ commit }, comment: AddComment) {
         await commit('deleteCommentId', comment);
+    },
+
+    async setNewOrder({ commit }, newOrder: ITask[]) {
+        await commit('setNewOrder', newOrder);
     },
 };
 

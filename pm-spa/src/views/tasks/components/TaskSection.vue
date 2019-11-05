@@ -48,12 +48,22 @@
             class="task-section_list"
             v-if="taskSection.isOpen"
         >
-            <Task
-                :key="task.id"
-                :task="task"
-                v-for="task in getTasks"
-                @update-task="$emit('update-task', $event)"
-            />
+            <Draggable
+                v-model="dragList"
+                v-bind="dragOptions"
+                group="tasks"
+                :move="onDragStart"
+                @end="onDragEnd"
+            >
+                <transition-group :name="!drag ? 'flip-list' : null">
+                    <Task
+                        :key="task.id"
+                        :task="task"
+                        v-for="task in getTasks"
+                        @update-task="$emit('update-task', $event)"
+                    />
+                </transition-group>
+            </Draggable>
 
             <div class="task-section__add">
                 <i class="fas fa-plus" />
@@ -80,6 +90,8 @@
     import { generateGuid, sortBy } from '@/utils';
     import { SortDirection, SortType } from '@data/type';
 
+    import Draggable from 'vuedraggable';
+
     const TaskSectionDropdown = () =>
         import('@components/dropdowns/TaskSectionDropdown.vue');
     const Task = () => import('./Task.vue');
@@ -88,6 +100,7 @@
 
     @Component({
         components: {
+            Draggable,
             TaskSectionDropdown,
             Task,
             InlineEdit,
@@ -103,6 +116,32 @@
         private triggerEdit: boolean = false;
         private sortDirection: SortDirection | null = null;
         private sortType: SortType | null = null;
+        private drag: boolean = false;
+
+        // draggable
+        private get dragOptions() {
+            return {
+                animation: 200,
+                disabled: false,
+                ghostClass: 'ghost',
+            };
+        }
+
+        private get dragList() {
+            return this.tasks;
+        }
+
+        private set dragList(tasks: ITask[]) {
+            console.log(tasks);
+        }
+
+        private onDragStart(e: any) {
+            console.log(e);
+        }
+
+        private onDragEnd(e: any) {
+            // console.log(e);
+        }
 
         private get getTasks(): ITask[] {
             let tasks = this.tasks.filter((task) => {
