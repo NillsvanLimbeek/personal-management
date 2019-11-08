@@ -49,7 +49,7 @@
             v-if="taskSection.isOpen"
         >
             <Draggable
-                v-model="dragList"
+                v-model="getTasks"
                 v-bind="dragOptions"
                 group="tasks"
                 :move="onDragStart"
@@ -57,7 +57,7 @@
             >
                 <!-- <transition-group :name="!drag ? 'flip-list' : null"> -->
                 <Task
-                    :key="task.id"
+                    :key="task"
                     :task-id="task"
                     v-for="task in getTasks"
                     @update-task="$emit('update-task', $event)"
@@ -98,13 +98,6 @@
     const InlineEdit = () => import('@components/inline-edit/InlineEdit.vue');
     const SortButton = () => import('@components/sort/SortButton.vue');
 
-    // TODO
-    interface DraggedObj {
-        id: string;
-        oldIndex: number;
-        newIndex: number;
-    }
-
     @Component({
         components: {
             Draggable,
@@ -132,14 +125,6 @@
                 disabled: false,
                 ghostClass: 'ghost',
             };
-        }
-
-        private get dragList() {
-            // return this.taskSection.taskIds;
-        }
-
-        private set dragList(tasksIds: string[]) {
-            // console.log(tasksIds);
         }
 
         private onDragStart(e: MoveEvent<ITask>) {
@@ -174,6 +159,13 @@
             //     }
             // }
             // return tasks;
+        }
+
+        private set getTasks(taskIds: string[]) {
+            this.$store.dispatch('taskSections/updateTasksIdsOrder', {
+                sectionId: this.taskSection.id,
+                taskIds,
+            });
         }
 
         private collapseSection(): void {

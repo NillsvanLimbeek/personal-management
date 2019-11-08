@@ -2,7 +2,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 
 import { IRootState, ITaskSectionState } from '@data/state';
 
-import { ITaskSection, ITaskSectionAddIds } from '@data/models';
+import { ITaskSection, ITaskSectionAddIds, ITaskOrder } from '@data/models';
 import { generateGuid } from '@/utils';
 
 const state: ITaskSectionState = {
@@ -107,6 +107,14 @@ const mutations: MutationTree<ITaskSectionState> = {
             state.duplicateSectionId = newSection.id;
         }
     },
+
+    updateTasksIdsOrder: (state, { sectionId, taskIds }: ITaskOrder) => {
+        const section = state.taskSections.find((x) => x.id === sectionId);
+
+        if (section) {
+            section.taskIds = [...taskIds];
+        }
+    },
 };
 
 const actions: ActionTree<ITaskSectionState, IRootState> = {
@@ -126,9 +134,17 @@ const actions: ActionTree<ITaskSectionState, IRootState> = {
         await commit('deleteSection', id);
     },
 
-    async duplicateSection({ commit, getters, state }, id: string) {
+    async duplicateSection({ commit, getters }, id: string) {
         await commit('duplicateSection', id);
         return getters.getDuplicateSection;
+    },
+
+    async updateTasksIdsOrder({ state, rootState, commit }, ids: ITaskOrder) {
+        // compare taskIds with taskSection.taskIds
+        // extract the id that is not in the tasksection.taskIds
+        // update the task with the new taskSection.id
+
+        await commit('updateTasksIdsOrder', ids);
     },
 };
 
