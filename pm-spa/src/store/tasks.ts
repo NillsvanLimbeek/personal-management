@@ -139,7 +139,6 @@ const mutations: MutationTree<ITaskState> = {
 
     setNewOrder: (state, newOrder: ITask[]) => {
         state.tasks = newOrder;
-        console.log(state.tasks);
     },
 };
 

@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from '@/vue-script';
+    import { Vue, Component, Prop, Getter } from '@/vue-script';
 
     import { ITaskSection, ITask } from '@models/index';
 
@@ -108,6 +108,9 @@
         },
     })
     export default class TaskSection extends Vue {
+        @Getter('taskSections/getTaskSections')
+        private taskSections!: ITaskSection[];
+
         @Prop({ required: true }) private taskSection!: ITaskSection;
         @Prop({ required: true }) private tasks!: ITask[];
 
@@ -162,6 +165,44 @@
         }
 
         private set getTasks(taskIds: string[]) {
+            // compare tasksection.taskids with taskids
+            const tasksSectionIds = this.taskSection.taskIds;
+
+            if (tasksSectionIds.length !== taskIds.length) {
+                // extract new id
+                taskIds.forEach((id) => {
+                    if (!tasksSectionIds.includes(id)) {
+                        const task = this.tasks.find((x) => x.id === id);
+
+                        if (task) {
+                            // update tasksectionid of task
+                            const newTask = {
+                                ...task,
+                                taskSectionId: this.taskSection.id,
+                            };
+                            this.$store.dispatch('tasks/updateTask', newTask);
+
+                            // remove id from old taskSection
+                            const taskSection = this.taskSections.find(
+                                (x) => x.id === task.taskSectionId,
+                            );
+
+                            if (taskSection) {
+                                const taskIds = taskSection.taskIds.filter(
+                                    (x) => id !== id,
+                                );
+                                const newSection = { ...taskSection, taskIds };
+
+                                this.$store.dispatch(
+                                    'taskSections/updateSection',
+                                    newSection,
+                                );
+                            }
+                        }
+                    }
+                });
+            }
+
             this.$store.dispatch('taskSections/updateTasksIdsOrder', {
                 sectionId: this.taskSection.id,
                 taskIds,
