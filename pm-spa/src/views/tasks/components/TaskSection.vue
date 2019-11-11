@@ -53,16 +53,14 @@
                 v-bind="dragOptions"
                 group="tasks"
                 :move="onDragStart"
-                @end="onDragEnd"
+                @end="drag = false"
             >
-                <!-- <transition-group :name="!drag ? 'flip-list' : null"> -->
                 <Task
                     :key="task"
                     :task-id="task"
                     v-for="task in getTasks"
                     @update-task="$emit('update-task', $event)"
                 />
-                <!-- </transition-group> -->
             </Draggable>
 
             <div class="task-section__add">
@@ -130,12 +128,8 @@
             };
         }
 
-        private onDragStart(e: MoveEvent<ITask>) {
+        private onDragStart() {
             this.drag = true;
-        }
-
-        private onDragEnd() {
-            this.drag = false;
         }
 
         private get getTasks(): string[] {
@@ -176,11 +170,7 @@
 
                         if (task) {
                             // update tasksectionid of task
-                            const newTask = {
-                                ...task,
-                                taskSectionId: this.taskSection.id,
-                            };
-                            this.$store.dispatch('tasks/updateTask', newTask);
+                            this.updateTask(task);
 
                             // remove id from old taskSection
                             const taskSection = this.taskSections.find(
@@ -188,15 +178,7 @@
                             );
 
                             if (taskSection) {
-                                const taskIds = taskSection.taskIds.filter(
-                                    (x) => id !== id,
-                                );
-                                const newSection = { ...taskSection, taskIds };
-
-                                this.$store.dispatch(
-                                    'taskSections/updateSection',
-                                    newSection,
-                                );
+                                this.updateTaskSection(taskSection, id);
                             }
                         }
                     }
@@ -207,6 +189,22 @@
                 sectionId: this.taskSection.id,
                 taskIds,
             });
+        }
+
+        private updateTask(task: ITask) {
+            const newTask = {
+                ...task,
+                taskSectionId: this.taskSection.id,
+            };
+
+            this.$store.dispatch('tasks/updateTask', newTask);
+        }
+
+        private updateTaskSection(taskSection: ITaskSection, id: string) {
+            const taskIds = taskSection.taskIds.filter((x) => id !== id);
+            const newSection = { ...taskSection, taskIds };
+
+            this.$store.dispatch('taskSections/updateSection', newSection);
         }
 
         private collapseSection(): void {
