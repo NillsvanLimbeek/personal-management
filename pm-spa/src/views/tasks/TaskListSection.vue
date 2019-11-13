@@ -8,7 +8,10 @@
                 Add Section
             </BaseButton>
 
-            <SearchBar v-model="search" @clear="search = null" />
+            <SearchBar
+                v-model="search"
+                @clear="search = null"
+            />
         </div>
 
         <div class="tasks__section">
@@ -16,7 +19,7 @@
                 v-for="taskSection in taskSections"
                 :key="taskSections.id"
                 :task-section="taskSection"
-                :tasks="searchedTasks"
+                :tasks="taskSection.taskIds"
             />
         </div>
 
@@ -52,15 +55,15 @@
 
         private search: string = '';
 
-        private get searchedTasks() {
-            if (this.search) {
-                return this.tasks.filter((task) =>
-                    task.title.includes(this.search),
-                );
-            }
+        // private get getTasks() {
+        //     if (this.search) {
+        //         return this.tasks.filter((task) =>
+        //             task.title.includes(this.search),
+        //         );
+        //     }
 
-            return this.tasks;
-        }
+        //     return this.tasks;
+        // }
 
         private addSection(): void {
             const taskSection: ITaskSection = {
