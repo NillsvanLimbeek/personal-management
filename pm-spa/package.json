@@ -9,7 +9,7 @@
         "test:unit": "vue-cli-service test:unit"
     },
     "dependencies": {
-        "core-js": "^3.4.0",
+        "core-js": "^3.4.1",
         "date-fns": "^2.7.0",
         "tiptap": "^1.26.4",
         "tiptap-extensions": "^1.28.4",
