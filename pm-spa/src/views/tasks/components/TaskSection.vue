@@ -29,8 +29,6 @@
                 <SortButton
                     v-if="taskSection.isOpen"
                     @sort="sortTasks('name')"
-                    @cancel="cancelSort"
-                    @save="saveSortedTasks"
                 />
 
             </div>
@@ -39,7 +37,6 @@
                 <SortButton
                     v-if="taskSection.isOpen"
                     @sort="sortTasks('date')"
-                    @cancel="cancelSort"
                 />
             </div>
         </div>
@@ -108,9 +105,10 @@
     export default class TaskSection extends Vue {
         @Getter('taskSections/getTaskSections')
         private taskSections!: ITaskSection[];
+        @Getter('tasks/getTasks') private tasks!: ITask[];
 
         @Prop({ required: true }) private taskSection!: ITaskSection;
-        @Prop({ required: true }) private tasks!: ITask[];
+        @Prop({ required: true }) private taskIds!: string[];
 
         private sectionTitle: string = '';
         private newTaskTitle: string = '';
@@ -118,8 +116,8 @@
         private sortDirection: SortDirection | null = null;
         private sortType: SortType | null = null;
         private drag: boolean = false;
+        private draggedTask: string = '';
 
-        // draggable
         private get dragOptions() {
             return {
                 animation: 200,
@@ -138,30 +136,12 @@
             }
 
             return [];
-
-            // let tasks = this.tasks.filter((task) => {
-            //     return task.taskSectionId === this.taskSection.id;
-            // });
-            // if (this.sortType === 'title') {
-            //     if (this.sortDirection === 'up') {
-            //         tasks = sortBy(tasks, 'title');
-            //     } else {
-            //         tasks = sortBy(tasks, 'title').reverse();
-            //     }
-            // } else if (this.sortType === 'date') {
-            //     if (this.sortDirection === 'up') {
-            //         tasks = sortBy(tasks, 'date');
-            //     } else {
-            //         tasks = sortBy(tasks, 'date').reverse();
-            //     }
-            // }
-            // return tasks;
         }
 
         private set getTasks(taskIds: string[]) {
-            // compare tasksection.taskids with taskids
             const tasksSectionIds = this.taskSection.taskIds;
 
+            // compare tasksection.taskids with taskids
             if (tasksSectionIds.length !== taskIds.length) {
                 // extract new id
                 taskIds.forEach((id) => {
@@ -170,7 +150,12 @@
 
                         if (task) {
                             // update tasksectionid of task
-                            this.updateTask(task);
+                            const newTask = {
+                                ...task,
+                                taskSectionId: this.taskSection.id,
+                            };
+
+                            this.updateTask(newTask);
 
                             // remove id from old taskSection
                             const taskSection = this.taskSections.find(
@@ -313,21 +298,34 @@
                     this.sortDirection = 'up';
                     break;
             }
+
+            this.getSortedTasks();
         }
 
-        private cancelSort() {
-            this.sortDirection = null;
-            this.sortType = null;
-        }
+        private getSortedTasks() {
+            const taskList: ITask[] = this.$store.getters['tasks/getTasks'];
+            let tasks = taskList.filter(
+                (task) => task.taskSectionId === this.taskSection.id,
+            );
 
-        private saveSortedTasks() {
-            const tasks = this.getTasks;
+            if (this.sortType === 'title') {
+                if (this.sortDirection === 'up') {
+                    tasks = sortBy(tasks, 'title');
+                } else {
+                    tasks = sortBy(tasks, 'title').reverse();
+                }
+            } else if (this.sortType === 'date') {
+                if (this.sortDirection === 'up') {
+                    tasks = sortBy(tasks, 'date');
+                } else {
+                    tasks = sortBy(tasks, 'date').reverse();
+                }
+            }
 
-            this.$store
-                .dispatch('tasks/deleteByTaskSectionId', this.taskSection.id)
-                .then(() => this.$store.dispatch('tasks/saveSortedTasks', tasks));
-
-            this.cancelSort();
+            this.$store.dispatch('taskSections/updateTasksIdsOrder', {
+                sectionId: this.taskSection.id,
+                taskIds: tasks.map((task) => task.id),
+            });
         }
     }
 </script>

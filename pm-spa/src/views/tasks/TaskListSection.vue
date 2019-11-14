@@ -19,7 +19,7 @@
                 v-for="taskSection in taskSections"
                 :key="taskSections.id"
                 :task-section="taskSection"
-                :tasks="taskSection.taskIds"
+                :task-ids="taskSection.taskIds"
             />
         </div>
 

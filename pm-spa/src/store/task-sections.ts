@@ -112,7 +112,8 @@ const mutations: MutationTree<ITaskSectionState> = {
         const section = state.taskSections.find((x) => x.id === sectionId);
 
         if (section) {
-            section.taskIds = [...taskIds];
+            // section.taskIds = [...taskIds];
+            section.taskIds.splice(0, section.taskIds.length, ...taskIds);
         }
     },
 };
