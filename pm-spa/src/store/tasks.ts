@@ -90,6 +90,7 @@ const mutations: MutationTree<ITaskState> = {
 
             // set duplicate id in state
             state.duplicateTaskId = newTask.id;
+            // console.log(state.duplicateTaskId);
         }
     },
 
@@ -165,9 +166,9 @@ const actions: ActionTree<ITaskState, IRootState> = {
         });
     },
 
-    async duplicateTask({ commit, getters }, ids: ITaskSectionAddIds) {
-        await commit('duplicateTask', ids);
-        return getters.getDuplicateTaskId;
+    async duplicateTask({ commit }, ids: ITaskSectionAddIds) {
+        commit('duplicateTask', ids);
+        return state.duplicateTaskId;
     },
 
     async moveTask({ commit }, task: ITask) {

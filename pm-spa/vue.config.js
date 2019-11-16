@@ -20,5 +20,6 @@ module.exports = {
                 '@utils': path.join(__dirname, '/src/utils/'),
             },
         },
+        devtool: 'source-map',
     },
 };

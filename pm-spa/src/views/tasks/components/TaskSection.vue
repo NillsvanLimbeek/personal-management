@@ -116,7 +116,6 @@
         private sortDirection: SortDirection | null = null;
         private sortType: SortType | null = null;
         private drag: boolean = false;
-        private draggedTask: string = '';
 
         private get dragOptions() {
             return {
@@ -139,6 +138,7 @@
         }
 
         private set getTasks(taskIds: string[]) {
+            this.drag = false;
             const tasksSectionIds = this.taskSection.taskIds;
 
             // compare tasksection.taskids with taskids
@@ -249,28 +249,25 @@
             this.$store.dispatch('tasks/deleteTasks', this.taskSection.taskIds);
         }
 
-        // TODO refactor
         private async duplicateSection() {
             const section: ITaskSection = await this.$store.dispatch(
                 'taskSections/duplicateSection',
                 this.taskSection.id,
             );
 
-            if (this.taskSection && this.taskSection.taskIds) {
-                await this.taskSection.taskIds.forEach((id) => {
-                    this.$store
-                        .dispatch('tasks/duplicateTask', {
-                            taskId: id,
+            this.taskSection.taskIds.forEach((id) => {
+                this.$store
+                    .dispatch('tasks/duplicateTask', {
+                        taskId: id,
+                        taskSectionId: section.id,
+                    })
+                    .then((taskId) => {
+                        this.$store.dispatch('taskSections/addTaskToSection', {
+                            taskId,
                             taskSectionId: section.id,
-                        })
-                        .then((taskId) => {
-                            this.$store.dispatch('taskSections/addTaskToSection', {
-                                taskId,
-                                taskSectionId: section.id,
-                            });
                         });
-                });
-            }
+                    });
+            });
         }
 
         private renameSection(title: string): void {
@@ -321,6 +318,8 @@
                     tasks = sortBy(tasks, 'date').reverse();
                 }
             }
+
+            console.log(tasks.map((x) => x.title));
 
             this.$store.dispatch('taskSections/updateTasksIdsOrder', {
                 sectionId: this.taskSection.id,
