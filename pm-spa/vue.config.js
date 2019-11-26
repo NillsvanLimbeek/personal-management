@@ -4,7 +4,7 @@ module.exports = {
     css: {
         loaderOptions: {
             sass: {
-                data: `@import "@/assets/scss/utils/_mixins.scss";`,
+                prependData: `@import "@/assets/scss/utils/_mixins.scss";`,
             },
         },
     },
