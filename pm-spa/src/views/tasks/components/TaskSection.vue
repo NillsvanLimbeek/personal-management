@@ -28,7 +28,7 @@
 
                 <SortButton
                     v-if="taskSection.isOpen"
-                    @sort="sortTasks('name')"
+                    @sort="sortTasks('title')"
                 />
 
             </div>
@@ -85,7 +85,7 @@
     import { generateGuid, sortBy } from '@/utils';
     import { SortDirection, SortType } from '@data/type';
 
-    import Draggable, { MoveEvent } from 'vuedraggable';
+    import Draggable from 'vuedraggable';
 
     const TaskSectionDropdown = () =>
         import('@components/dropdowns/TaskSectionDropdown.vue');
@@ -318,8 +318,6 @@
                     tasks = sortBy(tasks, 'date').reverse();
                 }
             }
-
-            console.log(tasks.map((x) => x.title));
 
             this.$store.dispatch('taskSections/updateTasksIdsOrder', {
                 sectionId: this.taskSection.id,
