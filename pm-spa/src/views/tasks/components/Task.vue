@@ -1,5 +1,5 @@
 <template>
-    <div class="task">
+    <div class="task" :class="{ 'task--highlight': isHighlighted }">
         <TaskDropdown
             class="task__dropdown"
             :task-sections="taskSections"
@@ -57,6 +57,7 @@ export default class Task extends Vue {
     @Getter('taskSections/getTaskSections')
     private taskSections!: ITaskSection[];
     @Getter('tasks/getTasks') private tasks!: ITask[];
+    @Getter('tasks/getHighlightedTasks') private highlightedTasks!: string[];
 
     @Prop({ required: true }) private taskId!: string;
 
@@ -65,6 +66,10 @@ export default class Task extends Vue {
 
     private get task(): ITask | undefined {
         return this.tasks.find((task) => task.id === this.taskId);
+    }
+
+    private get isHighlighted(): boolean {
+        return this.highlightedTasks.includes(this.taskId);
     }
 
     private updateTask(e: any): void {

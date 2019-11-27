@@ -5,38 +5,42 @@
     &:not(:last-child) {
         margin-bottom: 3px;
     }
+}
 
-    &__dropdown {
-        margin-right: 1rem;
-    }
+.task--highlight {
+    background: var(--color-black-light-2);
+}
 
-    &__body {
-        @include flex-align;
+.task__dropdown {
+    margin-right: 1rem;
+}
 
-        width: 100%;
+.task__body {
+    @include flex-align;
 
+    width: 100%;
+
+    transition: var(--transition-2);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-black-light-2-alpha);
         transition: var(--transition-2);
-        cursor: pointer;
-
-        &:hover {
-            background: var(--color-black-light-2-alpha);
-            transition: var(--transition-2);
-        }
-
-        &--title {
-            @include flex-align;
-            flex: 1 1 auto;
-
-            & > div {
-                margin-right: 0.75rem;
-            }
-        }
-
-        &--date {
-            @include flex-center-align;
-
-            width: 15rem;
-            height: 100%;
-        }
     }
+}
+
+.task__body--title {
+    @include flex-align;
+    flex: 1 1 auto;
+
+    & > div {
+        margin-right: 0.75rem;
+    }
+}
+
+.task__body--date {
+    @include flex-center-align;
+
+    width: 15rem;
+    height: 100%;
 }

@@ -5,7 +5,11 @@
                 Add Section
             </BaseButton>
 
-            <SearchBar v-model="search" @clear="search = null" />
+            <SearchBar
+                v-model="search"
+                @clear="search = null"
+                @input="searchTasks"
+            />
         </div>
 
         <div class="tasks__section">
@@ -13,7 +17,6 @@
                 v-for="taskSection in taskSections"
                 :key="taskSections.id"
                 :task-section="taskSection"
-                :task-ids="taskSection.taskIds"
             />
         </div>
 
@@ -48,6 +51,18 @@ export default class TaskListSection extends Vue {
     @Getter('tasks/getTasks') private tasks!: ITask[];
 
     private search: string = '';
+
+    private searchTasks(): void {
+        const tasks = this.tasks
+            .filter((task) => task.title.toLowerCase().includes(this.search))
+            .map((task) => task.id);
+
+        if (this.search.length > 0) {
+            this.$store.dispatch('tasks/setHighlightedTasks', tasks);
+        } else {
+            this.$store.dispatch('tasks/setHighlightedTasks', []);
+        }
+    }
 
     private addSection(): void {
         const taskSection: ITaskSection = {
