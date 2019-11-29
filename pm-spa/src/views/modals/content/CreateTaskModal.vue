@@ -11,7 +11,7 @@
                         @input="newTask.title = $event"
                         :title="newTask.title"
                     />
-                    </div>
+                </div>
 
                 <div class="create-task__assigned-to">
                     <i class="far fa-user"></i>
@@ -20,7 +20,8 @@
                 <div class="create-task__due-date">
                     <Datepicker
                         :date="newTask.dueDate"
-                        @select-date="newTask.dueDate = $event"  />
+                        @select-date="newTask.dueDate = $event"
+                    />
                 </div>
 
                 <div class="create-task__task-section">
@@ -35,83 +36,80 @@
             <div class="create-task__description">
                 <TextEditor
                     placeholder="Task description"
-                    @description="newTask.description = $event" />
+                    @description="newTask.description = $event"
+                />
             </div>
         </div>
 
         <div class="create-task__footer">
-            <BaseButton
-                :disabled="!newTask.title"
-                @click="onSubmit">
-
-                    Create
+            <BaseButton :disabled="!newTask.title" @click="onSubmit">
+                Create
             </BaseButton>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop, Getter } from '@/vue-script';
+import { Vue, Component, Prop, Getter } from '@/vue-script';
 
-    import { ITask, ITaskSection } from '@data/models';
-    import { generateGuid } from '@/utils';
+import { ITask, ITaskSection } from '@data/models';
+import { generateGuid } from '@/utils';
 
-    const BaseButton = () => import('@/components/base-button/BaseButton.vue');
-    const Datepicker = () => import('@components/datepicker/Datepicker.vue');
-    const TextEditor = () => import('@components/editor/TextEditor.vue');
-    const ModalTaskSectionDropdown = () =>
-        import('@components/dropdowns/ModalTaskSectionDropdown.vue');
-    const TextArea = () => import('@components/text-area/TextArea.vue');
+const BaseButton = () => import('@/components/base-button/BaseButton.vue');
+const Datepicker = () => import('@components/datepicker/Datepicker.vue');
+const TextEditor = () => import('@components/editor/TextEditor.vue');
+const ModalTaskSectionDropdown = () =>
+    import('@components/dropdowns/ModalTaskSectionDropdown.vue');
+const TextArea = () => import('@components/text-area/TextArea.vue');
 
-    @Component({
-        components: {
-            BaseButton,
-            Datepicker,
-            TextEditor,
-            ModalTaskSectionDropdown,
-            TextArea,
-        },
-    })
-    export default class CreateTaskModal extends Vue {
-        @Getter('taskSections/getTaskSections')
-        private taskSections!: ITaskSection[];
+@Component({
+    components: {
+        BaseButton,
+        Datepicker,
+        TextEditor,
+        ModalTaskSectionDropdown,
+        TextArea,
+    },
+})
+export default class CreateTaskModal extends Vue {
+    @Getter('taskSections/getTaskSections')
+    private taskSections!: ITaskSection[];
 
-        @Prop() private date!: Date;
+    @Prop() private date!: Date;
 
-        private taskSection: ITaskSection | null = null;
-        private newTask = {
-            title: '',
-            dueDate: this.date,
-            description: '',
-        };
+    private taskSection: ITaskSection | null = null;
+    private newTask = {
+        title: '',
+        dueDate: this.date,
+        description: '',
+    };
 
-        private get selectedTaskSection() {
-            if (this.taskSection !== null) {
-                return this.taskSection;
-            } else {
-                return this.taskSections[0];
-            }
-        }
-
-        private async onSubmit() {
-            const task: ITask = {
-                ...this.newTask,
-                id: generateGuid(),
-                comments: [],
-                completed: false,
-                taskSectionId: this.selectedTaskSection.id,
-            };
-
-            await this.$store.dispatch('tasks/addTask', task);
-            await this.$store.dispatch('taskSections/addTaskToSection', {
-                taskId: task.id,
-                taskSectionId: task.taskSectionId,
-            });
-
-            this.$router.go(-1);
+    private get selectedTaskSection() {
+        if (this.taskSection !== null) {
+            return this.taskSection;
+        } else {
+            return this.taskSections[0];
         }
     }
+
+    private async onSubmit() {
+        const task: ITask = {
+            ...this.newTask,
+            id: generateGuid(),
+            comments: [],
+            completed: false,
+            taskSectionId: this.selectedTaskSection.id,
+        };
+
+        await this.$store.dispatch('tasks/addTask', task);
+        await this.$store.dispatch('taskSections/addTaskToSection', {
+            taskId: task.id,
+            taskSectionId: task.taskSectionId,
+        });
+
+        this.$router.go(-1);
+    }
+}
 </script>
 
-<style lang="scss" src="./CreateTaskModal.scss">
-</style>
+<style lang="scss" src="./CreateTaskModal.scss"></style>

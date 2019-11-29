@@ -38,6 +38,7 @@ const state: ITaskState = {
         },
     ],
     duplicateTaskId: '',
+    highlightedTasks: [],
 };
 
 const getters: GetterTree<ITaskState, IRootState> = {
@@ -51,6 +52,10 @@ const getters: GetterTree<ITaskState, IRootState> = {
 
     getDuplicateTaskId: (state) => {
         return state.duplicateTaskId;
+    },
+
+    getHighlightedTasks: (state) => {
+        return state.highlightedTasks;
     },
 };
 
@@ -90,6 +95,7 @@ const mutations: MutationTree<ITaskState> = {
 
             // set duplicate id in state
             state.duplicateTaskId = newTask.id;
+            // console.log(state.duplicateTaskId);
         }
     },
 
@@ -136,6 +142,14 @@ const mutations: MutationTree<ITaskState> = {
             );
         }
     },
+
+    setNewOrder: (state, newOrder: ITask[]) => {
+        state.tasks = newOrder;
+    },
+
+    setHighlightedTasks: (state, tasks: string[]) => {
+        state.highlightedTasks = tasks;
+    },
 };
 
 const actions: ActionTree<ITaskState, IRootState> = {
@@ -161,9 +175,9 @@ const actions: ActionTree<ITaskState, IRootState> = {
         });
     },
 
-    async duplicateTask({ commit, getters }, ids: ITaskSectionAddIds) {
-        await commit('duplicateTask', ids);
-        return getters.getDuplicateTaskId;
+    async duplicateTask({ commit }, ids: ITaskSectionAddIds) {
+        commit('duplicateTask', ids);
+        return state.duplicateTaskId;
     },
 
     async moveTask({ commit }, task: ITask) {
@@ -180,6 +194,14 @@ const actions: ActionTree<ITaskState, IRootState> = {
 
     async deleteCommentId({ commit }, comment: AddComment) {
         await commit('deleteCommentId', comment);
+    },
+
+    async setNewOrder({ commit }, newOrder: ITask[]) {
+        await commit('setNewOrder', newOrder);
+    },
+
+    async setHighlightedTasks({ commit }, tasks: string[]) {
+        await commit('setHighlightedTasks', tasks);
     },
 };
 

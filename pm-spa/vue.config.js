@@ -4,7 +4,7 @@ module.exports = {
     css: {
         loaderOptions: {
             sass: {
-                data: `@import "@/assets/scss/utils/_mixins.scss";`,
+                prependData: `@import "@/assets/scss/utils/_mixins.scss";`,
             },
         },
     },
@@ -20,7 +20,6 @@ module.exports = {
                 '@utils': path.join(__dirname, '/src/utils/'),
             },
         },
+        devtool: 'source-map',
     },
-    // resolve building error
-    productionSourceMap: false,
 };

@@ -2,7 +2,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex';
 
 import { IRootState, ITaskSectionState } from '@data/state';
 
-import { ITaskSection, ITaskSectionAddIds } from '@data/models';
+import { ITaskSection, ITaskSectionAddIds, ITaskOrder } from '@data/models';
 import { generateGuid } from '@/utils';
 
 const state: ITaskSectionState = {
@@ -59,7 +59,9 @@ const mutations: MutationTree<ITaskSectionState> = {
     },
 
     updateSection: (state, section: ITaskSection) => {
-        const index = state.taskSections.map((taskSection) => taskSection.id).indexOf(section.id);
+        const index = state.taskSections
+            .map((taskSection) => taskSection.id)
+            .indexOf(section.id);
         const sectionToUpdate = state.taskSections.find(
             (taskSection) => taskSection.id === section.id,
         );
@@ -74,15 +76,21 @@ const mutations: MutationTree<ITaskSectionState> = {
     },
 
     deleteSection: (state, id: string) => {
-        state.taskSections = state.taskSections.filter((taskSection) => taskSection.id !== id);
+        state.taskSections = state.taskSections.filter(
+            (taskSection) => taskSection.id !== id,
+        );
     },
 
     duplicateSection: (state, id: string) => {
         // section to duplicate
-        const sectionToDuplicate = state.taskSections.find((taskSection) => taskSection.id === id);
+        const sectionToDuplicate = state.taskSections.find(
+            (taskSection) => taskSection.id === id,
+        );
 
         // find index of section
-        const index: number = state.taskSections.map((taskSection) => taskSection.id).indexOf(id);
+        const index: number = state.taskSections
+            .map((taskSection) => taskSection.id)
+            .indexOf(id);
 
         // make copy and put in array after the original
         if (sectionToDuplicate) {
@@ -97,6 +105,15 @@ const mutations: MutationTree<ITaskSectionState> = {
 
             // set duplicate id
             state.duplicateSectionId = newSection.id;
+        }
+    },
+
+    updateTasksIdsOrder: (state, { sectionId, taskIds }: ITaskOrder) => {
+        const section = state.taskSections.find((x) => x.id === sectionId);
+
+        if (section) {
+            // section.taskIds = [...taskIds];
+            section.taskIds.splice(0, section.taskIds.length, ...taskIds);
         }
     },
 };
@@ -118,9 +135,17 @@ const actions: ActionTree<ITaskSectionState, IRootState> = {
         await commit('deleteSection', id);
     },
 
-    async duplicateSection({ commit, getters, state }, id: string) {
+    async duplicateSection({ commit, getters }, id: string) {
         await commit('duplicateSection', id);
         return getters.getDuplicateSection;
+    },
+
+    async updateTasksIdsOrder({ state, rootState, commit }, ids: ITaskOrder) {
+        // compare taskIds with taskSection.taskIds
+        // extract the id that is not in the tasksection.taskIds
+        // update the task with the new taskSection.id
+
+        await commit('updateTasksIdsOrder', ids);
     },
 };
 
