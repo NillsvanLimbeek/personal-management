@@ -116,6 +116,10 @@ const mutations: MutationTree<ITaskSectionState> = {
             section.taskIds.splice(0, section.taskIds.length, ...taskIds);
         }
     },
+
+    setSectionOrder: (state, sections: ITaskSection[]) => {
+        state.taskSections = [...sections];
+    },
 };
 
 const actions: ActionTree<ITaskSectionState, IRootState> = {
@@ -141,11 +145,11 @@ const actions: ActionTree<ITaskSectionState, IRootState> = {
     },
 
     async updateTasksIdsOrder({ state, rootState, commit }, ids: ITaskOrder) {
-        // compare taskIds with taskSection.taskIds
-        // extract the id that is not in the tasksection.taskIds
-        // update the task with the new taskSection.id
-
         await commit('updateTasksIdsOrder', ids);
+    },
+
+    async setSectionOrder({ commit }, sections: ITaskSection[]) {
+        await commit('setSectionOrder', sections);
     },
 };
 
