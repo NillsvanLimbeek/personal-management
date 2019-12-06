@@ -1,0 +1,20 @@
+.progress-ring {
+    position: relative;
+}
+
+.progress-ring__circle {
+    transition: 0.35s stroke-dashoffset;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.progress-ring__circle--bottom {
+    stroke: rgba(129, 129, 129, 0.3);
+}
+
+.progress-ring__center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}

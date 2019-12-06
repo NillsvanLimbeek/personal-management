@@ -6,3 +6,5 @@ export { ITaskSectionDeleteIds } from './task-delete-ids';
 export { ITaskSectionAddIds } from './task-add-ids';
 
 export { ITaskOrder } from './task-order';
+
+export { IProgressRingData } from './progress-ring-data';
