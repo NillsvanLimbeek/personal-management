@@ -1,72 +1,85 @@
 <template>
-    <div class="progress-ring">
-        <svg class="progress-ring" :width="size" :height="size">
+    <div
+        class="progress-ring"
+        :style="{ width: `${size}px` }"
+    >
+        <svg
+            class="progress-ring"
+            :width="size"
+            :height="size"
+        >
             <circle
-                ref="circle"
-                class="progress-ring__circle"
-                stroke="white"
+                class="progress-ring__circle--bottom"
                 fill="transparent"
                 :stroke-width="strokeWidth"
                 :r="circleRadius"
                 :cx="circleSize"
                 :cy="circleSize"
             />
+
+            <circle
+                ref="circle"
+                class="progress-ring__circle"
+                :stroke="stroke"
+                fill="transparent"
+                :stroke-width="strokeWidth"
+                :r="circleRadius"
+                :cx="circleSize"
+                :cy="circleSize"
+            />
+
         </svg>
+
+        <p class="progress-ring__center-text">
+            {{ taskData.completedTasks }} / {{ taskData.totalTasks }}
+        </p>
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from '@/vue-script';
+    import { Vue, Component, Prop, Watch } from '@/vue-script';
 
-@Component({})
-export default class ProgressRing extends Vue {
-    @Prop({ default: 120 }) private size!: number;
-    @Prop({ default: 4 }) private strokeWidth!: number;
-    @Prop({ default: 50 }) private percent!: number;
+    import { IProgressRingData } from '@data/models';
 
-    @Watch('percent')
-    private setProgress() {
-        this.progress();
-        this.getProgress(this.percent);
-        console.log(this.$refs.circle);
-    }
+    @Component({})
+    export default class ProgressRing extends Vue {
+        @Prop({ default: 120 }) private size!: number;
+        @Prop({ default: 4 }) private strokeWidth!: number;
+        @Prop({ default: 'white' }) private stroke!: string;
+        @Prop() private taskData!: IProgressRingData;
 
-    private get circleSize(): number {
-        return this.size / 2;
-    }
+        @Watch('percent')
+        private watchProgress() {
+            this.setProgress(this.taskData.percent);
+        }
 
-    private get circleRadius(): number {
-        return this.size / 2 - this.strokeWidth * 2;
-    }
+        private setProgress(percent: number) {
+            const circle = this.$refs.circle as SVGCircleElement;
+            const radius = circle?.r.baseVal.value;
 
-    private progress() {
-        const circle = this.$refs.circle as SVGCircleElement;
-        const radius = circle?.r.baseVal.value;
+            if (circle && radius) {
+                const circumference = radius * 2 * Math.PI;
+                const offset = `${circumference - (percent / 100) * circumference}`;
 
-        if (circle && radius) {
-            const circumference = radius * 2 * Math.PI;
+                circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                circle.style.strokeDashoffset = offset;
+            }
+        }
 
-            circle.style.strokeDasharray = `${circumference} ${circumference}`;
-            circle.style.strokeDashoffset = `${circumference}`;
+        private get circleSize(): number {
+            return this.size / 2;
+        }
+
+        private get circleRadius(): number {
+            return this.size / 2 - this.strokeWidth * 2;
+        }
+
+        private mounted() {
+            this.taskData.percent
+                ? this.setProgress(this.taskData.percent)
+                : this.setProgress(0);
         }
     }
-
-    private getProgress(percent: number) {
-        const circle = document.querySelector('circle');
-        const radius = circle?.r.baseVal.value;
-
-        if (circle && radius) {
-            const circumference = radius * 2 * Math.PI;
-
-            const offset = `${circumference - (percent / 100) * circumference}`;
-            circle.style.strokeDashoffset = offset;
-        }
-    }
-
-    private created() {
-        this.progress();
-    }
-}
 </script>
 
 <style lang="scss" src="./ProgressRing.scss"></style>
