@@ -10,12 +10,12 @@ A project management tool.
 
 Some features i like about Asana/BaseCamp/Notion/Monday i like to build for myself. The idea behind this is to gain experience in the front-end and the back-end.
 
-Front-End development stack:
+## Front-End
 
 - Vue
 - TypeScript
 
-## Back-end is for later
+## Back-end
 
 - NodeJS
-- Koa
+- Express
