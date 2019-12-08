@@ -1,8 +1,10 @@
 import express from 'express';
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    res.send('It works!!!!');
-});
+import { catchErrors } from '../handlers/ErrorHandlers';
+
+import { getTasks } from '../controllers/TaskController';
+
+router.get('/', catchErrors(getTasks));
 
 export default router;

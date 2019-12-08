@@ -1,16 +1,18 @@
 {
     "workbench.colorCustomizations": {
-        "titleBar.activeBackground": "#007fdb",
-        "titleBar.inactiveBackground": "#007fdb99",
+        "titleBar.activeBackground": "#0099e5",
+        "titleBar.inactiveBackground": "#0099e599",
         "titleBar.activeForeground": "#e7e7e7",
         "titleBar.inactiveForeground": "#e7e7e799",
-        "statusBar.background": "#007fdb",
-        "statusBarItem.hoverBackground": "#0f9aff",
-        "statusBar.foreground": "#e7e7e7"
+        "statusBar.background": "#0099e5",
+        "statusBarItem.hoverBackground": "#19b3ff",
+        "statusBar.foreground": "#e7e7e7",
+        "tab.activeBorder": "#19b3ff"
     },
     "eslint.validate": [
         "javascript",
         "javascriptreact",
         { "language": "vue", "autoFix": true }
-    ]
+    ],
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

@@ -8,3 +8,5 @@ export { ITaskSectionAddIds } from './task-add-ids';
 export { ITaskOrder } from './task-order';
 
 export { IProgressRingData } from './progress-ring-data';
+
+export { ITasksWidgetData } from './tasks-widget-data';

@@ -8,7 +8,14 @@ export const routes: RouteConfig[] = [
     {
         path: '/home',
         name: 'home',
-        component: () => import('@views/Home.vue'),
+        component: () => import('@views/home/Home.vue'),
+        children: [
+            {
+                path: 'home/:id',
+                name: 'homeTaskModal',
+                component: () => import('@views/modals/ModalCenter.vue'),
+            },
+        ],
     },
     {
         path: '/tasks',

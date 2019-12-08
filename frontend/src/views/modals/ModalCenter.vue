@@ -33,6 +33,7 @@
         private get modalContent() {
             switch (this.$route.name) {
                 case 'calendarTaskModal':
+                case 'homeTaskModal':
                     return () => import('./content/TaskModal.vue');
                 case 'calendarCreateTaskModal':
                     return () => import('./content/CreateTaskModal.vue');
@@ -40,7 +41,14 @@
         }
 
         private get modalType() {
-            return this.$route.name === 'calendarTaskModal' ? true : false;
+            switch (this.$route.name) {
+                case 'calendarTaskModal':
+                case 'homeTaskModal':
+                    return true;
+                default:
+                    return false;
+            }
+            // return this.$route.name === 'calendarTaskModal' ? true : false;
         }
 
         private created() {

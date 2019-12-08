@@ -1,0 +1,7 @@
+.tasks-widget__body {
+    @include flex-align;
+}
+
+.tasks-widget__ring {
+    margin-right: 2rem;
+}

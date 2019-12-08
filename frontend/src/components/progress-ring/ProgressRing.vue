@@ -43,8 +43,8 @@
 
     @Component({})
     export default class ProgressRing extends Vue {
-        @Prop({ default: 120 }) private size!: number;
-        @Prop({ default: 4 }) private strokeWidth!: number;
+        @Prop({ default: 125 }) private size!: number;
+        @Prop({ default: 6 }) private strokeWidth!: number;
         @Prop({ default: 'white' }) private stroke!: string;
         @Prop() private taskData!: IProgressRingData;
 

@@ -1,0 +1,11 @@
+.task-mini {
+    @include flex-align;
+
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
+
+.task-mini__title {
+    font-size: 1.5rem;
+}
