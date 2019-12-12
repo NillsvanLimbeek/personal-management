@@ -1,7 +1,34 @@
 import { Request, Response } from 'express';
+import Task from '../models/Task';
 
-function getTasks(req: Request, res: Response) {
-    res.send('It works!, IT WORKS!');
+async function getTasks(req: Request, res: Response) {
+    const tasks = await Task.find();
+    res.json(tasks);
 }
 
-export { getTasks };
+async function getTask(req: Request, res: Response) {
+    const id = req.params.id;
+    const task = await Task.findOne({ _id: id })
+    res.json(task)
+}
+
+async function saveTask(req: Request, res: Response) {
+    const task = await new Task(req.body).save();
+    res.json(task);
+}
+
+async function editTask(req: Request, res: Response) {
+    const task = await Task.findOneAndUpdate({ _id: req.params.id }, req.body,
+        {
+            new: true,
+            runValidators: true
+        }).exec()
+    res.json(task);
+}
+
+async function deleteTask(req: Request, res: Response) {
+    const task = await Task.remove({ _id: req.params.id });
+    res.json(task);
+}
+
+export { getTasks, getTask, saveTask, editTask, deleteTask };
