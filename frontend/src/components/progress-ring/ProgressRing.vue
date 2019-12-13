@@ -48,7 +48,7 @@
         @Prop({ default: 'white' }) private stroke!: string;
         @Prop() private taskData!: IProgressRingData;
 
-        @Watch('percent')
+        @Watch('taskData')
         private watchProgress() {
             this.setProgress(this.taskData.percent);
         }

@@ -1,15 +1,15 @@
 <template>
-    <div
-        class="task-mini"
-        @click="openTask"
-    >
+    <div class="task-mini">
         <Checkbox
             class="mr-1"
             :active="task.completed"
             @click="updateTask"
         />
 
-        <p class="task-mini__title">
+        <p
+            class="task-mini__title"
+            @click="openTask"
+        >
             {{ task.title }}
         </p>
     </div>
