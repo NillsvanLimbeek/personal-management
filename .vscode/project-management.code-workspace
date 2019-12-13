@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "path": "D:\\Projects\\project-management"
+    },
+    {
+      "path": "D:\\Projects\\project-management\\backend"
+    },
+    {
+      "path": "D:\\Projects\\project-management\\frontend"
+    }
+  ],
+  "settings": {
+    "workbench.colorCustomizations": {
+      "titleBar.activeBackground": "#007fdb",
+      "titleBar.inactiveBackground": "#007fdb99",
+      "titleBar.activeForeground": "#e7e7e7",
+      "titleBar.inactiveForeground": "#e7e7e799",
+      "statusBar.background": "#007fdb",
+      "statusBarItem.hoverBackground": "#0f9aff",
+      "statusBar.foreground": "#e7e7e7"
+    }
+  }
+}
