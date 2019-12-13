@@ -7,8 +7,7 @@ async function getTasks(req: Request, res: Response) {
 }
 
 async function getTask(req: Request, res: Response) {
-    const id = req.params.id;
-    const task = await Task.findOne({ _id: id })
+    const task = await Task.findOne({ _id: req.params.id })
     res.json(task)
 }
 

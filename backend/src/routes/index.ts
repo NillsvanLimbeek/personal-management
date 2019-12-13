@@ -4,13 +4,18 @@ const router = express.Router();
 import { catchErrors } from '../handlers/ErrorHandlers';
 import { getTasks, getTask, saveTask, editTask, deleteTask } from '../controllers/TaskController';
 
-router.get('/', catchErrors(getTasks));
-router.get('/:id', catchErrors(getTask));
+// sections
 
-router.post('/', catchErrors(saveTask));
+// tasks
+router.get('/tasks', catchErrors(getTasks));
+router.get('/tasks/:id', catchErrors(getTask));
 
-router.put('/:id', catchErrors(editTask));
+router.post('/tasks', catchErrors(saveTask));
 
-router.delete('/:id', catchErrors(deleteTask))
+router.put('/tasks/:id', catchErrors(editTask));
+
+router.delete('/tasks/:id', catchErrors(deleteTask))
+
+// comments
 
 export default router;
