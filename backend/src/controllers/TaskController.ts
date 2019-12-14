@@ -7,8 +7,8 @@ async function getTasks(req: Request, res: Response) {
 }
 
 async function getTask(req: Request, res: Response) {
-    const task = await Task.findOne({ _id: req.params.id })
-    res.json(task)
+    const task = await Task.findOne({ _id: req.params.id });
+    res.json(task);
 }
 
 async function saveTask(req: Request, res: Response) {
@@ -17,11 +17,10 @@ async function saveTask(req: Request, res: Response) {
 }
 
 async function editTask(req: Request, res: Response) {
-    const task = await Task.findOneAndUpdate({ _id: req.params.id }, req.body,
-        {
-            new: true,
-            runValidators: true
-        }).exec()
+    const task = await Task.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+        runValidators: true,
+    }).exec();
     res.json(task);
 }
 

@@ -1,12 +1,16 @@
-import mongoose, { Schema } from 'mongoose';
+import { Request, Response } from 'express';
+import TaskSection from '../models/TaskSection';
 
-const TaskSectionSchema = new Schema({
-    title: {
-        type: String,
-        required: 'Please add a title',
-        trim: true
-    },
-    
-});
+async function getTaskSections(req: Request, res: Response) {
+    const taskSections = await TaskSection.find();
+    res.json(taskSections);
+}
 
-export default mongoose.model('TaskSection', TaskSectionSchema)
+async function getTaskSection(req: Request, res: Response) {
+    const taskSection = await TaskSection.findOne({ _id: req.params.id });
+    res.json(taskSection);
+}
+
+async function saveTaskSection(req: Request, res: Response) {}
+
+export { getTaskSections, getTaskSection };
