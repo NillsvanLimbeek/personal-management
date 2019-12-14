@@ -23,7 +23,7 @@
         "vuex-class": "^0.3.2"
     },
     "devDependencies": {
-        "@babel/core": "^7.7.4",
+        "@babel/core": "^7.7.5",
         "@babel/plugin-proposal-optional-chaining": "^7.7.4",
         "@types/jest": "^24.0.23",
         "@vue/cli-plugin-babel": "^4.1.1",
