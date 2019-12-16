@@ -11,6 +11,29 @@ async function getTaskSection(req: Request, res: Response) {
     res.json(taskSection);
 }
 
-async function saveTaskSection(req: Request, res: Response) {}
+async function saveTaskSection(req: Request, res: Response) {
+    const taskSection = await new TaskSection(req.body).save();
+    res.json(taskSection);
+}
 
-export { getTaskSections, getTaskSection };
+async function editTaskSection(req: Request, res: Response) {
+    const taskSection = await TaskSection.findOneAndUpdate(
+        { _id: req.body.id },
+        req.body,
+        { new: true, runValidators: true },
+    ).exec();
+    res.json(taskSection);
+}
+
+async function deleteTaskSection(req: Request, res: Response) {
+    const taskSection = await TaskSection.remove({ _id: req.body.id });
+    res.json(taskSection);
+}
+
+export {
+    getTaskSections,
+    getTaskSection,
+    saveTaskSection,
+    editTaskSection,
+    deleteTaskSection,
+};
