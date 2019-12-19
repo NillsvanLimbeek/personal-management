@@ -3,8 +3,11 @@ import app from './src/server';
 
 const db = mongoose.connection;
 
+// load env variables
+require('dotenv').config({ path: 'variables.env' });
+
 // connect db
-mongoose.connect('mongodb://localhost/project-managment', {
+mongoose.connect(process.env.LOCAL_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
