@@ -77,7 +77,7 @@
             });
 
             EventBus.$on('open-task', (id: string) => {
-                this.$router.push({ path: `home/${id}` });
+                this.$router.push({ path: `home/task/${id}` });
             });
         }
     }
