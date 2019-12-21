@@ -1,9 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { resolve } from 'path';
-import { config } from 'dotenv';
-
 const tasks = require('./routes/tasks');
 const tasksections = require('./routes/tasksections');
 const comments = require('./routes/comments');
