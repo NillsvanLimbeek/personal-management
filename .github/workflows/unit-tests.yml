@@ -12,10 +12,11 @@ jobs:
                 node: ['10']
         name: Node ${{ matrix.node }} sample
         steps:
-            - name: Set Node.js 10.x
-              uses: actions/setup-node@master
+            - uses: actions/checkout@v1
+            - name: Setup node
+              uses: actions/setup-node@v1
               with:
-                  version: 10.x
+                  node-version: ${{ matrix.node }}
 
             - name: Install dependencies
               working-directory: ./frontend
