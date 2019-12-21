@@ -3,21 +3,27 @@ name: Unit Tests
 on:
     pull_request:
         types: [opened]
-        paths: 
-            - 'frontend/**'
 
 jobs:
     build:
         runs-on: ubuntu-16.04
         strategy:
             matrix:
-                node: ['10', '8']
+                node: ['10']
         name: Node ${{ matrix.node }} sample
         steps:
-            - uses: actions/checkout@v1
-            - name: Setup node
-              uses: actions/setup-node@v1
+            - name: Set Node.js 10.x
+              uses: actions/setup-node@master
               with:
-                  node-version: ${{ matrix.node }}
-            - run: npm install
-            - run: npm run test:unit
+                version: 10.x
+
+            - name: Install dependencies
+              working-directory: ./frontend
+              run: | 
+                npm install
+                
+            - name: Run unit tests
+              working-directory: ./frontend
+              run: | 
+                npm run test:unit
+              
