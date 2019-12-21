@@ -3,6 +3,7 @@ name: Unit Tests
 on:
     pull_request:
         types: [opened]
+        paths: '/frontend'
 
 jobs:
     build:
