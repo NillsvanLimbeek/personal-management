@@ -1,6 +1,5 @@
 <template>
 	<div class="home">
-		TEST
 		<TasksWidget v-bind:widget-data="completedTasks" />
 		<TasksWidget v-bind:widget-data="overdueTasks" />
 
