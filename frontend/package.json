@@ -38,6 +38,7 @@
         "sass-loader": "^8.0.0",
         "ts-jest": "^24.2.0",
         "typescript": "^3.7.3",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.11",
+        "@babel/plugin-proposal-optional-chaining": "^7.7.5"
     }
 }
