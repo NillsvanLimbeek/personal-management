@@ -10,14 +10,14 @@
         background: var(--checkbox-green-dark);
         border: 2px solid var(--checkbox-green);
     }
+}
 
-    &--active {
-        background: var(--checkbox-green);
-        border: 2px solid var(--checkbox-green);
+.checkbox--active {
+    background: var(--checkbox-green);
+    border: 2px solid var(--checkbox-green);
 
-        &:hover {
-            border: 2px solid var(--checkbox-green-dark);
-            background: var(--checkbox-green-dark);
-        }
+    &:hover {
+        border: 2px solid var(--checkbox-green-dark);
+        background: var(--checkbox-green-dark);
     }
 }

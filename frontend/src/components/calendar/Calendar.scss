@@ -1,85 +1,85 @@
 .calendar {
     position: relative;
     padding: 2.5rem;
+}
 
-    &__header {
-        @include flex-center-align;
-        margin-bottom: 2.5rem;
+.calendar__header {
+    @include flex-center-align;
+    margin-bottom: 2.5rem;
+}
 
-        & > span {
-            @include flex-center;
-            width: 15rem;
-        }
+.calendar__header > span {
+    @include flex-center;
+    width: 15rem;
+}
+
+.calendar__arrow {
+    color: var(--color-grey-light);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-grey);
     }
+}
 
-    &__arrow {
-        color: var(--color-grey-light);
-        cursor: pointer;
+.calendar__button {
+    position: absolute;
+    right: 2.5rem;
+}
 
-        &:hover {
-            color: var(--color-grey);
-        }
+.calendar__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    margin-bottom: 2.5rem;
+}
+
+.calendar__weekdays > span {
+    @include flex-center;
+}
+
+.calendar__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 7.5px;
+}
+
+.calendar__day {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 10rem;
+    padding: 5px;
+
+    border: 1px dashed var(--color-black);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-black-light-2-alpha);
+        transition: var(--transition-3);
     }
+}
 
-    &__button {
-        position: absolute;
-        right: 2.5rem;
-    }
+.calendar__day--today {
+    border: 1px dashed var(--color-blue-dark);
+}
 
-    &__weekdays {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
+.calendar__day-header {
+    @include flex-end;
 
-        margin-bottom: 2.5rem;
+    margin-bottom: 5px;
+}
 
-        & > span {
-            @include flex-center;
-        }
-    }
+.calendar__add {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
-    &__days {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        grid-gap: 7.5px;
-    }
+    transform: translateX(-60%) translateY(-40%);
 
-    &__day {
-        position: relative;
-
-        display: flex;
-        flex-direction: column;
-
-        height: 10rem;
-        padding: 5px;
-
-        border: 1px dashed var(--color-black);
-        cursor: pointer;
-
-        &--today {
-            border: 1px dashed var(--color-blue-dark);
-        }
-
-        &:hover {
-            background: var(--color-black-light-2-alpha);
-            transition: var(--transition-3);
-        }
-    }
-
-    &__day-header {
-        @include flex-end;
-
-        margin-bottom: 5px;
-    }
-
-    &__add {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-
-        transform: translateX(-60%) translateY(-40%);
-
-        & > i {
-            margin-right: 1rem;
-        }
+    & > i {
+        margin-right: 1rem;
     }
 }

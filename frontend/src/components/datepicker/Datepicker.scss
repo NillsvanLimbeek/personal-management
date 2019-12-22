@@ -1,106 +1,106 @@
 .datepicker {
     display: flex;
     position: relative;
+}
 
-    &__trigger {
-        padding: 1rem 1.5rem;
-        border: var(--border-transparent);
-        cursor: pointer;
+.datepicker__trigger {
+    padding: 1rem 1.5rem;
+    border: var(--border-transparent);
+    cursor: pointer;
 
-        & > i:first-child {
-            margin-right: 1rem;
-        }
-
-        & > i:last-of-type {
-            opacity: 0;
-            margin-left: 1rem;
-            transition: var(--transition-2);
-        }
-
-        &:hover {
-            border: var(--border-black);
-
-            & > i:last-of-type {
-                opacity: 1;
-                transition: var(--transition-2);
-            }
-        }
+    & > i:first-child {
+        margin-right: 1rem;
     }
 
-    &__container {
-        position: absolute;
-        right: 0;
-        top: 4.5rem;
-        z-index: 100;
-
-        display: flex;
-
-        padding: 1rem;
-        background: var(--color-black-light);
-        border: 1px solid #13181f;
-        box-shadow: 0 5px 1rem 3px rgba(0, 0, 0, 0.3);
-    }
-
-    &__body {
-        position: relative;
-        display: flex;
-
-        width: 30rem;
-        height: 30rem;
-        overflow: hidden;
-    }
-
-    &__weekdays {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-
-        position: absolute;
-        top: 3rem;
-        z-index: 100;
-
-        height: 3rem;
-        width: 30rem;
-
-        & > span {
-            @include flex-center-align;
-            font-size: 1.25rem;
-        }
-    }
-
-    &__arrow {
-        position: absolute;
-        top: 5px;
-        z-index: 100;
-
-        color: var(--color-grey);
-        padding: 1rem;
-        cursor: pointer;
-
-        &--left {
-            left: 5px;
-        }
-
-        &--right {
-            right: 5px;
-        }
-    }
-
-    &__months {
-        display: flex;
+    & > i:last-of-type {
+        opacity: 0;
+        margin-left: 1rem;
         transition: var(--transition-2);
     }
 
-    &__month {
-        flex: 0 0 30rem;
-        background: var(--color-black-light);
+    &:hover {
+        border: var(--border-black);
 
-        &--absolute {
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            width: 30rem;
-            background: var(--color-black-light);
+        & > i:last-of-type {
+            opacity: 1;
+            transition: var(--transition-2);
         }
     }
+}
+
+.datepicker__container {
+    position: absolute;
+    right: 0;
+    top: 4.5rem;
+    z-index: 100;
+
+    display: flex;
+
+    padding: 1rem;
+    background: var(--color-black-light);
+    border: 1px solid #13181f;
+    box-shadow: 0 5px 1rem 3px rgba(0, 0, 0, 0.3);
+}
+
+.datepicker__body {
+    position: relative;
+    display: flex;
+
+    width: 30rem;
+    height: 30rem;
+    overflow: hidden;
+}
+
+.datepicker__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    position: absolute;
+    top: 3rem;
+    z-index: 100;
+
+    height: 3rem;
+    width: 30rem;
+}
+
+.datepicker__weekdays > span {
+    @include flex-center-align;
+    font-size: 1.25rem;
+}
+
+.datepicker__arrow {
+    position: absolute;
+    top: 5px;
+    z-index: 100;
+
+    color: var(--color-grey);
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.datepicker__arrow--left {
+    left: 5px;
+}
+
+.datepicker__arrow--right {
+    right: 5px;
+}
+
+.datepicker__months {
+    display: flex;
+    transition: var(--transition-2);
+}
+
+.datepicker__month {
+    flex: 0 0 30rem;
+    background: var(--color-black-light);
+}
+
+.datepicker__month--absolute {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 30rem;
+    background: var(--color-black-light);
 }
