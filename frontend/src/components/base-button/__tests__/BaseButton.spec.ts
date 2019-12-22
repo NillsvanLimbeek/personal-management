@@ -10,7 +10,7 @@ describe('Button', () => {
     });
 
     it('Renders a button', () => {
-        expect(wrapper.contains('.button')).toBe(true);
+        expect(wrapper.contains('.base-button')).toBe(true);
     });
 
     it('Renders a slot', () => {
