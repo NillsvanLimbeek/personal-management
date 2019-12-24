@@ -2,9 +2,8 @@
     @include flex-space-between;
 
     padding: 1.5rem;
-    border-bottom: 1px solid var(--color-black);
-}
+    margin-bottom: 1.75rem;
 
-.tasks__section {
-    padding: 1rem;
+    border-radius: var(--border-radius);
+    background: var(--color-black-light);
 }
