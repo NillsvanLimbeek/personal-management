@@ -57,6 +57,7 @@
 
     &__add {
         @include flex-align;
+        margin-top: 1rem;
 
         & > i {
             margin: 0 1.9rem 0 3px;
