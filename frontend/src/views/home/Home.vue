@@ -5,9 +5,7 @@
 			<TasksWidget v-bind:widget-data="overdueTasks" />
 		</div>
 
-		<div class="home__task-sections">
-			Task Sections
-		</div>
+		<TaskSectionsWidget class="home__task-sections" />
 
 		<transition name="modal-center">
 			<router-view />
@@ -23,10 +21,13 @@
 	import { isBefore } from 'date-fns';
 
 	const TasksWidget = () => import('@/components/tasks-widget/TasksWidget.vue');
+	const TaskSectionsWidget = () =>
+		import('@/components/task-sections-widget/TaskSectionsWidget.vue');
 
 	@Component({
 		components: {
 			TasksWidget,
+			TaskSectionsWidget,
 		},
 	})
 	export default class Home extends Vue {

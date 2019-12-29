@@ -1,8 +1,8 @@
 <template>
 	<div class="tasks-widget">
-		<h3 class="tasks-widget__title">
+		<h4 class="tasks-widget__title">
 			{{ widgetData.title }}
-		</h3>
+		</h4>
 
 		<div class="tasks-widget__body">
 			<ProgressRing
