@@ -10,7 +10,7 @@ jobs:
         strategy:
             matrix:
                 node: ['10']
-        name: Node ${{ matrix.node }} sample
+        name: Run unit tests
         steps:
             - uses: actions/checkout@v1
             - name: Setup node
