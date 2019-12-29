@@ -2,6 +2,8 @@
     width: 2rem;
     height: 2rem;
 
+    flex: 0 0 auto;
+
     border: 2px solid var(--color-grey);
     border-radius: 5rem;
     cursor: pointer;
@@ -10,14 +12,14 @@
         background: var(--checkbox-green-dark);
         border: 2px solid var(--checkbox-green);
     }
+}
 
-    &--active {
-        background: var(--checkbox-green);
-        border: 2px solid var(--checkbox-green);
+.checkbox--active {
+    background: var(--checkbox-green);
+    border: 2px solid var(--checkbox-green);
 
-        &:hover {
-            border: 2px solid var(--checkbox-green-dark);
-            background: var(--checkbox-green-dark);
-        }
+    &:hover {
+        border: 2px solid var(--checkbox-green-dark);
+        background: var(--checkbox-green-dark);
     }
 }

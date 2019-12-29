@@ -55,7 +55,7 @@
 
         private setProgress(percent: number) {
             const circle = this.$refs.circle as SVGCircleElement;
-            const radius = circle?.r.baseVal.value;
+            const radius = circle?.r?.baseVal.value;
 
             if (circle && radius) {
                 const circumference = radius * 2 * Math.PI;

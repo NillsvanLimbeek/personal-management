@@ -1,0 +1,16 @@
+.home {
+    display: flex;
+}
+
+.home__tasks {
+    flex: 1 0 40%;
+    margin-right: 1.5rem;
+}
+
+.home__task-sections {
+    flex: 1 0 60%;
+
+    background: var(--color-black-light);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}

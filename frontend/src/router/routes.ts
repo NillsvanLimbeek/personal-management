@@ -11,7 +11,7 @@ export const routes: RouteConfig[] = [
         component: () => import('@views/home/Home.vue'),
         children: [
             {
-                path: 'home/:id',
+                path: 'task/:id',
                 name: 'homeTaskModal',
                 component: () => import('@views/modals/ModalCenter.vue'),
             },

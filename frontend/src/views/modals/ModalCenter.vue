@@ -48,7 +48,6 @@
                 default:
                     return false;
             }
-            // return this.$route.name === 'calendarTaskModal' ? true : false;
         }
 
         private created() {

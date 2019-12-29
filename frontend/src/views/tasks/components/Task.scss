@@ -1,6 +1,6 @@
 .task {
     @include flex-align;
-    margin-left: 6px;
+    padding: 1px 6px;
 
     &:not(:last-child) {
         margin-bottom: 3px;

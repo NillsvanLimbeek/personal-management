@@ -1,7 +1,10 @@
 <template>
     <div class="task-section">
-        <div class="task-section__body">
-            <div class="task-section__body--title">
+        <div
+            class="task-section__header"
+            :class="{ 'task-section__header--closed': !taskSection.isOpen }"
+        >
+            <div class="task-section__header--title">
                 <TaskSectionDropdown
                     class="task-section__dropdown"
                     :is-open="taskSection.isOpen"
@@ -32,7 +35,7 @@
                 />
             </div>
 
-            <div class="task-section__body--date">
+            <div class="task-section__header--date">
                 <SortButton
                     v-if="taskSection.isOpen"
                     @sort="sortTasks('date')"
@@ -40,7 +43,7 @@
             </div>
         </div>
 
-        <div class="task-section_list" v-if="taskSection.isOpen">
+        <div class="task-section__body" v-if="taskSection.isOpen">
             <Draggable
                 v-model="getTasks"
                 v-bind="dragOptions"
@@ -59,6 +62,7 @@
             <div class="task-section__add">
                 <i class="fas fa-plus" />
 
+                <!-- TODO usee base input -->
                 <input
                     placeholder="Add new task"
                     @blur="addTask"

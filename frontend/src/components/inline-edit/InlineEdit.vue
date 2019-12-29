@@ -13,6 +13,7 @@
             class="inline-edit__input"
             v-show="showEdit"
         >
+            <!-- TODO use BaseInput -->
             <input
                 @blur="submit"
                 @keypress.enter="submit"

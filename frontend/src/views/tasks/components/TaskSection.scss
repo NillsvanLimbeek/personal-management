@@ -1,12 +1,18 @@
 .task-section {
-    padding: 1rem;
+    border-radius: var(--border-radius);
+    background: var(--color-black-light);
 
-    &__body {
+    &:not(:last-child) {
+        margin-bottom: 1.75rem;
+    }
+
+    &__header {
         @include flex-align;
 
-        margin-bottom: 3px;
-        padding-bottom: 3px;
-        border-bottom: var(--border-black);
+        padding: 1rem 1.25rem;
+
+        background: var(--color-black-light-3);
+        border-radius: 3px 3px 0 0;
 
         &--title {
             @include flex-align;
@@ -21,18 +27,18 @@
             width: 15rem;
             height: 100%;
         }
+
+        &--closed {
+            border-radius: 3px;
+        }
     }
 
-    // &__menu-button {
-    //     cursor: pointer;
-    // }
+    &__body {
+        padding: 1.25rem;
+    }
 
     &__dropdown {
         margin-right: 5px;
-
-        // &--hide {
-        //     opacity: 0;
-        // }
     }
 
     &__arrow {
@@ -51,6 +57,7 @@
 
     &__add {
         @include flex-align;
+        margin-top: 1rem;
 
         & > i {
             margin: 0 1.9rem 0 3px;

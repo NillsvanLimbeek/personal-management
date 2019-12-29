@@ -1,7 +1,5 @@
 <template>
-    <div class="tasks">
-        <router-view/>
-    </div>
+    <router-view />
 </template>
 
 <script lang="ts">
