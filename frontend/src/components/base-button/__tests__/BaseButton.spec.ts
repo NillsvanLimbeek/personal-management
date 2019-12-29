@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils';
 
-import Button from '../BaseButton.vue';
+import BaseButton from '../BaseButton.vue';
 
-describe('Button', () => {
-    const wrapper = shallowMount(Button, {
+describe('Base Button', () => {
+    const wrapper = shallowMount(BaseButton, {
         slots: {
             default: '<p class="slot"></p>',
         },

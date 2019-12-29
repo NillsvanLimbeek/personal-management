@@ -11,30 +11,30 @@
         color: var(--color-black);
         border-radius: 2px;
     }
+}
 
-    &--disabled {
-        cursor: not-allowed;
+.dropdown-item--disabled {
+    cursor: not-allowed;
 
-        &:hover {
-            color: var(--color-black-light-2);
-            background: var(--color-grey-light);
-        }
+    &:hover {
+        color: var(--color-black-light-2);
+        background: var(--color-grey-light);
     }
+}
 
-    &__title {
-        font-size: 1.4rem;
-    }
+.dropdown-item__title {
+    font-size: 1.4rem;
+}
 
-    &__second-menu {
-        position: absolute;
-        top: 0;
-        right: -20rem;
+.dropdown-item__second-menu {
+    position: absolute;
+    top: 0;
+    right: -20rem;
 
-        width: 20rem;
-        z-index: 100;
+    width: 20rem;
+    z-index: 100;
 
-        background: var(--color-black-light-2);
-        color: var(--color-grey);
-        border-radius: 2px;
-    }
+    background: var(--color-black-light-2);
+    color: var(--color-grey);
+    border-radius: 2px;
 }

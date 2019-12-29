@@ -2,29 +2,29 @@
     display: flex;
 
     color: var(--color-grey);
+}
 
-    &__list {
-        @include flex-align;
+.task-header__list {
+    @include flex-align;
 
-        margin-left: 2.5rem;
+    margin-left: 2.5rem;
+}
+
+.task-header__link {
+    font-size: 1.25rem;
+    border-bottom: 1px solid transparent;
+
+    cursor: pointer;
+
+    &:hover {
+        border-bottom: 1px solid var(--color-grey);
     }
 
-    &__link {
-        font-size: 1.25rem;
-        border-bottom: 1px solid transparent;
-
-        cursor: pointer;
-
-        &:hover {
-            border-bottom: 1px solid var(--color-grey);
-        }
-
-        &--active {
-            border-bottom: 1px solid var(--color-grey);
-        }
-
-        &:not(:last-child) {
-            margin-right: 1rem;
-        }
+    &:not(:last-child) {
+        margin-right: 1rem;
     }
+}
+
+.task-header__link--active {
+    border-bottom: 1px solid var(--color-grey);
 }
