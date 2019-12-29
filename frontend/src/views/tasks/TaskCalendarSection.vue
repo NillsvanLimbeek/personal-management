@@ -1,55 +1,55 @@
 <template>
-    <div>
-        <Calendar
-            :tasks="tasks"
-            @create-task="openCreateModal($event)"
-        />
+	<div>
+		<Calendar
+			:tasks="tasks"
+			@create-task="openCreateModal($event)"
+		/>
 
-        <transition name="modal-center">
-            <router-view />
-        </transition>
-    </div>
+		<transition name="modal-center">
+			<router-view />
+		</transition>
+	</div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Getter } from '@/vue-script';
+	import { Vue, Component, Getter } from '@/vue-script';
 
-    import { ITask } from '@/data/models';
-    import { EventBus } from '@/event-bus';
+	import { ITask } from '@/data/models';
+	import { EventBus } from '@/event-bus';
 
-    const Calendar = () => import('@components/calendar/Calendar.vue');
+	const Calendar = () => import('@components/calendar/Calendar.vue');
 
-    @Component({
-        components: {
-            Calendar,
-        },
-    })
-    export default class TaskCalendarSection extends Vue {
-        @Getter('tasks/getTasks') private tasks!: ITask[];
+	@Component({
+		components: {
+			Calendar,
+		},
+	})
+	export default class TaskCalendarSection extends Vue {
+		@Getter('tasks/getTasks') private tasks!: ITask[];
 
-        private openTaskModal(id: string) {
-            if (this.$route.name === 'calendarTaskModal') {
-                this.$router.replace({ path: `${id}` });
-            } else {
-                this.$router.push({ path: `calendar/task/${id}` });
-            }
-        }
+		private openTaskModal(id: string) {
+			if (this.$route.name === 'calendarTaskModal') {
+				this.$router.replace({ path: `${id}` });
+			} else {
+				this.$router.push({ name: 'calendarTaskModal', params: { id } });
+			}
+		}
 
-        private openCreateModal(day: Date) {
-            this.$router.push({
-                name: 'calendarCreateTaskModal',
-                params: { date: `${day}` },
-            });
-        }
+		private openCreateModal(day: Date) {
+			this.$router.push({
+				name: 'calendarCreateTaskModal',
+				params: { date: `${day}` },
+			});
+		}
 
-        private created() {
-            EventBus.$on('task-modal', (id: string) => {
-                this.openTaskModal(id);
-            });
+		private created() {
+			EventBus.$on('task-modal', (id: string) => {
+				this.openTaskModal(id);
+			});
 
-            EventBus.$on('update-task', (complete: boolean) => {
-                this.$store.dispatch('tasks/updateTask', complete);
-            });
-        }
-    }
+			EventBus.$on('update-task', (complete: boolean) => {
+				this.$store.dispatch('tasks/updateTask', complete);
+			});
+		}
+	}
 </script>

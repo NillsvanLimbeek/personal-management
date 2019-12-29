@@ -1,5 +1,27 @@
+.tasks-widget {
+    padding: 1rem;
+
+    background: var(--color-black-light);
+    border-radius: var(--border-radius);
+
+    &:not(:last-child) {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.tasks-widget__title {
+    margin-bottom: 1.5rem;
+}
+
 .tasks-widget__body {
     @include flex-align;
+}
+
+.tasks-widget__list {
+    height: 10rem;
+    overflow-y: auto;
+
+    padding-right: 2rem;
 }
 
 .tasks-widget__ring {
