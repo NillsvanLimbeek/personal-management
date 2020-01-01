@@ -10,3 +10,4 @@ export { ITaskOrder } from './task-order';
 export { IProgressRingData } from './progress-ring-data';
 
 export { ITasksWidgetData } from './tasks-widget-data';
+export { ISectionWidgetData } from './section-widget-data';

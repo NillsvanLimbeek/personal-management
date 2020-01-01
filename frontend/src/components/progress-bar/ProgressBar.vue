@@ -4,30 +4,28 @@
 			class="progress-bar__label"
 			for="section"
 		>
-			{{ title }}
+			{{ sectionData.title }}
 		</label>
 
 		<progress
 			id="section"
-			max="100"
-			:value="value"
+			:max="sectionData.totalTasks"
+			:value="sectionData.completedTasks"
 		>
-			{{ value }}
+			{{ sectionData.completedTasks }}
 		</progress>
 
-		<p class="progress-bar__tasks">{{ completedTasks }} / {{ totalTasks }}</p>
+		<p class="progress-bar__tasks">{{ sectionData.completedTasks }} / {{ sectionData.totalTasks }}</p>
 	</div>
 </template>
 
 <script lang="ts">
 	import { Vue, Component, Prop } from '@/vue-script';
+	import { ITasksWidgetData } from '@/data/models';
 
 	@Component({})
 	export default class ProgressBar extends Vue {
-		@Prop({ required: true }) private title!: string;
-		@Prop({ required: true }) private value!: string;
-		@Prop({ required: true }) private completedTasks!: string;
-		@Prop({ required: true }) private totalTasks!: string;
+		@Prop({ required: true }) private sectionData!: ITasksWidgetData;
 	}
 </script>
 

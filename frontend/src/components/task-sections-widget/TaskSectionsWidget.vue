@@ -4,17 +4,18 @@
 
 		<div class="task-sections-widget__body">
 			<ProgressBar
-				title="Section"
-				value="50"
-				completed-tasks="1"
-				total-tasks="2"
+				v-for="(section, index) in sectionsData"
+				:key="index"
+				v-bind:section-data="section"
 			/>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-	import { Vue, Component } from '@/vue-script';
+	import { Vue, Component, Prop } from '@/vue-script';
+
+	import { ITaskSection, ITask, ISectionWidgetData } from '@/data/models';
 
 	const ProgressBar = () => import('@components/progress-bar/ProgressBar.vue');
 
@@ -23,7 +24,26 @@
 			ProgressBar,
 		},
 	})
-	export default class TaskSectionsWidget extends Vue {}
+	export default class TaskSectionsWidget extends Vue {
+		@Prop({ required: true }) private taskSections!: ITaskSection[];
+		@Prop({ required: true }) private tasks!: ITask[];
+
+		private get sectionsData() {
+			const sectionsData: ISectionWidgetData[] = [];
+
+			this.taskSections.forEach((taskSection) => {
+				sectionsData.push({
+					title: taskSection.title,
+					totalTasks: taskSection.taskIds.length,
+					completedTasks: this.tasks
+						.filter((task) => task.taskSectionId === taskSection.id)
+						.filter((task) => task.completed === true).length,
+				});
+			});
+
+			return sectionsData;
+		}
+	}
 </script>
 
 <style lang="scss" src="./TaskSectionsWidget.scss">
