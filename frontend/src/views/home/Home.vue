@@ -1,93 +1,61 @@
 <template>
-	<div class="home">
-		<div class="home__tasks">
-			<TasksWidget v-bind:widget-data="completedTasks" />
-			<TasksWidget v-bind:widget-data="overdueTasks" />
-		</div>
+    <div class="home">
+        <div class="home__tasks">
+            <TasksWidget v-bind:widget-data="completedTasks" />
+            <TasksWidget v-bind:widget-data="overdueTasks" />
+        </div>
 
-		<TaskSectionsWidget />
+        <TaskSectionsWidget />
 
-		<transition name="modal-center">
-			<router-view />
-		</transition>
-	</div>
+        <transition name="modal-center">
+            <router-view />
+        </transition>
+    </div>
 </template>
 
 <script lang="ts">
-	import { Vue, Component, Getter } from '@/vue-script';
+    import { Vue, Component, Getter } from '@/vue-script';
 
-	import { ITask, IProgressRingData, ITasksWidgetData } from '@/data/models';
-	import { EventBus } from '@/event-bus';
-	import { isBefore } from 'date-fns';
+    import { ITask, IProgressRingData, ITasksWidgetData } from '@/data/models';
+    import { EventBus } from '@/event-bus';
+    import { isBefore } from 'date-fns';
+    import { taskWidgetData } from '@utils/index';
 
-	const TasksWidget = () => import('@/components/tasks-widget/TasksWidget.vue');
-	const TaskSectionsWidget = () =>
-		import('@/components/task-sections-widget/TaskSectionsWidget.vue');
+    const TasksWidget = () => import('@/components/tasks-widget/TasksWidget.vue');
+    const TaskSectionsWidget = () =>
+        import('@/components/task-sections-widget/TaskSectionsWidget.vue');
 
-	@Component({
-		components: {
-			TasksWidget,
-			TaskSectionsWidget,
-		},
-	})
-	export default class Home extends Vue {
-		@Getter('tasks/getTasks') private tasks!: ITask[];
+    @Component({
+        components: {
+            TasksWidget,
+            TaskSectionsWidget,
+        },
+    })
+    export default class Home extends Vue {
+        @Getter('tasks/getTasks') private tasks!: ITask[];
 
-		private get completedTasks(): ITasksWidgetData {
-			return {
-				title: 'Completed Tasks',
-				stroke: '#4680ff',
-				progressRing: this.getCompletedTasks,
-				tasks: this.tasks,
-			};
-		}
+        private get completedTasks(): ITasksWidgetData {
+            return taskWidgetData('Completed Tasks', '#4680ff', this.tasks);
+        }
 
-		private get getCompletedTasks(): IProgressRingData {
-			const totalTasks = this.tasks.length;
-			const completedTasks = this.tasks.filter(
-				(task) => task.completed === true,
-			).length;
-			const percent = (completedTasks / totalTasks) * 100;
+        private get overdueTasks(): ITasksWidgetData {
+            return taskWidgetData(
+                'Overdue Tasks',
+                '#fb617f',
+                this.tasks.filter((task) => task.dueDate),
+            );
+        }
 
-			return { totalTasks, completedTasks, percent };
-		}
+        private created() {
+            EventBus.$on('update-task', (task: ITask) => {
+                this.$store.dispatch('tasks/updateTask', task);
+            });
 
-		private get overdueTasks(): ITasksWidgetData {
-			return {
-				title: 'Overdue Tasks',
-				stroke: '#fb617f',
-				progressRing: this.getOverdueTasks,
-				tasks: this.tasks.filter((task) => task.dueDate),
-			};
-		}
-
-		private get getOverdueTasks(): IProgressRingData {
-			const tasks = this.tasks.filter((task) => task.dueDate);
-			const tasksOverdue = tasks.filter((task) => {
-				if (task.dueDate) {
-					return !task.completed && isBefore(task.dueDate, Date.now());
-				}
-			});
-
-			const percent = (tasksOverdue.length / tasks.length) * 100;
-
-			return {
-				totalTasks: tasks.length,
-				completedTasks: tasksOverdue.length,
-				percent,
-			};
-		}
-
-		private created() {
-			EventBus.$on('update-task', (task: ITask) => {
-				this.$store.dispatch('tasks/updateTask', task);
-			});
-
-			EventBus.$on('open-task', (id: string) => {
-				this.$router.push({ name: 'homeTaskModal', params: { id } });
-			});
-		}
-	}
+            EventBus.$on('open-task', (id: string) => {
+                this.$router.push({ name: 'homeTaskModal', params: { id } });
+            });
+        }
+    }
 </script>
 
 <style lang="scss" src="./Home.scss">
