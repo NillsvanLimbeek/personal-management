@@ -1,6 +1,12 @@
-.tasks-sections-widget {
-    padding: 1rem;
+.task-sections-widget {
+    flex: 0 0 60%;
 
     background: var(--color-black-light);
     border-radius: var(--border-radius);
+}
+
+.task-sections-widget__title {
+    background: var(--color-black-light-2);
+    padding: 1rem 1.25rem;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 }

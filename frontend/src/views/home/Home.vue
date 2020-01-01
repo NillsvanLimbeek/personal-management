@@ -5,7 +5,7 @@
 			<TasksWidget v-bind:widget-data="overdueTasks" />
 		</div>
 
-		<TaskSectionsWidget class="home__task-sections" />
+		<TaskSectionsWidget />
 
 		<transition name="modal-center">
 			<router-view />

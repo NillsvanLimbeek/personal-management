@@ -1,6 +1,4 @@
 .tasks-widget {
-    padding: 1rem;
-
     background: var(--color-black-light);
     border-radius: var(--border-radius);
 
@@ -10,11 +8,15 @@
 }
 
 .tasks-widget__title {
-    margin-bottom: 1.5rem;
+    background: var(--color-black-light-2);
+    padding: 1rem 1.25rem;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .tasks-widget__body {
     @include flex-align;
+
+    padding: 1rem;
 }
 
 .tasks-widget__list {
