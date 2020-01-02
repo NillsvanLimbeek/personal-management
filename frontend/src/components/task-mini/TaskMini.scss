@@ -1,8 +1,15 @@
 .task-mini {
     @include flex-align;
 
+    padding: 2.5px;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-black-light-2);
+    }
+
     &:not(:last-child) {
-        margin-bottom: 1rem;
+        margin-bottom: 5px;
     }
 }
 
