@@ -1,5 +1,5 @@
 <template>
-	<div class="week__body">
+	<div class="week">
 		<div class="week__weekdays">
 			<span v-for="day in getWeekDays">
 				{{ day | date('EEE') }}
