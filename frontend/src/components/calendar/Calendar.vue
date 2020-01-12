@@ -37,6 +37,7 @@
 			:date="date"
 			:tasks="tasks"
 			@create-task="$emit('create-task', $event)"
+			@calendar-task-modal="$emit('calendar-task-modal', $event)"
 		/>
 
 		<Week
