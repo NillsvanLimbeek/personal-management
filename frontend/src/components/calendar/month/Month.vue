@@ -22,11 +22,23 @@
 					{{ day | date('d') }}
 				</div>
 
-				<CalendarTask
-					v-for="(task, index) in filteredTasks(day)"
-					:key="index"
-					:task="task"
-				/>
+				<div class="month__tasks">
+					<div v-if="filteredTasks(day).length < 3">
+						<CalendarTask
+							v-for="(task, index) in filteredTasks(day)"
+							:key="index"
+							:task="task"
+						/>
+					</div>
+
+					<div v-else>
+						<CalendarTask :task="filteredTasks(day)[0]" />
+
+						<p @click="$emit('calendar-task-modal', day)">
+							+ {{ filteredTasks(day).length -1 }} more
+						</p>
+					</div>
+				</div>
 
 				<span
 					v-if="showAdd === index && filteredTasks(day).length == 0"
