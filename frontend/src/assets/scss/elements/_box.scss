@@ -1,5 +1,10 @@
 .box {
     max-width: 114rem;
+    height: 100%;
+
     margin: 0 auto;
+
     color: var(--color-grey);
+    overflow-x: hidden;
+    overflow-y: auto;
 }

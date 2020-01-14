@@ -1,11 +1,14 @@
 .calendar {
     position: relative;
-    padding: 2.5rem;
 }
 
 .calendar__header {
     @include flex-center-align;
-    margin-bottom: 2.5rem;
+
+    margin-bottom: 2rem;
+    padding: 2rem 0;
+    background: var(--color-black-light);
+    border-radius: var(--border-radius);
 }
 
 .calendar__header > span {
@@ -22,64 +25,16 @@
     }
 }
 
-.calendar__button {
+.calendar__view {
     position: absolute;
-    right: 2.5rem;
+    left: 2rem;
 }
 
-.calendar__weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-
-    margin-bottom: 2.5rem;
+.calendar__view > button:not(:last-child) {
+    margin-right: 1rem;
 }
 
-.calendar__weekdays > span {
-    @include flex-center;
-}
-
-.calendar__days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 7.5px;
-}
-
-.calendar__day {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-
-    height: 10rem;
-    padding: 5px;
-
-    border: 1px dashed var(--color-black);
-    cursor: pointer;
-
-    &:hover {
-        background: var(--color-black-light-2-alpha);
-        transition: var(--transition-3);
-    }
-}
-
-.calendar__day--today {
-    border: 1px dashed var(--color-blue-dark);
-}
-
-.calendar__day-header {
-    @include flex-end;
-
-    margin-bottom: 5px;
-}
-
-.calendar__add {
+.calendar__button--right {
     position: absolute;
-    top: 50%;
-    left: 50%;
-
-    transform: translateX(-60%) translateY(-40%);
-
-    & > i {
-        margin-right: 1rem;
-    }
+    right: 2rem;
 }

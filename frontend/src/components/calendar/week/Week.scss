@@ -1,0 +1,66 @@
+.week {
+    background: var(--color-black-light);
+    border-radius: var(--border-radius);
+}
+
+.week__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    background: var(--color-black-light-2);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.week__weekdays > span {
+    @include flex-center;
+}
+
+.week__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 7.5px;
+
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.week__day {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 10rem;
+    padding: 5px;
+
+    border: 1px dashed var(--color-black);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-black-light-2-alpha);
+        transition: var(--transition-3);
+    }
+}
+
+.week__day--today {
+    border: 1px dashed var(--color-blue-dark);
+}
+
+.week__day-header {
+    @include flex-end;
+
+    margin-bottom: 5px;
+}
+
+.week__add {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translateX(-60%) translateY(-40%);
+}
+
+.week__add > i {
+    margin-right: 1rem;
+}

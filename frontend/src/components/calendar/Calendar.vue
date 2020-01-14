@@ -1,158 +1,134 @@
 <template>
-    <div class="calendar">
-        <div class="calendar__header">
-            <i
-                class="calendar__arrow fas fa-chevron-left"
-                @click="switchDate('previous-month')"
-            />
+	<div class="calendar">
+		<div class="calendar__header">
+			<div class="calendar__view">
+				<BaseButton @click="switchView('week')">
+					Week
+				</BaseButton>
 
-            <span>{{ date | date('MMMM yyyy') }}</span>
+				<BaseButton @click="switchView('month')">
+					Month
+				</BaseButton>
+			</div>
 
-            <i
-                class="calendar__arrow fas fa-chevron-right"
-                @click="switchDate('next-month')"
-            />
+			<i
+				class="calendar__arrow fas fa-chevron-left"
+				@click="switchDate('previous')"
+			/>
 
-            <BaseButton
-                class="calendar__button"
-                @click="switchDate('today')"
-            >
-                Today
-            </BaseButton>
-        </div>
+			<span v-if="view === 'month'">{{ date | date('MMMM yyyy') }}</span>
+			<span v-if="view === 'week'">Week {{ date | date('w') }}</span>
 
-        <div class="calendar__weekdays">
-            <span v-for="day in getWeekDays">
-                {{ day | date('EEE') }}
-            </span>
-        </div>
+			<i
+				class="calendar__arrow fas fa-chevron-right"
+				@click="switchDate('next')"
+			/>
 
-        <div class="calendar__days">
-            <div
-                v-for="(day, index) in daysInMonth"
-                class="calendar__day"
-                :class="{ 'calendar__day--today': isToday(day) }"
-                :style="{ gridColumn: startOfMonth(index) }"
-                :key="index"
-                @click="$emit('create-task', day)"
-                @mouseenter="showAdd = index"
-                @mouseleave="showAdd = null"
-            >
+			<BaseButton
+				class="calendar__button calendar__button--right"
+				@click="switchDate('today')"
+			>
+				Today
+			</BaseButton>
+		</div>
 
-                <div class="calendar__day-header">
-                    {{ day | date('d') }}
-                </div>
+		<Month
+			v-if="view === 'month'"
+			:date="date"
+			:tasks="tasks"
+			@create-task="$emit('create-task', $event)"
+		/>
 
-                <CalendarTask
-                    v-for="(task, index) in filteredTasks(day)"
-                    :key="index"
-                    :task="task"
-                />
-
-                <span
-                    v-if="showAdd === index && filteredTasks(day).length == 0"
-                    :key="index"
-                    class="calendar__add"
-                >
-                    <i class="fas fa-plus"></i> Add
-                </span>
-            </div>
-        </div>
-    </div>
+		<Week
+			v-if="view === 'week'"
+			:date="date"
+			:tasks="tasks"
+			@create-task="$emit('create-task', $event)"
+		/>
+	</div>
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop, Getter } from '@/vue-script';
+	import { Vue, Component, Prop, Getter } from '@/vue-script';
 
-    import { ITask } from '@data/models';
+	import { ITask } from '@data/models';
 
-    import {
-        getDaysInMonth,
-        addDays,
-        startOfMonth,
-        getDay,
-        eachDayOfInterval,
-        startOfWeek,
-        endOfWeek,
-        format,
-        isToday,
-        addMonths,
-        subMonths,
-        setDate,
-        isSameMonth,
-        isSameDay,
-    } from 'date-fns';
+	import {
+		getDaysInMonth,
+		addDays,
+		startOfMonth,
+		getDay,
+		eachDayOfInterval,
+		startOfWeek,
+		endOfWeek,
+		format,
+		isToday,
+		addMonths,
+		subMonths,
+		setDate,
+		isSameMonth,
+		isSameDay,
+		addWeeks,
+		subWeeks,
+	} from 'date-fns';
 
-    const BaseButton = () => import('@/components/base-button/BaseButton.vue');
-    const CalendarTask = () => import('./calendar-task/CalendarTask.vue');
+	const BaseButton = () => import('@/components/base-button/BaseButton.vue');
+	const Month = () => import('./month/Month.vue');
+	const Week = () => import('./week/Week.vue');
 
-    @Component({
-        components: {
-            BaseButton,
-            CalendarTask,
-        },
-    })
-    export default class Calendar extends Vue {
-        @Prop() public tasks!: ITask[];
+	@Component({
+		components: {
+			BaseButton,
+			Month,
+			Week,
+		},
+	})
+	export default class Calendar extends Vue {
+		@Prop() private tasks!: ITask[];
 
-        public date: Date = startOfMonth(new Date());
-        public showAdd: boolean = false;
+		private date: Date = startOfMonth(new Date());
+		private showAdd: boolean = false;
+		private view: 'week' | 'month' = 'month';
 
-        public get daysInMonth(): Date[] {
-            const start: Date = startOfMonth(this.date);
+		private switchDate(date: string) {
+			this.view === 'month' ? this.switchMonth(date) : this.switchWeek(date);
+		}
 
-            return [...Array(getDaysInMonth(start))].map((_, index) => {
-                return addDays(start, index);
-            });
-        }
+		private switchMonth(date: string) {
+			switch (date) {
+				case (date = 'today'):
+					this.date = startOfMonth(new Date());
+					break;
+				case (date = 'next'):
+					this.date = addMonths(this.date, 1);
+					break;
+				case (date = 'previous'):
+					this.date = subMonths(this.date, 1);
+					break;
+			}
+		}
 
-        public get getWeekDays(): Date[] {
-            const today = Date.now();
+		private switchWeek(date: string) {
+			switch (date) {
+				case (date = 'today'):
+					this.date = startOfWeek(new Date());
+					break;
+				case (date = 'next'):
+					this.date = addWeeks(this.date, 1);
+					break;
+				case (date = 'previous'):
+					this.date = subWeeks(this.date, 1);
+					break;
+			}
+		}
 
-            return eachDayOfInterval({
-                start: startOfWeek(today),
-                end: endOfWeek(today),
-            });
-        }
-
-        public filteredTasks(date: Date) {
-            if (this.tasks) {
-                return this.tasks.filter((task) => {
-                    if (task.dueDate) {
-                        return isSameDay(task.dueDate, date);
-                    }
-                });
-            }
-        }
-
-        public sameDay(day: Date, task: ITask) {
-            return isSameDay(day, task.dueDate as Date);
-        }
-
-        public startOfMonth(index: number) {
-            if (index === 0) {
-                return getDay(this.date) + 1;
-            }
-        }
-
-        public isToday(date: Date) {
-            return isToday(date);
-        }
-
-        public switchDate(date: string) {
-            switch (date) {
-                case (date = 'today'):
-                    this.date = startOfMonth(new Date());
-                    break;
-                case (date = 'next-month'):
-                    this.date = addMonths(this.date, 1);
-                    break;
-                case (date = 'previous-month'):
-                    this.date = subMonths(this.date, 1);
-                    break;
-            }
-        }
-    }
+		private switchView(view: 'week' | 'month') {
+			this.view = view;
+			this.view === 'month'
+				? this.switchMonth('today')
+				: this.switchWeek('today');
+		}
+	}
 </script>
 
 <style lang="scss" src="./Calendar.scss">
