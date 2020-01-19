@@ -3,28 +3,28 @@
 
     width: 95%;
     padding: 7.5px;
+}
 
-    &__profile {
-        align-self: flex-start;
-    }
+.task-comment__profile {
+    align-self: flex-start;
+}
 
-    &__title {
-        @include flex-space-between;
+.task-comment__title {
+    @include flex-space-between;
 
-        margin: 3px 0 5px 0;
-    }
+    margin: 3px 0 5px 0;
+}
 
-    &__name {
-        font-size: 14px;
-        margin-right: 1rem;
-    }
+.task-comment__name {
+    font-size: 14px;
+    margin-right: 1rem;
+}
 
-    &__date {
-        font-size: 14px;
-        color: var(--color-grey-light);
-    }
+.task-comment__date {
+    font-size: 14px;
+    color: var(--color-grey-light);
+}
 
-    &__body {
-        width: 95%;
-    }
+.task-comment__body {
+    width: 95%;
 }

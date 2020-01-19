@@ -2,10 +2,10 @@
     @include flex-center-align;
 
     position: relative;
+}
 
-    input {
-        margin-right: 1rem;
-    }
+.search-bar__input input {
+    margin-right: 1rem;
 }
 
 .search-bar__cross {
